@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMSQC_Web", "AMSQC_Web\AMSQC_Web.csproj", "{DE66BC68-E9C4-4C2A-B754-E37196D30449}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMSQC_Web.Test", "AMSQC_Web.Test\AMSQC_Web.Test.csproj", "{DC042C93-B143-4BE8-8154-218014711374}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMSQC_Web.Test", "AMSQC_Web.Test\AMSQC_Web.Test.csproj", "{DC042C93-B143-4BE8-8154-218014711374}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{15CE9966-1A32-451D-8DE4-D9DE07B0D5AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{DC042C93-B143-4BE8-8154-218014711374}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC042C93-B143-4BE8-8154-218014711374}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC042C93-B143-4BE8-8154-218014711374}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15CE9966-1A32-451D-8DE4-D9DE07B0D5AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15CE9966-1A32-451D-8DE4-D9DE07B0D5AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15CE9966-1A32-451D-8DE4-D9DE07B0D5AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15CE9966-1A32-451D-8DE4-D9DE07B0D5AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
