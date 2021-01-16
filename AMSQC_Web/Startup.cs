@@ -83,6 +83,8 @@ namespace AMSQC_Web
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -121,6 +123,14 @@ namespace AMSQC_Web
             //    endpoints.MapRazorPages();
             //    endpoints.MapControllers();
             //});
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AMSQC_Web");
+                c.RoutePrefix = string.Empty;
+            });
+
 
             if (env.IsDevelopment())
             {

@@ -14,7 +14,7 @@ namespace AMSQC_Web.Controllers
     public class QuoteController : ControllerBase
     {
         [HttpGet]
-        public Quote GetQuoteDetail(string quoteNo)
+        public Quote Get(string quoteNo)
         {
             var quote = new Quote();
             quote.Company = "Honda";
