@@ -9,7 +9,10 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
     && apt-get install -y nodejs \
-    && npm install -g react-tools
+
+RUN mkdir /home/node/.npm-global
+ENV PATH=/home/node/.npm-global/bin:$PATH
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 
 #RUN apt-get update -yq \
     #&& apt-get install curl gnupg -yq \
