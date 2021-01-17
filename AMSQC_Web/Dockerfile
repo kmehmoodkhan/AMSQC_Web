@@ -5,18 +5,24 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g react-tools
+
 #RUN apt-get update -yq \
     #&& apt-get install curl gnupg -yq \
     #&& curl -sL https://deb.nodesource.com/setup_14.x | bash \
     #&& apt-get install nodejs -yq
 
-RUN apt-get update && apt-get install curl -y \
-CMD /bin/bash
-
-#RUN apt-get update; apt-get install curl
-RUN curl -sL https://deb.nodesource.com/setup_14.x |  bash -
-RUN apt-get install -y nodejs
-RUN apt-get install npm -y 
+#RUN apt-get update && apt-get install curl -y \
+#CMD /bin/bash
+#
+##RUN apt-get update; apt-get install curl
+#RUN curl -sL https://deb.nodesource.com/setup_14.x |  bash -
+#RUN apt-get install -y nodejs
+#RUN apt-get install npm -y 
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
