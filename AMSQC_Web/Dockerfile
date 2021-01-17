@@ -16,7 +16,7 @@ CMD /bin/bash
 #RUN apt-get update; apt-get install curl
 RUN curl -sL https://deb.nodesource.com/setup_14.x |  bash -
 RUN apt-get install -y nodejs
-npm 
+RUN apt-get install npm -y 
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
