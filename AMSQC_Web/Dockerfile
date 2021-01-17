@@ -10,7 +10,8 @@ EXPOSE 443
     #&& curl -sL https://deb.nodesource.com/setup_14.x | bash \
     #&& apt-get install nodejs -yq
 
-RUN apt-get update; apt-get install curl
+RUN apt-get update
+RUN apt-get install curl
 RUN curl -sL https://deb.nodesource.com/setup_14.x |  bash -
 RUN apt-get install -y nodejs
 
