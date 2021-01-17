@@ -5,14 +5,10 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-RUN apt-get update \
-    && apt-get upgrade -y \
-    && curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-    && apt-get install -y nodejs \
-
-RUN mkdir /home/node/.npm-global
-ENV PATH=/home/node/.npm-global/bin:$PATH
-ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+#RUN apt-get update \
+    #&& apt-get upgrade -y \
+    #&& curl -sL https://deb.nodesource.com/setup_14.x | bash - \
+    #&& apt-get install -y nodejs \
 
 #RUN apt-get update -yq \
     #&& apt-get install curl gnupg -yq \
@@ -22,10 +18,10 @@ ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 #RUN apt-get update && apt-get install curl -y \
 #CMD /bin/bash
 #
-##RUN apt-get update; apt-get install curl
-#RUN curl -sL https://deb.nodesource.com/setup_14.x |  bash -
-#RUN apt-get install -y nodejs
-#RUN apt-get install npm -y 
+#RUN apt-get update; apt-get install curl
+RUN curl -sL https://deb.nodesource.com/setup_14.x |  bash -
+RUN apt-get install -y nodejs
+RUN npm install -g npm
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
