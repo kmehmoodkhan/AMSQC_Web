@@ -5,27 +5,9 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-RUN apt-get update -yq && apt-get upgrade -yq && apt-get install -yq
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -yq nodejs build-essential
-RUN npm install -g npm
-
-#RUN apt-get update \
-    #&& apt-get upgrade -y \
-    #&& curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-    #&& apt-get install -y nodejs \
-
-#RUN apt-get update -yq \
-    #&& apt-get install curl gnupg -yq \
-    #&& curl -sL https://deb.nodesource.com/setup_14.x | bash \
-    #&& apt-get install nodejs -yq
-
-#RUN apt-get update && apt-get install curl -y \
-#CMD /bin/bash
-##
-#RUN apt-get update; apt-get install curl
-#RUN curl -sL https://deb.nodesource.com/setup_14.x |  bash -
-#RUN apt-get install -y nodejs
-#RUN npm install -g npm
+RUN apt-get update -y && apt-get install -y gnupg2 && curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get update -y && apt-get install -y nodejs
+WORKDIR /app
+EXPOSE 80 
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
