@@ -1,16 +1,20 @@
-import * as React from 'react';
-import { Route } from 'react-router';
-import Layout from './components/Layout';
-import Home from './components/Home';
-import Counter from './components/Counter';
-import FetchData from './components/FetchData';
+import React, { Component } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import RouterConfig from './navigation/RouterConfig';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
-import './custom.css'
+export default class App extends Component {
+    static displayName = App.name;
+    baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 
-export default () => (
-    <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetch-data/:startDateIndex?' component={FetchData} />
-    </Layout>
-);
+    render() {
+        return (
+            <Provider store={store}>
+                <BrowserRouter>
+                    <RouterConfig />
+                </BrowserRouter>
+            </Provider>
+        );
+    }
+}
