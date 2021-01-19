@@ -146,22 +146,18 @@ namespace AMSQC_Web
             app.UseCors("AllowAll");
 
             app.UseHttpsRedirection();
-            //app.UseStaticFiles();
-            //app.UseSpaStaticFiles();
-
-            app.UseFileServer();
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
 
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllerRoute(
-            //        name: "default",
-            //        pattern: "{controller}/{action=Index}/{id?}");
-            //});
 
-          
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
 
             app.UseSpa(spa =>
             {
@@ -173,12 +169,6 @@ namespace AMSQC_Web
                 }
             });
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
         }
     }
 }

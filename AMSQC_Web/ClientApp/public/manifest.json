@@ -1,6 +1,6 @@
 {
-  "short_name": "AMSQC_Web",
-  "name": "AMSQC_Web",
+  "short_name": "react_core",
+  "name": "react_core",
   "icons": [
     {
       "src": "favicon.ico",
