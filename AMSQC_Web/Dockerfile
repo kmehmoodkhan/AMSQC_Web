@@ -5,15 +5,20 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-#RUN apt-get update -y && apt-get install -y gnupg2 && curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get update -y && apt-get install -y nodejs
+RUN apt-get update -y && apt-get install -y gnupg2 && curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get update -y && apt-get install -y nodejs
 
-RUN apt-get update -yq \
-    && apt-get install curl gnupg -yq \
-    && curl -sL https://deb.nodesource.com/setup_14.x | bash \
-    && apt-get install nodejs -yq
+#RUN apt-get update -yq \
+    #&& apt-get install curl gnupg -yq \
+    #&& curl -sL https://deb.nodesource.com/setup_14.x | bash \
+    #&& apt-get install nodejs -yq
 
 WORKDIR /app
 EXPOSE 80 
+
+RUN mkdir /home/node/.npm-global
+ENV PATH=/home/node/.npm-global/bin:$PATH
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+RUN npm install
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
