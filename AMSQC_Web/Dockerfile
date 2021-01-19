@@ -5,9 +5,9 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-RUN apt-get update -y && apt-get install -y gnupg2 && curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get update -y && apt-get install -y nodejs
+RUN apt-get update -y && apt-get install -y gnupg2 && curl -sL https://deb.nodesource.com/setup_10.x | bash - && apt-get update -y && apt-get install -y nodejs
 WORKDIR /app
-EXPOSE 80 
+EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
