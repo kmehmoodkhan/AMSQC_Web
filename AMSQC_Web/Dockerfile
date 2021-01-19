@@ -15,9 +15,7 @@ RUN apt-get update -y && apt-get install -y gnupg2 && curl -sL https://deb.nodes
 WORKDIR /app
 EXPOSE 80 
 
-RUN mkdir /home/node/.npm-global
-ENV PATH=/home/node/.npm-global/bin:$PATH
-ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 RUN npm install
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
