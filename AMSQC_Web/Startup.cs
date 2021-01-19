@@ -123,6 +123,10 @@ namespace AMSQC_Web
             //    endpoints.MapRazorPages();
             //    endpoints.MapControllers();
             //});
+
+
+            //working version before
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
@@ -146,8 +150,9 @@ namespace AMSQC_Web
             app.UseCors("AllowAll");
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+            app.UseFileServer();
+            //app.UseStaticFiles();
+            //app.UseSpaStaticFiles();
 
             app.UseRouting();
             app.UseAuthentication();
@@ -169,6 +174,42 @@ namespace AMSQC_Web
                 }
             });
 
+            
+
+            /*if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller}/{action=Index}/{id?}");
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
+            });
+            */
         }
     }
 }

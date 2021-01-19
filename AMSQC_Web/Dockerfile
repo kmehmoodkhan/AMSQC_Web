@@ -5,7 +5,13 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-RUN apt-get update -y && apt-get install -y gnupg2 && curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get update -y && apt-get install -y nodejs
+#RUN apt-get update -y && apt-get install -y gnupg2 && curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get update -y && apt-get install -y nodejs
+
+RUN apt-get update -yq \
+    && apt-get install curl gnupg -yq \
+    && curl -sL https://deb.nodesource.com/setup_14.x | bash \
+    && apt-get install nodejs -yq
+
 WORKDIR /app
 EXPOSE 80 
 
