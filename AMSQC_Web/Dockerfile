@@ -16,7 +16,9 @@ WORKDIR /app
 EXPOSE 80 
 
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-RUN npm install
+RUN apt-get install -y npm
+# Installing Node.js
+RUN npm install -g n; n stable
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
