@@ -106,14 +106,14 @@ namespace AMSQC_Web
 
             //app.UseRouting();
 
-            //var fordwardedHeaderOptions = new ForwardedHeadersOptions
-            //{
-            //    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            //};
-            //fordwardedHeaderOptions.KnownNetworks.Clear();
-            //fordwardedHeaderOptions.KnownProxies.Clear();
+            var fordwardedHeaderOptions = new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            };
+            fordwardedHeaderOptions.KnownNetworks.Clear();
+            fordwardedHeaderOptions.KnownProxies.Clear();
 
-            //app.UseForwardedHeaders(fordwardedHeaderOptions);
+            app.UseForwardedHeaders(fordwardedHeaderOptions);
 
             //app.UseAuthentication();
             //app.UseAuthorization();
@@ -165,6 +165,7 @@ namespace AMSQC_Web
 
                 if (env.IsDevelopment())
                 {
+                    spa.Options.StartupTimeout = TimeSpan.FromSeconds(120);
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });

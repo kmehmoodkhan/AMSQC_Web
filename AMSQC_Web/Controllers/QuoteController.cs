@@ -10,7 +10,7 @@ namespace AMSQC_Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [Authorize]
+   [Authorize]
     public class QuoteController : ControllerBase
     {
         [HttpGet]

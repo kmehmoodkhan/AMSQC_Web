@@ -1,27 +1,37 @@
 import React from 'react';
 import MainBanner from '../../../assets/images/main-bg.png';
 
-export default function Home() {
+type Props = {
+    onQuoteChange: any;
+    quoteId: any;
+    onSubmit: any;
+};
+export default function Home({ onQuoteChange, quoteId, onSubmit }: Props) {
     return (
         <div className="container-fluid">
             <div className="row">
                 <div className="col-lg-5  col-md-12 col-sm-12 login-section">
                     <div className=" my-auto">
                         <div className="wrapper">
-                            <form>
-                                <div className="form-group">
-                                    <label htmlFor="email">Quote number</label>
-                                    <input type="text" className="form-control" value="67883 " />
-                                </div>
-                                <div className="text-right">
-                                    <input
-                                        name="login"
-                                        className="btn btn-secondary-outline   "
-                                        type="button"
-                                        value="Submit"
-                                    />
-                                </div>
-                            </form>
+                            <div className="form-group">
+                                <label htmlFor="email">Quote number</label>
+                                <input
+                                    type="text"
+                                    id="email"
+                                    className="form-control"
+                                    value={quoteId}
+                                    onChange={(e) => onQuoteChange(e.target.value)}
+                                />
+                            </div>
+                            <div className="text-right">
+                                <input
+                                    name="login"
+                                    className="btn btn-secondary-outline "
+                                    type="button"
+                                    value="Submit"
+                                    onClick={() => onSubmit()}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
