@@ -42,6 +42,8 @@ namespace AMSQC_Web
             //    .AddMvcOptions(options => { })
             //    .AddMicrosoftIdentityUI();
 
+            services.AddApplicationInsightsTelemetry();
+
             var tenantId = $"{Configuration["AzureAD:TenantId"]}";
             var authority = $"{Configuration["AzureAD:Instance"]}/{tenantId}";
 
@@ -81,7 +83,8 @@ namespace AMSQC_Web
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/build";
+                // configuration.RootPath = "ClientApp/build";
+                configuration.RootPath = "ClientApp/dist";
             });
 
             services.AddSwaggerGen();
