@@ -1,6 +1,7 @@
 import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
 import userReducer from './reducers/userReducer';
 import thunk from 'redux-thunk';
+import sharedReducer from './reducers/sharedReducer';
 
 declare global {
     interface Window {
@@ -8,7 +9,7 @@ declare global {
     }
 }
 
-const rootReducer = combineReducers({ user: userReducer });
+const rootReducer = combineReducers({ user: userReducer, shared: sharedReducer });
 
 // Redux DevTools
 const composeEnhancers =

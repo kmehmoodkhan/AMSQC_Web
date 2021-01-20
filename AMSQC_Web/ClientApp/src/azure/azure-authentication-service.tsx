@@ -10,12 +10,12 @@ const isIE = msie > 0 || msie11 > 0;
 
 const authenticationModule: AzureAuthenticationContext = new AzureAuthenticationContext();
 
-export const logIn = (method: string): any => {
+export const logIn = (method: string, callback: any): any => {
     const typeName = method;
     const logInType = isIE ? 'loginRedirect' : typeName;
 
     // Azure Login
-    authenticationModule.login(logInType, returnedAccountInfo);
+    authenticationModule.login(logInType, returnedAccountInfo, callback);
 };
 
 export const logOut = (user: any): any => {
@@ -27,6 +27,5 @@ export const logOut = (user: any): any => {
 };
 
 const returnedAccountInfo = (user: AuthenticationResult) => {
-    console.log(user);
     store.dispatch(setUser(user));
 };

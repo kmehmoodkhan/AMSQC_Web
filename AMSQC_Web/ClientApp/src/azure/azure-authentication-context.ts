@@ -6,6 +6,7 @@ import {
     RedirectRequest,
     PopupRequest,
 } from '@azure/msal-browser';
+import store from '../redux/store';
 
 import { MSAL_CONFIG, PopUpRequest } from './azure-authentication-config';
 
@@ -38,15 +39,17 @@ export class AzureAuthenticationContext {
         };
     }
 
-    login(signInType: string, setUser: any): void {
+    login(signInType: string, setUser: any, callback: any): void {
         if (signInType === 'loginPopup') {
             this.myMSALObj
                 .acquireTokenPopup(PopUpRequest)
                 .then((resp: AuthenticationResult) => {
-                    this.handleResponse(resp, setUser);
+                    this.handleResponse(resp, setUser, callback);
+                    store.dispatch({ type: 'HIDE_LOADER' });
                 })
                 .catch((err) => {
                     console.error(err);
+                    store.dispatch({ type: 'HIDE_LOADER' });
                 });
         } else if (signInType === 'loginRedirect') {
             this.myMSALObj.loginRedirect(this.loginRedirectRequest);
@@ -60,13 +63,14 @@ export class AzureAuthenticationContext {
 
         this.myMSALObj.logout(logOutRequest);
     }
-    handleResponse(response: AuthenticationResult, incomingFunction: any) {
+    handleResponse(response: AuthenticationResult, incomingFunction: any, callback: any) {
         if (response !== null) {
             this.account = { user: response.account, accessToken: response.accessToken };
         }
 
         if (this.account) {
             incomingFunction(response);
+            callback();
         }
     }
     // private getAccount(): AccountInfo | undefined {

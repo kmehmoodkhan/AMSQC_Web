@@ -1,12 +1,17 @@
+import { Button } from 'antd';
 import React from 'react';
 import MainBanner from '../../../assets/images/main-bg.png';
+import CarDetails from './CarDetails';
 
 type Props = {
     onQuoteChange: any;
     quoteId: any;
     onSubmit: any;
+    alreadySubmitted: boolean;
+    carDetails: any;
+    loading: boolean;
 };
-export default function Home({ onQuoteChange, quoteId, onSubmit }: Props) {
+export default function Home({ onQuoteChange, quoteId, onSubmit, alreadySubmitted, carDetails, loading }: Props) {
     return (
         <div className="container-fluid">
             <div className="row">
@@ -23,14 +28,24 @@ export default function Home({ onQuoteChange, quoteId, onSubmit }: Props) {
                                     onChange={(e) => onQuoteChange(e.target.value)}
                                 />
                             </div>
+                            {alreadySubmitted && (
+                                <div className="alert alert-danger">
+                                    <strong>Sorry!</strong> A quote has beed already submitted for this Quote Number
+                                </div>
+                            )}
+                            {carDetails && <CarDetails car={carDetails} />}
                             <div className="text-right">
-                                <input
+                                <Button
                                     name="login"
-                                    className="btn btn-secondary-outline "
-                                    type="button"
+                                    className="btn btn-secondary-outline"
                                     value="Submit"
                                     onClick={() => onSubmit()}
-                                />
+                                    loading={loading}
+                                    shape="round"
+                                    size="large"
+                                >
+                                    Submit
+                                </Button>
                             </div>
                         </div>
                     </div>
