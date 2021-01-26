@@ -1,3 +1,0 @@
-const CREATE_QUOTE = 'CREATE_QUOTE';
-const SET_USER = 'SET_USER';
-const LOG_OUT = 'LOG_OUT';
