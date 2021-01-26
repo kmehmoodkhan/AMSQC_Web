@@ -1,4 +1,4 @@
-type userReducerType = {
+export type userReducerType = {
     loggedIn: boolean;
     user: any;
     accessToken: string;

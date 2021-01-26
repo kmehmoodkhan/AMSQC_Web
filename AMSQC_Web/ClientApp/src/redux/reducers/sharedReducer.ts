@@ -1,4 +1,4 @@
-type sharedReducerType = {
+export type sharedReducerType = {
     loading: boolean;
 };
 

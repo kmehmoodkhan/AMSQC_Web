@@ -34,6 +34,7 @@ export default function HomeContainer() {
     };
 
     const SubmitQuoteNumber = () => {
+        dispatch({ type: 'SHOW_LOADER' });
         SubmitQuote(quoteId)
             .then((response: any) => {
                 if (response.data.success) {
@@ -46,7 +47,8 @@ export default function HomeContainer() {
                     openNotificationWithError();
                 }
             })
-            .catch((err) => openNotificationWithError(err, 'Error'));
+            .catch((err) => openNotificationWithError(err, 'Error'))
+            .finally(() => dispatch({ type: 'HIDE_LOADER' }));
     };
 
     return (
