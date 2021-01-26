@@ -1,8 +1,0 @@
-version: '3.4'
-
-services:
-  amsqc_web:
-    image: ${DOCKER_REGISTRY-}amsqcweb
-    build:
-      context: .
-      dockerfile: AMSQC_Web/Dockerfile

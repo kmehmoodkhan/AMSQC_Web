@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMSQC_Web", "AMSQC_Web\AMSQC_Web.csproj", "{DE66BC68-E9C4-4C2A-B754-E37196D30449}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMSQC_Web.Test", "AMSQC_Web.Test\AMSQC_Web.Test.csproj", "{DC042C93-B143-4BE8-8154-218014711374}"
-EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{15CE9966-1A32-451D-8DE4-D9DE07B0D5AF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{615082DE-EE03-4C3D-83D4-6B08DABACFA2}"
 EndProject
@@ -15,15 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra.Data", "Infra.Data", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infra.IOC", "Infra.IOC", "{9A1BFEAB-E664-4A6D-AD69-EE38A8505C0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMSQC.Domain", "..\AMSQC.Domain\AMSQC.Domain.csproj", "{ABAEC62B-A117-4C96-A453-575C33E1E406}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMSQC.Domain", "..\AMSQC.Domain\AMSQC.Domain.csproj", "{ABAEC62B-A117-4C96-A453-575C33E1E406}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMSQC.Infra.Data", "..\AMSQC.Infra.Data\AMSQC.Infra.Data.csproj", "{8A514186-DC69-4536-9626-2DB8382F74DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMSQC.Infra.Data", "..\AMSQC.Infra.Data\AMSQC.Infra.Data.csproj", "{8A514186-DC69-4536-9626-2DB8382F74DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMSQC.Infra.IoC", "..\AMSQC.Infra.IoC\AMSQC.Infra.IoC.csproj", "{709003E3-5E0C-4182-83BF-E5819193EB08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMSQC.Infra.IoC", "..\AMSQC.Infra.IoC\AMSQC.Infra.IoC.csproj", "{709003E3-5E0C-4182-83BF-E5819193EB08}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{35CFAB59-8425-4148-91C1-BDF0424152D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMSQC.Application", "..\AMSQC.Application\AMSQC.Application.csproj", "{1EFD54BD-25A0-40DF-9C25-4F3646AA9AB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMSQC.Application", "..\AMSQC.Application\AMSQC.Application.csproj", "{1EFD54BD-25A0-40DF-9C25-4F3646AA9AB1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AMSQC_UI", "AMSQC_UI\AMSQC_UI.csproj", "{7714DC36-842A-4586-88AD-2BDDBAA35B49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,18 +29,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DE66BC68-E9C4-4C2A-B754-E37196D30449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE66BC68-E9C4-4C2A-B754-E37196D30449}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE66BC68-E9C4-4C2A-B754-E37196D30449}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE66BC68-E9C4-4C2A-B754-E37196D30449}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DC042C93-B143-4BE8-8154-218014711374}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC042C93-B143-4BE8-8154-218014711374}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC042C93-B143-4BE8-8154-218014711374}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC042C93-B143-4BE8-8154-218014711374}.Release|Any CPU.Build.0 = Release|Any CPU
-		{15CE9966-1A32-451D-8DE4-D9DE07B0D5AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15CE9966-1A32-451D-8DE4-D9DE07B0D5AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15CE9966-1A32-451D-8DE4-D9DE07B0D5AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15CE9966-1A32-451D-8DE4-D9DE07B0D5AF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ABAEC62B-A117-4C96-A453-575C33E1E406}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ABAEC62B-A117-4C96-A453-575C33E1E406}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABAEC62B-A117-4C96-A453-575C33E1E406}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -59,6 +49,10 @@ Global
 		{1EFD54BD-25A0-40DF-9C25-4F3646AA9AB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1EFD54BD-25A0-40DF-9C25-4F3646AA9AB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1EFD54BD-25A0-40DF-9C25-4F3646AA9AB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7714DC36-842A-4586-88AD-2BDDBAA35B49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7714DC36-842A-4586-88AD-2BDDBAA35B49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7714DC36-842A-4586-88AD-2BDDBAA35B49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7714DC36-842A-4586-88AD-2BDDBAA35B49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
