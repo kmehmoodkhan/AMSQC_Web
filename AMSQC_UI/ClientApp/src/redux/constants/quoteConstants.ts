@@ -1,0 +1,2 @@
+export const CREATE_QUOTE = 'CREATE_QUOTE';
+export const GET_QUOTE_DETAILS = 'GET_QUOTE_DETAILS';

@@ -45,7 +45,6 @@ export class AzureAuthenticationContext {
                 .acquireTokenPopup(PopUpRequest)
                 .then((resp: AuthenticationResult) => {
                     this.handleResponse(resp, setUser, callback);
-                    store.dispatch({ type: 'HIDE_LOADER' });
                 })
                 .catch((err) => {
                     console.error(err);
@@ -56,13 +55,15 @@ export class AzureAuthenticationContext {
         }
     }
 
-    logout(account: AccountInfo): void {
+    logout(account: AccountInfo): Promise<void> {
         const logOutRequest: EndSessionRequest = {
             account,
+            postLogoutRedirectUri: '/',
         };
 
-        this.myMSALObj.logout(logOutRequest);
+        return this.myMSALObj.logout(logOutRequest);
     }
+
     handleResponse(response: AuthenticationResult, incomingFunction: any, callback: any) {
         if (response !== null) {
             this.account = { user: response.account, accessToken: response.accessToken };

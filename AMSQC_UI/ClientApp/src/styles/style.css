@@ -53,12 +53,25 @@ a {
     background: #fff;
 }
 
+.header.shadow .navbar-brand {
+    opacity: 1;
+}
+
 .header .navbar-brand {
     margin-right: 50px;
+    /* opacity: 0; */
 }
 
 .header .navbar-brand img {
     height: 60px;
+}
+
+.header .navbar-toggler {
+    background: #000;
+    border-radius: 0;
+    color: #fff;
+    height: 40px;
+    outline: 0;
 }
 
 .header .navbar-nav .nav-link {
@@ -100,6 +113,10 @@ a {
 .header .site-user b {
     font-weight: 400;
     color: #60bb46;
+}
+
+.header .left-menu {
+    /* border: 1px solid #ccc; */
 }
 
 .header .right-menu {
@@ -222,6 +239,11 @@ a {
 
 /**=========================================================================**/
 
+.login-page {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
 .login-section {
     display: -webkit-box;
     display: flex;
@@ -230,7 +252,6 @@ a {
     flex-direction: column;
     padding: 68px 0;
     background-color: #fff;
-    padding-bottom: 0;
     padding-top: 100px;
 }
 
@@ -241,21 +262,19 @@ a {
 
 .login-bg {
     background-size: cover;
-    background-image: url(../assets/images/main-bg.png);
 }
 
 .login-image-section {
     position: relative;
 }
 
-.login-image-section img {
+.login-image-section .login-img {
     width: 100%;
     height: 100vh;
     -o-object-fit: cover;
     object-fit: cover;
     -o-object-position: left;
     object-position: left;
-    opacity: 0;
 }
 
 .login-image-section .wrapper {
@@ -272,27 +291,35 @@ a {
 }
 
 .login-image-section .content {
-    padding-left: 100px;
     display: table-cell;
     vertical-align: middle;
-    padding-right: 100px;
     padding: 100px;
+    width: 100%;
 }
 
 .login-image-section .content h2 {
     font-weight: 200;
-    font-size: 55px;
+    font-size: 36px;
     margin-bottom: 30px;
+    color: rgb(255, 255, 255, 1);
 }
 
-.login-image-section .content h2 b {
+.login-image-section .content h3 {
     font-weight: 600;
     display: block;
+    font-size: 55px;
+    color: rgb(255, 255, 255, 1);
 }
 
 .login-image-section .content p {
     font-weight: 200;
     font-size: 20px;
+}
+
+.login-image-section .content .logo {
+    max-height: 90px;
+    max-width: 100%;
+    margin-left: 20px;
 }
 
 /**=========================================================================**/
@@ -345,6 +372,7 @@ select.form-control {
     appearance: none;
     background-size: 30px;
     min-width: 200px;
+    padding-right: 40px;
 }
 
 .form-file {
@@ -432,6 +460,9 @@ select.form-control {
 
 /**=========================================================================**/
 
+.car-details {
+}
+
 .car-details .card {
     padding: 5px 15px;
     border: 1px solid #ccc;
@@ -486,4 +517,587 @@ select.form-control {
 .car-details .options-buttons label {
     margin-bottom: 0;
     margin-right: 20px;
+}
+
+/**=========================================================================**/
+
+.damage-categories {
+    margin: auto;
+    margin-top: 80px;
+}
+
+.damage-categories .card {
+    border: 0;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    border: 0;
+    border-radius: 0 0 15px 15px;
+}
+
+.damage-categories .card-header {
+    font-weight: 600;
+    color: #fff;
+    border-radius: 15px 15px 0 0;
+    border-bottom: 0;
+    padding: 15px 0;
+}
+
+.damage-categories .card-header .value {
+    border: 5px solid #979797;
+    height: 60px;
+    width: 60px;
+    margin: auto;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 50%;
+    font-size: 30px;
+    box-sizing: content-box;
+    font-weight: 400;
+    margin-top: -50px;
+    background: #fff;
+    color: #555;
+}
+
+.damage-categories .card-body {
+    padding: 20px;
+    border: 1px solid #999;
+    text-align: center;
+    border-top: 0;
+    border-radius: 0 0 15px 15px;
+}
+
+.damage-categories .card-body h5 {
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.damage-categories .card-body p {
+    color: #656565;
+    font-weight: 400;
+}
+
+.damage-categories .category1 .card-header {
+    background-color: #4db57e;
+}
+
+.damage-categories .category2 .card-header {
+    background-color: #e8d000;
+}
+
+.damage-categories .category3 .card-header {
+    background-color: #d90022;
+}
+
+.damage-categories .category1 .card-body {
+    border-color: #4db57e;
+}
+
+.damage-categories .category2 .card-body {
+    border-color: #e8d000;
+}
+
+.damage-categories .category3 .card-body {
+    border-color: #d90022;
+}
+
+.damage-categories .category1 .value {
+    border-color: #4db57e;
+}
+
+.damage-categories .category2 .value {
+    border-color: #e8d000;
+}
+
+.damage-categories .category3 .value {
+    border-color: #d90022;
+}
+
+/**=========================================================================**/
+
+.inspection-detail {
+}
+
+.inspection-detail .qoute-text {
+    padding: 0;
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 30px;
+    margin-left: -31px;
+}
+
+.inspection-detail .qoute-text b {
+    letter-spacing: 10px;
+}
+
+.inspection-detail .card {
+    padding: 15px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    border-radius: 0.25rem;
+    margin-bottom: 0;
+    margin-top: 50px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.inspection-detail .card-header {
+    color: #fff;
+    border-radius: 0;
+    border-bottom: 0;
+    background-color: #555;
+    padding: 10px 15px;
+}
+
+.inspection-detail .card-body {
+    padding: 0;
+}
+
+.inspection-detail .table {
+    margin-bottom: 0;
+    border: 0px solid #4db57e;
+}
+
+.inspection-detail td .name {
+    font-weight: 400;
+    color: #656565;
+    margin: 0;
+}
+
+.inspection-detail th {
+    color: #fff;
+    padding: 10px 15px !important;
+}
+
+.inspection-detail th,
+.inspection-detail td {
+    border-top: 0;
+    border-bottom: 1px solid #eee;
+    width: 50%;
+    padding: 14px 15px;
+    text-align: left;
+    white-space: nowrap;
+    vertical-align: middle !important;
+}
+
+.inspection-detail tr:last-child th,
+.inspection-detail tr:last-child td {
+    border-bottom: aliceblue;
+}
+
+.inspection-detail .options-buttons label {
+    margin-bottom: 0;
+    margin-right: 20px;
+}
+
+.inspection-detail .category-name {
+    display: inline-block;
+    border: 5px solid #000;
+    height: 60px;
+    width: 60px;
+    margin: auto;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 50%;
+    font-size: 30px;
+    box-sizing: content-box;
+    font-weight: 600;
+    background: #fff;
+    color: #000;
+    margin: 0 15px;
+    position: relative;
+    top: -5px;
+}
+
+.inspection-detail.category1 .category-name {
+    border: 5px solid #4db57e;
+}
+
+.inspection-detail.category1 .table th {
+    background-color: #4db57e;
+}
+
+.inspection-detail.category2 .category-name {
+    border: 5px solid #e8d000;
+}
+
+.inspection-detail.category2 .table th {
+    background-color: #e8d000;
+}
+
+.inspection-detail.category3 .category-name {
+    border: 5px solid #d90022;
+}
+
+.inspection-detail.category3 .table th {
+    background-color: #d90022;
+}
+
+/**=========================================================================**/
+
+.action-details {
+    /* margin-top: 30px; */
+    margin-bottom: 50px;
+    font-weight: 400;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.action-details .card {
+    padding: 15px 15px;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    margin-bottom: 25px;
+}
+
+.action-details .card-header {
+    color: #fff;
+    border-radius: 0;
+    border-bottom: 0;
+    background-color: #656565;
+    padding: 10px 15px;
+}
+
+.action-details .card-body {
+    padding: 5px 0;
+    border: 0px solid #4db57e;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+.action-details .table {
+    margin-bottom: 0;
+    border: 0px solid #4db57e;
+}
+
+.action-details td .name {
+    font-weight: 400;
+    color: #656565;
+    margin: 0;
+}
+
+.action-details th {
+    color: #fff;
+    padding: 10px 15px !important;
+}
+
+.action-details th,
+.action-details td {
+    border-top: 0;
+    border-bottom: 1px solid #eee;
+    width: 50%;
+    padding: 5px 15px;
+    text-align: left;
+    vertical-align: middle !important;
+    white-space: nowrap;
+    min-width: 240px;
+}
+
+.action-details tr:last-child th,
+.action-details tr:last-child td {
+    border-bottom: aliceblue;
+}
+
+.action-details .options-buttons label {
+    margin-bottom: 0;
+    margin-right: 20px;
+}
+
+.action-details .form-group {
+    margin-bottom: 0;
+}
+
+.action-details.box1 .card-header {
+    box-shadow: none;
+}
+
+.category-title {
+    background-color: #4db57e;
+    padding: 20px 0;
+}
+
+.category-title .value {
+    border: 3px solid #fff;
+    height: 60px;
+    width: 60px;
+    margin: auto;
+    text-align: center;
+    line-height: 60px;
+    border-radius: 50%;
+    font-size: 30px;
+    box-sizing: content-box;
+    font-weight: 700;
+    color: #fff;
+}
+
+.category-title .name {
+    text-align: center;
+    line-height: 65px;
+    font-size: 20px;
+    color: #fff;
+}
+
+/**=========================================================================**/
+
+.dashboard-menu3 {
+    text-align: center;
+    margin-top: 50px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.dashboard-menu3 .navbar-nav {
+    width: 100%;
+    text-align: center;
+}
+
+.dashboard-menu3 .col {
+    display: block;
+    flex: auto;
+    max-width: 25%;
+}
+
+.dashboard-menu3 .item-link {
+    font-size: 13px;
+    display: block;
+    margin-bottom: 30px;
+    background: #117180;
+    color: #4a4a4a;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0;
+}
+
+.dashboard-menu3 .item-link i {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 50px;
+    background: #fff;
+}
+
+.dashboard-menu3 .item-link i img {
+    height: 40px;
+}
+
+.dashboard-menu3 .item-link .name {
+    display: block;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 400;
+}
+
+/**=========================================================================**/
+
+.reports-table {
+    box-shadow: none;
+}
+
+.reports-table .filters {
+    margin-top: 0;
+    padding: 0;
+    margin-bottom: 15px;
+    background: #ffffff;
+    border-radius: 0;
+    overflow: hidden;
+}
+
+.reports-table .filters .card-body {
+    border: 1px solid #ccc;
+    border-radius: 0;
+    background: #ffffff;
+}
+
+.reports-table .filters .form-control {
+    box-shadow: none;
+    min-width: inherit;
+}
+
+.reports-table .filters .cola {
+    box-shadow: none;
+    /* width: 15%; */
+}
+
+.reports-table .filters .btn-go {
+    padding: 0 15px;
+    background: #60bb46;
+    color: #fff;
+    border: 0 !important;
+    cursor: pointer;
+}
+
+.reports-table .filters .form-group {
+    margin-bottom: 0;
+}
+
+.reports-table .export-buttons {
+    margin-bottom: 15px;
+}
+
+.table-style1 {
+    margin: 0;
+}
+
+.table-style1 .table {
+    margin-bottom: 0;
+    border: 0px solid #4db57e;
+}
+
+.table-style1 td .name {
+    font-weight: 400;
+    color: #787878;
+    margin: 0;
+}
+
+.table-style1 th {
+    padding: 10px 15px !important;
+    font-size: 13px;
+    background: #dddddd;
+    color: #000000;
+    border-bottom: 0 !important;
+    border-bottom: 2px solid #ffffff !important;
+}
+
+.table-style1 th,
+.table-style1 td {
+    border-top: 0;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    vertical-align: middle !important;
+    padding: 7px 15px;
+    white-space: nowrap;
+}
+
+.table-style1 tr:last-child th,
+.table-style1 tr:last-child td {
+    box-shadow: none;
+}
+
+.table-style1.options-buttons label {
+    margin-bottom: 0;
+    margin-right: 20px;
+}
+
+.table-style1 .category-name {
+    display: inline-block;
+    border: 3px solid #4db57e;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    border-radius: 50%;
+    box-sizing: content-box;
+    font-weight: 600;
+    color: #000;
+    position: relative;
+}
+
+.table-style1 .category1 {
+    border-color: #4db57e;
+}
+
+.table-style1 .category2 {
+    border-color: #e8d000;
+}
+
+.table-style1 .category3 {
+    border-color: #d90022;
+}
+
+.table-style1 .yes {
+    color: #d90022;
+}
+
+/**==== Responsive =====================================================================**/
+
+@media (max-width: 1366px) {
+    .header .navbar-brand {
+        margin-right: 10px;
+    }
+}
+
+@media (max-width: 991px) {
+    .header .navbar-brand {
+        margin-right: 10px;
+    }
+    .login-header {
+        position: relative;
+        margin-bottom: 0;
+    }
+    .header .left-menu {
+        margin-bottom: 0;
+        background: #e6e6e6;
+        padding: 15px;
+    }
+    .header .right-menu {
+        text-align: center;
+        background: #eee;
+        border: 0;
+        padding: 15px;
+        border-top: 0px solid #656565;
+    }
+    .header .right-menu .site-user {
+        margin-bottom: 10px;
+    }
+    .header .navbar-nav .btn-login,
+    .header .navbar-nav .btn-reporting {
+        display: inline-block;
+    }
+    .login-section {
+        padding: 50px;
+    }
+    .login-image-section .content h2 {
+        font-size: 30px;
+    }
+    .login-image-section .content .logo {
+        max-height: 60px;
+    }
+    .login-image-section .content h3 {
+        font-size: 30px;
+    }
+    .reports-table .filters .cola {
+        width: 50%;
+        flex-basis: auto;
+        margin-bottom: 15px;
+    }
+    .login-image-section .login-img {
+        max-height: 400px;
+    }
+    .login-image-section .content {
+        padding: 50px;
+    }
+    .main-title {
+        font-size: 30px;
+    }
+    .sub-title {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 640px) {
+    .login-section {
+        /* padding-top: 20px; */
+        /* padding-bottom: 20px; */
+        min-height: 100%;
+    }
+    .login-section .wrapper {
+        width: 100%;
+    }
+    .damage-categories .card {
+        margin-bottom: 80px;
+    }
+    .damage-categories .card.category3 {
+        margin-bottom: 0;
+    }
+    .dashboard-menu3 .menu-item {
+        width: 50%;
+    }
+    .reports-table .filters .btn-go {
+        min-height: 40px;
+    }
+    .buttons .btn {
+        margin-bottom: 10px;
+    }
 }

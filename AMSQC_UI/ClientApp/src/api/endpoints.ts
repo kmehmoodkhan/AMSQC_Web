@@ -1,3 +1,6 @@
-export const QuoteAPI = {
-    SubmitQuote: 'api/quote',
+export const Endpoints = {
+    QuoteAPI: {
+        SubmitQuote: 'api/quote',
+        UploadMappingSheet: 'api/quote',
+    },
 };

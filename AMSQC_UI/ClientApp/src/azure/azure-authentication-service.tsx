@@ -1,7 +1,7 @@
 import AzureAuthenticationContext from './azure-authentication-context';
 import { AuthenticationResult } from '@azure/msal-browser';
-import { logUserOut, setUser } from '../redux/actions/userActions';
 import store from '../redux/store';
+import { SET_USER } from '../redux/constants/userConstants';
 
 const ua = window.navigator.userAgent;
 const msie = ua.indexOf('MSIE ');
@@ -18,14 +18,13 @@ export const logIn = (method: string, callback: any): any => {
     authenticationModule.login(logInType, returnedAccountInfo, callback);
 };
 
-export const logOut = (user: any): any => {
+export const logOut = (user: any) => {
     if (user) {
         // Azure Logout
         authenticationModule.logout(user);
-        logUserOut();
     }
 };
 
 const returnedAccountInfo = (user: AuthenticationResult) => {
-    store.dispatch(setUser(user));
+    store.dispatch({ type: SET_USER, user });
 };

@@ -1,53 +1,63 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { SubmitQuote } from '../../../api/quoteapi';
+import { useHistory } from 'react-router-dom';
 import { logIn } from '../../../azure/azure-authentication-service';
-import { openNotificationWithError } from '../../../components/notification';
+import { QuoteSteps } from '../../../common/enum';
+import { openNotificationWithError } from '../../Shared/Components/notification';
+import { GetQuoteDetails } from '../../../redux/actions/quoteAction';
+import { showLoader } from '../../../redux/actions/sharedActions';
 import { RootState } from '../../../redux/store';
 import Header from '../components/Header';
 import Home from '../components/Home';
 
 export default function HomeContainer() {
+    // General hooks
+    var history = useHistory();
+
+    const dispatch = useDispatch();
+
+    // Use State
     const [quoteId, setQuoteId] = useState('');
 
     const [alreadySubmitted, setAlreadySubmitted] = useState(false);
+
+    // Use Selector
+    const alreadySubmittedVal = useSelector((state: RootState) => state.quote.alreadySubmitted);
 
     const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
 
     const loading = useSelector((state: RootState) => state.shared.loading);
 
-    const dispatch = useDispatch();
+    const carDetails = useSelector((state: RootState) => state.quote.carDetails);
 
-    const [carDetails, setCarDetails] = useState(null);
+    const quoteStep = useSelector((state: RootState) => state.quote.quoteStep);
 
+    // Events and helpers
     const onSubmit = () => {
-        if (quoteId && quoteId.length > 0 && /^\d+$/.test(quoteId)) {
-            dispatch({ type: 'SHOW_LOADER' });
-            if (!loggedIn) {
-                logIn('loginPopup', () => SubmitQuoteNumber());
-            } else {
-                SubmitQuoteNumber();
-            }
-        } else {
-            openNotificationWithError('Please enter valid quote number', 'Quote Number validation');
+        switch (quoteStep) {
+            case QuoteSteps.GetQuoteDetail:
+                if (quoteId && quoteId.length > 0 && /^\d+$/.test(quoteId)) {
+                    dispatch(showLoader());
+                    if (!loggedIn) {
+                        logIn('loginPopup', () => dispatch(GetQuoteDetails(quoteId)));
+                    } else {
+                        dispatch(GetQuoteDetails(quoteId));
+                    }
+                } else {
+                    openNotificationWithError('Please enter valid quote number', 'Quote Number validation');
+                }
+                break;
+            case QuoteSteps.SubmitQuote:
+                history.push('/file-upload');
+                break;
         }
     };
 
-    const SubmitQuoteNumber = () => {
-        SubmitQuote(quoteId)
-            .then((response: any) => {
-                if (response.data.success) {
-                    if (response.data.result.alreadySubmitted) {
-                        setAlreadySubmitted(true);
-                    } else {
-                        setCarDetails(response.data.result.quote);
-                    }
-                } else {
-                    openNotificationWithError();
-                }
-            })
-            .catch((err) => openNotificationWithError(err, 'Error'));
-    };
+    // Side Effects
+
+    useEffect(() => {
+        setAlreadySubmitted(alreadySubmittedVal);
+    }, [alreadySubmittedVal]);
 
     return (
         <>

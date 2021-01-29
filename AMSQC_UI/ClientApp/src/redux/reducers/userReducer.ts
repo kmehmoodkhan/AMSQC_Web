@@ -19,6 +19,7 @@ const userReducer = (state = defaultState, action: any): userReducerType => {
                 accessToken: action.user.accessToken,
             };
         case 'LOG_OUT':
+            localStorage.removeItem('persist:user');
             return {
                 loggedIn: false,
                 user: {},
