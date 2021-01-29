@@ -1,3 +1,6 @@
+using AMSQC.Infra.Data.Context;
+using AMSQC.Infra.IoC;
+using AMSQC_UI.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -6,6 +9,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +30,25 @@ namespace AMSQC_UI
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            /*services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<QuoteDbContext>(options =>
+            {
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("LibraryConnection"));
+            });
+            */
+            var connectionString = $"{Configuration["ConnectionStrings:QuoteDB"]}";
+
+            var managedIdentityInterceptor = new ConnectionInterceptor($"{Configuration["AzureAD:TenantId"]}");
+            services.AddDbContext<QuoteDbContext>(o =>
+                o.UseSqlServer(connectionString).AddInterceptors(managedIdentityInterceptor));
+
+            //services.AddDbContext<QuoteDbContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("QuoteDB")));
+
             var tenantId = $"{Configuration["AzureAD:TenantId"]}";
             var authority = $"{Configuration["AzureAD:Instance"]}/{tenantId}";
 
@@ -69,6 +93,7 @@ namespace AMSQC_UI
             });
 
             services.AddSwaggerGen();
+            RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -128,6 +153,11 @@ namespace AMSQC_UI
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+        }
+
+        private static void RegisterServices(IServiceCollection services)
+        {
+            DepedencyContainer.RegisterServices(services);
         }
     }
 }

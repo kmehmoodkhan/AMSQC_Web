@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AMSQC_UI.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,8 +9,9 @@ namespace AMSQC_UI
 {
     public class Response
     {
-        public bool Success { get; set; }
-        public HttpStatusCode StatusCode { get; set; }
+        public Status Status { get; set; }
+        public HttpStatusCode HttpStatusCode { get; set; }
         public dynamic Result { get; set; }
+        public string Message { get; set; }
     }
 }
