@@ -31,8 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AMSQC.Infra.Data\AMSQC.Infra.Data.csproj" />
-    <ProjectReference Include="..\..\AMSQC.Infra.IoC\AMSQC.Infra.IoC.csproj" />
+    <ProjectReference Include="..\AMSQC.Application\AMSQC.Application.csproj" />
+    <ProjectReference Include="..\AMSQC.Infra.Data\AMSQC.Infra.Data.csproj" />
+    <ProjectReference Include="..\AMSQC.Infra.IoC\AMSQC.Infra.IoC.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
