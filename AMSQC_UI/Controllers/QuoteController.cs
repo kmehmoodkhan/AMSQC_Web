@@ -42,6 +42,7 @@ namespace AMSQC_UI.Controllers
         }
 
         [HttpPost]
+        [Consumes("multipart/form-data")]
         public Response Post([FromForm]QuoteViewModel quoteFile)
         {
             return new Response
