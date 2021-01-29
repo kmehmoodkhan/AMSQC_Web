@@ -31,6 +31,7 @@ namespace AMSQC_UI.Controllers
             //quote.Registration = "ABC 4005";
 
             var quote = _quouteService.GetQuote(quoteNo);
+            quote.Color = "White";
             return new Response 
             { 
                 Result = new { quote, alreadySubmitted = false }, 
@@ -41,7 +42,7 @@ namespace AMSQC_UI.Controllers
         }
 
         [HttpPost]
-        public Response Post(QuoteViewModel quoteFile)
+        public Response Post([FromForm]QuoteViewModel quoteFile)
         {
             return new Response
             {
