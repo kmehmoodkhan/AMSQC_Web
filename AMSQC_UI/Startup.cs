@@ -109,6 +109,16 @@ namespace AMSQC_UI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AMSQC V1");
+            });
+
             app.UseCors("AllowAll");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
