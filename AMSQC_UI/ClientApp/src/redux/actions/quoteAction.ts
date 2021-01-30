@@ -1,4 +1,4 @@
-import { axiosGet, axiosPost } from '../../api/apiutils';
+import { axiosFormPost, axiosGet } from '../../api/apiutils';
 import { Endpoints } from '../../api/endpoints';
 import { QuoteSteps, RequestStatus } from '../../common/enum';
 import { openNotificationWithError } from '../../pages/Shared/Components/notification';
@@ -9,7 +9,7 @@ export const GetQuoteDetails = (quoteNo: string) => (dispatch: any) => {
     const url = Endpoints.QuoteAPI.SubmitQuote + `?quoteNo=${quoteNo}`;
     axiosGet(url)
         .then((response: any) => {
-            if (response.data.Success == RequestStatus.Success) {
+            if (response.data.status == RequestStatus.Success) {
                 if (response.data.result.alreadySubmitted) {
                     dispatch({
                         type: actionType.GET_QUOTE_DETAILS,
@@ -37,5 +37,8 @@ export const GetQuoteDetails = (quoteNo: string) => (dispatch: any) => {
 
 export const UploadMappingSheet = async (mappingSheet: any, quoteNo: string) => {
     const url = Endpoints.QuoteAPI.UploadMappingSheet;
-    return axiosPost(url, { MappingSheet: mappingSheet, QuoteId: quoteNo });
+    const formData = new FormData();
+    formData.append('MappingSheet', mappingSheet);
+    formData.append('QuoteId', quoteNo);
+    return axiosFormPost(url, formData);
 };

@@ -1,7 +1,10 @@
 import React from 'react';
 import SuccessIcon from '../../../assets/images/icon-success.svg';
 
-export default function FileUploadSuccess() {
+type Props = {
+    onContinue: any;
+};
+export default function FileUploadSuccess({ onContinue }: Props) {
     return (
         <div className="page ">
             <div className="container-fluid">
@@ -21,7 +24,7 @@ export default function FileUploadSuccess() {
                                     type="button"
                                     data-toggle="dropdown"
                                     className="btn btn-primary btn-lg btn-wide"
-                                    onClick={() => {}}
+                                    onClick={onContinue}
                                 >
                                     Continue
                                 </button>

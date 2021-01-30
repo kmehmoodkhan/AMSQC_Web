@@ -7,3 +7,9 @@ export enum RequestStatus {
     Failure = 0,
     Success = 1,
 }
+
+export enum SubletCompletionStatus {
+    Yes = 1,
+    No = 2,
+    NA = 3,
+}

@@ -24,13 +24,13 @@ namespace AMSQC_UI.Controllers
         [HttpGet]
         public Response Get(int quoteNo)
         {
-            //var quote = new Quote();
-            //quote.Company = "Honda";
-            //quote.Model = "Civic";
-            //quote.Color = "Red";
-            //quote.Registration = "ABC 4005";
+            var quote = new Quote();
+            quote.Company = "Honda";
+            quote.Model = "Civic";
+            quote.Color = "Red";
+            quote.Registration = "ABC 4005";
 
-            var quote = _quouteService.GetQuote(quoteNo);
+            //var quote = _quouteService.GetQuote(quoteNo);
             quote.Color = "White";
             return new Response 
             { 

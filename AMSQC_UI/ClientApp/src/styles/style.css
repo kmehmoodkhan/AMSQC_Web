@@ -563,6 +563,7 @@ select.form-control {
     text-align: center;
     border-top: 0;
     border-radius: 0 0 15px 15px;
+    min-height: 200px !important;
 }
 
 .damage-categories .card-body h5 {

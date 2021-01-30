@@ -16,7 +16,7 @@ declare global {
 const persistConfig = {
     key: 'user',
     storage,
-    whitelist: ['user'],
+    whitelist: ['user', 'quote'],
     stateReconciler: autoMergeLevel2,
 };
 
