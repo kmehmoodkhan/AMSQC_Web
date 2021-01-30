@@ -5,7 +5,7 @@ type Props = {
     selectCategory: any;
     selectedCategory: any;
 };
-export default function SelectDamageCategories({ onContinue, selectCategory }: Props) {
+export default function SelectDamageCategories({ onContinue, selectCategory, selectedCategory }: Props) {
     return (
         <div className="page ">
             <div className="container-fluid">
@@ -14,7 +14,7 @@ export default function SelectDamageCategories({ onContinue, selectCategory }: P
                         <div className="block-section">
                             <div className="main-title"> Damage Categories </div>
                             <p className="info-text"> Based on vehicle damage select one of the following </p>
-                            <div className="damage-categories">
+                            <div className="damage-categories" style={{ marginTop: '60px' }}>
                                 <div className="row justify-content-center">
                                     <CategoryCard
                                         title={'Category One'}
@@ -26,7 +26,7 @@ export default function SelectDamageCategories({ onContinue, selectCategory }: P
                                             </>
                                         }
                                         onClick={() => selectCategory(1)}
-                                        categoryClass={'category1'}
+                                        categoryClass={`category1 ${selectedCategory == 1 ? 'selected' : ''}`}
                                     />
                                     <CategoryCard
                                         title={'Category One Plus'}
@@ -37,7 +37,7 @@ export default function SelectDamageCategories({ onContinue, selectCategory }: P
                                             </>
                                         }
                                         onClick={() => selectCategory(2)}
-                                        categoryClass={'category2'}
+                                        categoryClass={`category2 ${selectedCategory == 2 ? 'selected' : ''}`}
                                     />
                                     <CategoryCard
                                         title={'Category One & Two Plus'}
@@ -55,11 +55,11 @@ export default function SelectDamageCategories({ onContinue, selectCategory }: P
                                             </>
                                         }
                                         onClick={() => selectCategory(3)}
-                                        categoryClass={'category3'}
+                                        categoryClass={`category3 ${selectedCategory == 3 ? 'selected' : ''}`}
                                     />
                                 </div>
                             </div>
-                            <div className="buttons">
+                            <div className="buttons" style={{ paddingBottom: '0px', marginTop: '40px' }}>
                                 <button
                                     type="button"
                                     data-toggle="dropdown"

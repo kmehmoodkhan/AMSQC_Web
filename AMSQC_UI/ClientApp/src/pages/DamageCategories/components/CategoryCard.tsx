@@ -8,7 +8,7 @@ type Props = {
 };
 export default function CategoryCard({ title, paragraph, value, onClick, categoryClass }: Props) {
     return (
-        <div className="col-lg-4 col-md-4 col-sm-4" onClick={onClick}>
+        <div className="col-lg-4 col-md-4 col-sm-4 pointer" onClick={onClick}>
             <div className={`card ${categoryClass}`}>
                 <div className="card-header">
                     <div className="value">{value}</div>
