@@ -25,13 +25,9 @@ namespace AMSQC.Infra.Data.Context
         public override InterceptionResult ConnectionOpening(DbConnection connection, ConnectionEventData eventData, InterceptionResult result)
         {
             var sqlConnection = (SqlConnection)connection;
-
             var provider = new AzureServiceTokenProvider();
-            // Note: in some situations the access token may not be cached automatically the Azure Token Provider.
-            // Depending on the kind of token requested, you may need to implement your own caching here.
             var r1 = GetAccessTokenAsync();
             sqlConnection.AccessToken = r1.Result;
-
             return result;
         }
 
@@ -42,12 +38,8 @@ namespace AMSQC.Infra.Data.Context
         CancellationToken cancellationToken = default)
         {
             var sqlConnection = (SqlConnection)connection;
-
             var provider = new AzureServiceTokenProvider();
-            // Note: in some situations the access token may not be cached automatically the Azure Token Provider.
-            // Depending on the kind of token requested, you may need to implement your own caching here.
             sqlConnection.AccessToken = await GetAccessTokenAsync();
-
             return result;
         }
 

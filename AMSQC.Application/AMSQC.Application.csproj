@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AMSQC.Domain\AMSQC.Domain.csproj" />
+    <ProjectReference Include="..\AMSQC.Infra.Data\AMSQC.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>
