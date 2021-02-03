@@ -45,6 +45,7 @@ export class AzureAuthenticationContext {
                 .acquireTokenPopup(PopUpRequest)
                 .then((resp: AuthenticationResult) => {
                     this.handleResponse(resp, setUser, callback);
+                    console.log(resp);
                 })
                 .catch((err) => {
                     console.error(err);

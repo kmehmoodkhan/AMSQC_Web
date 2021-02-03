@@ -16,7 +16,8 @@ export default function FileUploadContainer() {
     const history = useHistory();
 
     //useSelector
-    const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
+    // const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
+    const quote = useSelector((state: RootState) => state.quote.carDetails);
 
     //use states
     const [fileUploadStep, setFileUploadStep] = useState(1);
@@ -40,7 +41,7 @@ export default function FileUploadContainer() {
     const onFileUpload = () => {
         if (fileRef && fileRef.current && fileRef.current.files && fileRef.current.files.length > 0) {
             dispatch(showLoader());
-            UploadMappingSheet(fileRef.current.files[0], quoteNo)
+            UploadMappingSheet(fileRef.current.files[0], quote)
                 .then((response: any) => {
                     if (response.data.status == RequestStatus.Success) {
                         setFileUploadStep(3);

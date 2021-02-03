@@ -6,7 +6,7 @@ import * as actionType from '../constants/quoteConstants';
 import { HIDE_LOADER } from '../constants/sharedConstants';
 
 export const GetQuoteDetails = (quoteNo: string) => (dispatch: any) => {
-    const url = Endpoints.QuoteAPI.SubmitQuote + `?quoteNo=${quoteNo}`;
+    const url = Endpoints.QuoteAPI.SubmitQuote + `?quoteNo=${parseInt(quoteNo)}`;
     axiosGet(url)
         .then((response: any) => {
             if (response.data.status == RequestStatus.Success) {
@@ -35,10 +35,14 @@ export const GetQuoteDetails = (quoteNo: string) => (dispatch: any) => {
         .finally(() => dispatch({ type: HIDE_LOADER }));
 };
 
-export const UploadMappingSheet = async (mappingSheet: any, quoteNo: string) => {
+export const UploadMappingSheet = async (mappingSheet: any, quote: any) => {
     const url = Endpoints.QuoteAPI.UploadMappingSheet;
     const formData = new FormData();
     formData.append('MappingSheet', mappingSheet);
-    formData.append('QuoteId', quoteNo);
+    formData.append('QuoteDetail.QuoteId', quote.quoteId);
+    formData.append('QuoteDetail.Company', quote.company);
+    formData.append('QuoteDetail.Model', quote.model);
+    formData.append('QuoteDetail.Color', quote.color);
+    formData.append('QuoteDetail.Registration', quote.registration);
     return axiosFormPost(url, formData);
 };

@@ -1,3 +1,5 @@
+import { persistor } from '../store';
+
 type userReducerType = {
     loggedIn: boolean;
     user: any;
@@ -19,7 +21,7 @@ const userReducer = (state = defaultState, action: any): userReducerType => {
                 accessToken: action.user.accessToken,
             };
         case 'LOG_OUT':
-            localStorage.removeItem('persist:user');
+            persistor.purge();
             return {
                 loggedIn: false,
                 user: {},
