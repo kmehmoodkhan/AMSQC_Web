@@ -17,9 +17,11 @@ namespace AMSQC_UI.Controllers
     public class QuoteController : ControllerBase
     {
         IQouteService _quouteService = null;
-        public QuoteController(IQouteService quouteService)
+        IStorageService _storageService = null;
+        public QuoteController(IQouteService quouteService,IStorageService storageService)
         {
             _quouteService = quouteService;
+            _storageService = storageService;
         }
         [HttpGet]
         public Response Get(int quoteNo)
@@ -31,7 +33,6 @@ namespace AMSQC_UI.Controllers
             quote.Registration = "ABC 4005";
 
             //var quote = _quouteService.GetQuote(quoteNo);
-            quote.Color = "White";
             return new Response 
             { 
                 Result = new { quote, alreadySubmitted = false }, 
@@ -43,8 +44,16 @@ namespace AMSQC_UI.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public Response Post([FromForm]QuoteViewModel quoteFile)
+        public async Task<Response> Post([FromForm]QuoteViewModel quoteFile)
         {
+            BlobEntity blob = new BlobEntity()
+            {
+                Title = quoteFile.MappingSheet.FileName,
+                File = quoteFile.MappingSheet
+        };
+
+            var result = await _storageService.SaveBlobAsync(blob);
+
             return new Response
             {
                 Status = Common.Status.Success,
