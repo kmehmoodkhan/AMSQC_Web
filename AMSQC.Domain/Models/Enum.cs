@@ -4,7 +4,5 @@ using System.Text;
 
 namespace AMSQC.Domain.Models
 {
-    class Enum
-    {
-    }
+    public enum Status { Failed = 0, Success = 1 };
 }

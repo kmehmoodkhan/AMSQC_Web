@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AMSQC.Application\AMSQC.Application.csproj" />
+    <ProjectReference Include="..\AMSQC.Domain\AMSQC.Domain.csproj" />
     <ProjectReference Include="..\AMSQC.Infra.Data\AMSQC.Infra.Data.csproj" />
     <ProjectReference Include="..\AMSQC.Infra.IoC\AMSQC.Infra.IoC.csproj" />
   </ItemGroup>

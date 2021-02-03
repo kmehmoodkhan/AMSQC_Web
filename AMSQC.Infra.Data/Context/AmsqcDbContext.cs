@@ -1,15 +1,11 @@
 ﻿using AMSQC.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AMSQC.Infra.Data.Context
 {
-    public class QuoteDbContext : DbContext
+    public class AmsqcDbContext : DbContext
     {
-        public QuoteDbContext(DbContextOptions options) : base(options) { }
-
+        public AmsqcDbContext(DbContextOptions<AmsqcDbContext> dbContextOptions) : base(dbContextOptions) { }
         public DbSet<Quote> Quote { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,5 +22,6 @@ namespace AMSQC.Infra.Data.Context
                     eb.Property(v => v.QuoteId).HasColumnName("estimate_number");
                 });
         }
+
     }
 }

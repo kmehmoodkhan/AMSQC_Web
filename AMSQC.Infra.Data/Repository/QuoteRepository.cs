@@ -9,8 +9,8 @@ namespace AMSQC.Infra.Data.Repository
 {
     public class QuoteRepository : IQuoteRepository
     {
-        public QuoteDbContext _context;
-        public QuoteRepository(QuoteDbContext context)
+        public BodyShopDbContext _context;
+        public QuoteRepository(BodyShopDbContext context)
         {
             _context = context;
         }

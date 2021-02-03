@@ -1,13 +1,10 @@
 ﻿using AMSQC.Application.Interfaces;
 using AMSQC.Application.ViewModels;
+using AMSQC.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AMSQC_UI.Controllers
@@ -19,7 +16,7 @@ namespace AMSQC_UI.Controllers
     {
         IQouteService _quouteService = null;
         IStorageService _storageService = null;
-        ILogger _logger = null;
+        //ILogger _logger = null;
         public QuoteController(IQouteService quouteService, IStorageService storageService)
         {
             _quouteService = quouteService;
@@ -39,7 +36,7 @@ namespace AMSQC_UI.Controllers
             return new Response
             {
                 Result = new { quote, alreadySubmitted = false },
-                Status = Common.Status.Success,
+                Status = Status.Success,
                 HttpStatusCode = System.Net.HttpStatusCode.OK,
                 Message = ""
             };
@@ -62,7 +59,7 @@ namespace AMSQC_UI.Controllers
 
                 return new Response
                 {
-                    Status = Common.Status.Success,
+                    Status = Status.Success,
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = "File uploaded successfully.",
                     Result = ""
@@ -74,7 +71,7 @@ namespace AMSQC_UI.Controllers
 
                 return new Response
                 {
-                    Status = Common.Status.Failed,
+                    Status = Status.Failed,
                     HttpStatusCode = System.Net.HttpStatusCode.InternalServerError,
                     Message = ex.Message,
                     Result = ""
