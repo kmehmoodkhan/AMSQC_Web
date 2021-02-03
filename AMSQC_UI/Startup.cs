@@ -1,3 +1,4 @@
+using AMSQC.Application.ViewModels;
 using AMSQC.Infra.Data.Context;
 using AMSQC.Infra.IoC;
 using AMSQC_UI.Data;
@@ -40,6 +41,9 @@ namespace AMSQC_UI
                     Configuration.GetConnectionString("LibraryConnection"));
             });
             */
+            
+
+
             var connectionString = $"{Configuration["ConnectionStrings:QuoteDB"]}";
 
             var managedIdentityInterceptor = new ConnectionInterceptor($"{Configuration["AzureAD:TenantId"]}");
@@ -93,6 +97,8 @@ namespace AMSQC_UI
             });
 
             services.AddSwaggerGen();
+
+            services.Configure<StorageSetting>(Configuration.GetSection("StorageSettings"));
             RegisterServices(services);
         }
 
