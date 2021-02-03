@@ -8,7 +8,7 @@ namespace AMSQC.Application.ViewModels
 {
     public class QuoteViewModel
     {
-        public QouteDetail QouteDetail { get; set; }
+        public QuoteDetail QouteDetail { get; set; }
         //public int QuoteId { get; set; }
 
         public IFormFile MappingSheet

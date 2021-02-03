@@ -6,7 +6,7 @@ namespace AMSQC.Infra.Data.Context
     public class AmsqcDbContext : DbContext
     {
         public AmsqcDbContext(DbContextOptions<AmsqcDbContext> dbContextOptions) : base(dbContextOptions) { }
-        public DbSet<QouteDetail> QuoteDetail { get; set; }
+        public DbSet<QuoteDetail> QuoteDetail { get; set; }
 
 
     }

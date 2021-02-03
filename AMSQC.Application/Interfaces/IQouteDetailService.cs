@@ -9,8 +9,8 @@ namespace AMSQC.Application.Interfaces
 {
     public interface IQouteDetailService
     {
-        QouteDetail GetQouteDetail(int qouteId, int regionId);
+        QuoteDetail GetQouteDetail(int qouteId, int regionId);
 
-        int AddQouteDetail(QouteDetail qouteDetail);
+        int AddQouteDetail(QuoteDetail qouteDetail);
     }
 }

@@ -17,13 +17,13 @@ namespace AMSQC.Infra.Data.Repository
             _context = context;
         }
 
-        public int AddQouteDetail(QouteDetail qouteDetail)
+        public int AddQouteDetail(QuoteDetail qouteDetail)
         {
             var result = _context.QuoteDetail.Add(qouteDetail);
             return 1;
         }
 
-        public QouteDetail GetQouteDetail(int qouteId, int regionId)
+        public QuoteDetail GetQouteDetail(int qouteId, int regionId)
         {
             var qouteDetail = _context.QuoteDetail.Where(t => t.QouteNo == qouteId && t.RegionId == regionId).FirstOrDefault();
             return qouteDetail;

@@ -9,7 +9,7 @@ namespace AMSQC.Domain.Repository
 {
     public interface IQouteDetailRepository
     {
-        QouteDetail GetQouteDetail(int qouteId, int regionId);
-        int AddQouteDetail(QouteDetail qouteDetail);
+        QuoteDetail GetQouteDetail(int qouteId, int regionId);
+        int AddQouteDetail(QuoteDetail qouteDetail);
     }
 }

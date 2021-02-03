@@ -17,13 +17,13 @@ namespace AMSQC.Application.Services
             _qouteDetailRepository = qouteDetailRepository;
         }
 
-        public int AddQouteDetail(QouteDetail qouteDetail)
+        public int AddQouteDetail(QuoteDetail qouteDetail)
         {
             var result = _qouteDetailRepository.AddQouteDetail(qouteDetail);
             return result;
         }
 
-        public QouteDetail GetQouteDetail(int qouteId, int regionId)
+        public QuoteDetail GetQouteDetail(int qouteId, int regionId)
         {
             return _qouteDetailRepository.GetQouteDetail(qouteId, regionId);
         }
