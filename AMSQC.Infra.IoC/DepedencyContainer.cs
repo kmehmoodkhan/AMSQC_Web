@@ -33,6 +33,9 @@ namespace AMSQC.Infra.IoC
             services.AddScoped<IStorageService, StorageService>();
             services.AddScoped<IQuoteService, QuoteService>();
             services.AddScoped<IQuoteRepository, QuoteRepository>();
+
+            services.AddScoped<IQuoteDetailService, QuoteDetailService>();
+            services.AddScoped<IQuoteDetailRepository, QuoteDetailRepository>();
         }    
     }
 }
