@@ -35,7 +35,7 @@ export const GetQuoteDetails = (quoteNo: string) => (dispatch: any) => {
         .finally(() => dispatch({ type: HIDE_LOADER }));
 };
 
-export const UploadMappingSheet = async (mappingSheet: any, quote: any) => {
+export const UploadMappingSheet = async (mappingSheet: any, quote: any, user: any) => {
     const url = Endpoints.QuoteAPI.UploadMappingSheet;
     const formData = new FormData();
     formData.append('MappingSheet', mappingSheet);
@@ -44,5 +44,7 @@ export const UploadMappingSheet = async (mappingSheet: any, quote: any) => {
     formData.append('QuoteDetail.Model', quote.model);
     formData.append('QuoteDetail.Color', quote.color);
     formData.append('QuoteDetail.Registration', quote.registration);
+    formData.append('QuoteDetail.UserGuid', user.localAccountId);
+    formData.append('QuoteDetail.UserName', user.username);
     return axiosFormPost(url, formData);
 };
