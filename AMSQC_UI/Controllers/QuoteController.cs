@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,12 @@ namespace AMSQC_UI.Controllers
     {
         IQouteService _quouteService = null;
         IStorageService _storageService = null;
-        public QuoteController(IQouteService quouteService,IStorageService storageService)
+        ILogger _logger = null;
+        public QuoteController(IQouteService quouteService, IStorageService storageService)
         {
             _quouteService = quouteService;
             _storageService = storageService;
+            //_logger = logger;
         }
         [HttpGet]
         public Response Get(int quoteNo)
@@ -33,9 +36,9 @@ namespace AMSQC_UI.Controllers
             quote.Registration = "ABC 4005";
 
             //var quote = _quouteService.GetQuote(quoteNo);
-            return new Response 
-            { 
-                Result = new { quote, alreadySubmitted = false }, 
+            return new Response
+            {
+                Result = new { quote, alreadySubmitted = false },
                 Status = Common.Status.Success,
                 HttpStatusCode = System.Net.HttpStatusCode.OK,
                 Message = ""
@@ -44,23 +47,39 @@ namespace AMSQC_UI.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<Response> Post([FromForm]QuoteViewModel quoteFile)
+        public async Task<Response> Post([FromForm] QuoteViewModel quoteFile)
         {
             BlobEntity blob = new BlobEntity()
             {
                 Title = quoteFile.MappingSheet.FileName,
                 File = quoteFile.MappingSheet
-        };
-
-            var result = await _storageService.SaveBlobAsync(blob);
-
-            return new Response
-            {
-                Status = Common.Status.Success,
-                HttpStatusCode = System.Net.HttpStatusCode.OK,
-                Message = "File uploaded successfully.",
-                Result = ""
             };
+
+            try
+            {
+                var result = await _storageService.SaveBlobAsync(blob);
+                //_logger.LogInformation("File path=>" + result, string.Format("QouteId=>{0}", quoteFile.QuoteId));
+
+                return new Response
+                {
+                    Status = Common.Status.Success,
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = "File uploaded successfully.",
+                    Result = ""
+                };
+            }
+            catch (Exception ex)
+            {
+                //_logger.LogError(ex.Message, string.Format("QouteId=>{0}",quoteFile.QuoteId));
+
+                return new Response
+                {
+                    Status = Common.Status.Failed,
+                    HttpStatusCode = System.Net.HttpStatusCode.InternalServerError,
+                    Message = ex.Message,
+                    Result = ""
+                };
+            }
         }
     }
 }

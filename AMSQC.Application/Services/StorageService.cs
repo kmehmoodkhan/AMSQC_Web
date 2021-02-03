@@ -27,40 +27,30 @@ namespace AMSQC.Application.Services
         public async Task<string> SaveBlobAsync(BlobEntity blob)
         {
             string imageFullPath = null;
-            //if (blob.Content == null || blob.Content.Length == 0)
-            //{
-            //    return null;
-            //}
-            try
+
+            if (CloudStorageAccount.TryParse(_config.Value.StorageConnection, out CloudStorageAccount storageAccount))
             {
-                if (CloudStorageAccount.TryParse(_config.Value.StorageConnection, out CloudStorageAccount storageAccount))
-                {
-                    CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+                CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
-                    CloudBlobContainer container = blobClient.GetContainerReference(_config.Value.Container.ToLower());
+                CloudBlobContainer container = blobClient.GetContainerReference(_config.Value.Container.ToLower());
 
-                    OperationContext context = new OperationContext();
-                    bool result = await container.CreateIfNotExistsAsync();
+                OperationContext context = new OperationContext();
+                bool result = await container.CreateIfNotExistsAsync();
 
-                    BlobContainerPermissions containerPermissions = new BlobContainerPermissions();
-                    containerPermissions.PublicAccess = BlobContainerPublicAccessType.Blob;
-                    await container.SetPermissionsAsync(containerPermissions);
+                BlobContainerPermissions containerPermissions = new BlobContainerPermissions();
+                containerPermissions.PublicAccess = BlobContainerPublicAccessType.Blob;
+                await container.SetPermissionsAsync(containerPermissions);
 
-                    string imageName = Guid.NewGuid().ToString() + "_"+blob.Title;
+                string imageName = Guid.NewGuid().ToString() + "_" + blob.Title;
 
-                    CloudBlockBlob blockBlob = container.GetBlockBlobReference(imageName);
+                CloudBlockBlob blockBlob = container.GetBlockBlobReference(imageName);
 
-                    blockBlob.Properties.ContentType = MimeMapping.MimeUtility.GetMimeMapping(blob.Title);
-                   
-                    await blockBlob.UploadFromStreamAsync(blob.File.OpenReadStream());
+                blockBlob.Properties.ContentType = MimeMapping.MimeUtility.GetMimeMapping(blob.Title);
+
+                await blockBlob.UploadFromStreamAsync(blob.File.OpenReadStream());
 
 
-                    imageFullPath = blockBlob.Uri.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-
+                imageFullPath = blockBlob.Uri.ToString();
             }
             return imageFullPath;
         }
