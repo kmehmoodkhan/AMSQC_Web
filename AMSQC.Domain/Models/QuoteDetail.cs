@@ -9,11 +9,12 @@ namespace AMSQC.Domain.Models
 {
     public class QuoteDetail: Quote
     {
-		//[Key]
-  //      public int QuoteId { get; set; }
+        //[Key]
+        //      public int QuoteId { get; set; }
 
         //public int QouteNo { get; set; }
 
+        public string UserName { get; set; }
         public string UserGuid { get; set; }
         public int RegionId { get; set; }
 
