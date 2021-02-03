@@ -7,7 +7,8 @@ export default function LoggedInRouterConfig() {
         <>
             <Route exact path={ROUTES.FILE_UPLOAD_URL} component={COMPONENTS.FileUpload} />
             <Route exact path={ROUTES.DAMAGE_TYPE} component={COMPONENTS.DamageType} />
-            <Route exact path={ROUTES.CATEGORY_ONE} component={COMPONENTS.CategoryOne} />
+            <Route exact path={ROUTES.INSPECTION} component={COMPONENTS.Inspection} />
+            <Route exact path={ROUTES.CORRECTIVE_REQUEST} component={COMPONENTS.CorrectiveRequest} />
         </>
     );
 }

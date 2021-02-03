@@ -6,14 +6,14 @@ html {
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', sans-serif !important;
     overflow-x: hidden;
     background-color: #fff;
     font-weight: 400;
     min-height: 100%;
     letter-spacing: -0.0415625em;
     color: #000;
-    font-size: 14px;
+    font-size: 14px !important;
 }
 
 .flex {
@@ -221,11 +221,11 @@ a {
 
 .main-title {
     padding: 0;
-    color: #60bb46;
     font-size: 48px;
     text-align: center;
     font-weight: 700;
     margin-bottom: 15px;
+    color: #60bb46;
 }
 
 .sub-title {
@@ -537,13 +537,10 @@ select.form-control {
     border-radius: 15px 15px 15px 15px;
 }
 
-.damage-categories .card:hover,
-.damage-categories .card.selected {
-    box-shadow: 12px 13px 10px 0px rgba(0, 0, 0, 0.25);
-    -moz-filter: grayscale(0%);
-    -o-filter: grayscale(0%);
-    -ms-filter: grayscale(0%);
-    filter: grayscale(0%);
+.damage-categories .card.active .card-body,
+.damage-categories .card:hover {
+    border-width: 3px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .damage-categories .card-header {
@@ -1115,3 +1112,5 @@ select.form-control {
         margin-bottom: 10px;
     }
 }
+
+/* Developer CSS */

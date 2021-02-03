@@ -6,17 +6,18 @@ type Props = {
     onOptionChange: any;
     quoteNo: any;
     onNext: any;
+    category: number;
 };
-export default function CategoryOneInspection({ quoteNo, questions, onOptionChange, onNext }: Props) {
+export default function CategoryOneInspection({ quoteNo, questions, onOptionChange, onNext, category }: Props) {
     return (
         <div className="page">
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-8 offset-lg-2">
                         <div className="block-section">
-                            <div className="inspection-detail category1 ">
+                            <div className={`inspection-detail category${category}`}>
                                 <div className="main-title">
-                                    Category <span className="category-name">1</span> Inspection{' '}
+                                    Category <span className="category-name">{category}</span> Inspection{' '}
                                 </div>
                                 <div className="qoute-text ">
                                     Quote Number:<b> {quoteNo} </b>

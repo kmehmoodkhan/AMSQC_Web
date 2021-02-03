@@ -13,3 +13,10 @@ export enum SubletCompletionStatus {
     No = 2,
     NA = 3,
 }
+
+export enum QuestionType {
+    Select = 1,
+    Radio = 2,
+    TextBox = 3,
+    TextArea = 4,
+}

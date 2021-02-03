@@ -26,7 +26,7 @@ export default function SelectDamageCategories({ onContinue, selectCategory, sel
                                             </>
                                         }
                                         onClick={() => selectCategory(1)}
-                                        categoryClass={`category1 ${selectedCategory == 1 ? 'selected' : ''}`}
+                                        categoryClass={`category1 ${selectedCategory == 1 ? 'active' : ''}`}
                                     />
                                     <CategoryCard
                                         title={'Category One Plus'}
@@ -37,7 +37,7 @@ export default function SelectDamageCategories({ onContinue, selectCategory, sel
                                             </>
                                         }
                                         onClick={() => selectCategory(2)}
-                                        categoryClass={`category2 ${selectedCategory == 2 ? 'selected' : ''}`}
+                                        categoryClass={`category2 ${selectedCategory == 2 ? 'active' : ''}`}
                                     />
                                     <CategoryCard
                                         title={'Category One & Two Plus'}
@@ -55,7 +55,7 @@ export default function SelectDamageCategories({ onContinue, selectCategory, sel
                                             </>
                                         }
                                         onClick={() => selectCategory(3)}
-                                        categoryClass={`category3 ${selectedCategory == 3 ? 'selected' : ''}`}
+                                        categoryClass={`category3 ${selectedCategory == 3 ? 'active' : ''}`}
                                     />
                                 </div>
                             </div>

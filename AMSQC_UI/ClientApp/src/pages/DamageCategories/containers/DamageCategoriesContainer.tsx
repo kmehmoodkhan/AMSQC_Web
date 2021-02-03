@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { openNotificationWithWarning } from '../../Shared/Components/notification';
 import SelectDamageCategories from '../components/SelectDamageCategories';
 
 export default function DamageCategoriesContainer() {
@@ -16,7 +17,14 @@ export default function DamageCategoriesContainer() {
     };
 
     const onContinue = () => {
-        history.push('/category-one');
+        if (selectedCategory > 0) {
+            history.push({
+                pathname: '/inspection',
+                state: { category: selectedCategory },
+            });
+        } else {
+            openNotificationWithWarning('Please select a category!', 'Warning');
+        }
     };
 
     return (

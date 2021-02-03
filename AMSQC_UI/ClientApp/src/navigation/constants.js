@@ -1,4 +1,5 @@
 import CategoryOneInspectionContainer from '../pages/CategoryOne/containers/CategoryOneInspectionContainer';
+import CorrectiveRequestContainer from '../pages/CorrectiveRequest/containers/CorrectiveRequestContainer';
 import DamageCategoriesContainer from '../pages/DamageCategories/containers/DamageCategoriesContainer';
 import FileUploadContainer from '../pages/FileUpload/Containers/FileUploadContainer';
 import HomeContainer from '../pages/Home/containers/HomeContainer';
@@ -8,7 +9,8 @@ export const ROUTES = {
     ROOT_URL: '/',
     FILE_UPLOAD_URL: '/file-upload',
     DAMAGE_TYPE: '/damage-type',
-    CATEGORY_ONE: '/category-one',
+    INSPECTION: '/inspection',
+    CORRECTIVE_REQUEST: '/corrective-request',
 };
 
 export const COMPONENTS = {
@@ -16,5 +18,6 @@ export const COMPONENTS = {
     FileUpload: FileUploadContainer,
     ScreenLoader: ScreenLoader,
     DamageType: DamageCategoriesContainer,
-    CategoryOne: CategoryOneInspectionContainer,
+    Inspection: CategoryOneInspectionContainer,
+    CorrectiveRequest: CorrectiveRequestContainer,
 };

@@ -4,6 +4,9 @@ export const openNotificationWithSuccess = (description: any, title: any) => {
     notification['success']({
         message: title,
         description: description,
+        style: {
+            top: '75px',
+        },
     });
 };
 
@@ -14,6 +17,9 @@ export const openNotificationWithError = (
     notification['error']({
         message: title,
         description: description,
+        style: {
+            top: '75px',
+        },
     });
 };
 
@@ -24,6 +30,9 @@ export const openNotificationWithWarning = (
     notification['warning']({
         message: title,
         description: description,
+        style: {
+            top: '75px',
+        },
     });
 };
 
@@ -31,5 +40,8 @@ export const openNotificationWithInfo = (description: any, title: any) => {
     notification['info']({
         message: title,
         description: description,
+        style: {
+            top: '75px',
+        },
     });
 };
