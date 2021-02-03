@@ -14,19 +14,22 @@ namespace AMSQC_UI.Controllers
     [Authorize]
     public class QuoteController : ControllerBase
     {
-        IQouteService _quouteService = null;
+        IQuoteService _quouteService = null;
         IStorageService _storageService = null;
+        IQuoteDetailService _quoteDetailService = null;
         //ILogger _logger = null;
-        public QuoteController(IQouteService quouteService, IStorageService storageService)
+        public QuoteController(IQuoteService quouteService, IStorageService storageService, IQuoteDetailService quoteDetailService)
         {
             _quouteService = quouteService;
             _storageService = storageService;
+            _quoteDetailService = quoteDetailService;
             //_logger = logger;
         }
         [HttpGet]
         public Response Get(int quoteNo)
         {
             var quote = new Quote();
+            quote.QuoteId = quoteNo;
             quote.Company = "Honda";
             quote.Model = "Civic";
             quote.Color = "Red";
@@ -55,6 +58,10 @@ namespace AMSQC_UI.Controllers
             try
             {
                 var result = await _storageService.SaveBlobAsync(blob);
+                
+                quoteFile.QuoteDetail.MappingSheetPath = result;
+                _quoteDetailService.AddQuoteDetail(quoteFile.QuoteDetail);
+
                 //_logger.LogInformation("File path=>" + result, string.Format("QouteId=>{0}", quoteFile.QuoteId));
 
                 return new Response

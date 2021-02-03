@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AMSQC.Application.Interfaces
 {
-    public interface IQouteService
+    public interface IQuoteService
     {
         Quote GetQuote(int id);
     }

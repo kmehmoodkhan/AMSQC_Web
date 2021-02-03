@@ -12,7 +12,7 @@ namespace AMSQC.Domain.Models
 		//[Key]
   //      public int QuoteId { get; set; }
 
-        public int QouteNo { get; set; }
+        //public int QouteNo { get; set; }
 
         public string UserGuid { get; set; }
         public int RegionId { get; set; }

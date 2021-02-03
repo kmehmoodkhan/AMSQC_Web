@@ -31,7 +31,7 @@ namespace AMSQC.Infra.IoC
             //services.Configure<StorageSetting>(Configuration.GetSection("StorageSettings"));
 
             services.AddScoped<IStorageService, StorageService>();
-            services.AddScoped<IQouteService, QouteService>();
+            services.AddScoped<IQuoteService, QuoteService>();
             services.AddScoped<IQuoteRepository, QuoteRepository>();
         }    
     }

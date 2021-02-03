@@ -7,10 +7,10 @@ using System.Text;
 
 namespace AMSQC.Application.Services
 {
-    public class QouteService : IQouteService
+    public class QuoteService : IQuoteService
     {
         IQuoteRepository _quoteRepository = null;
-        public QouteService(IQuoteRepository quoteRepository)
+        public QuoteService(IQuoteRepository quoteRepository)
         {
             _quoteRepository = quoteRepository;
         }

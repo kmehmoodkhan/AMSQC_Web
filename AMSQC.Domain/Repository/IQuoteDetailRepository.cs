@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace AMSQC.Domain.Repository
 {
-    public interface IQouteDetailRepository
+    public interface IQuoteDetailRepository
     {
-        QuoteDetail GetQouteDetail(int qouteId, int regionId);
-        int AddQouteDetail(QuoteDetail qouteDetail);
+        QuoteDetail GetQuoteDetail(int quoteId, int regionId);
+        int AddQuoteDetail(QuoteDetail quoteDetail);
     }
 }

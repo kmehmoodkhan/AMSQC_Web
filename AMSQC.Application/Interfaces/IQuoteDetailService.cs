@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace AMSQC.Application.Interfaces
 {
-    public interface IQouteDetailService
+    public interface IQuoteDetailService
     {
-        QuoteDetail GetQouteDetail(int qouteId, int regionId);
+        QuoteDetail GetQuoteDetail(int quoteId, int regionId);
 
-        int AddQouteDetail(QuoteDetail qouteDetail);
+        int AddQuoteDetail(QuoteDetail quoteDetail);
     }
 }
