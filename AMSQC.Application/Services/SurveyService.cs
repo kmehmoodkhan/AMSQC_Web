@@ -24,5 +24,12 @@ namespace AMSQC.Application.Services
             surveyViewModel.Questions= _surveyRepository.GetSurveyQuestions(surveyType);
             return surveyViewModel;
         }
+
+        public int SaveSurveyReponse(List<UserQuestionResponse> userResponse)
+        {
+            userResponse.ForEach(f => f.CreatedOn = DateTime.Now);
+            return _surveyRepository.SaveSurveyReponse(userResponse);
+        }
+
     }
 }

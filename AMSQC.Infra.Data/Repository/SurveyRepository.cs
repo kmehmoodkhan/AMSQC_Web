@@ -47,5 +47,12 @@ namespace AMSQC.Infra.Data.Repository
 
             return result.ToList();
         }
+
+        public int SaveSurveyReponse(List<UserQuestionResponse> userResponse)
+        {
+            _context.UserQuestionResponse.AddRange(userResponse);
+            var result = _context.SaveChanges();
+            return result;
+        }
     }
 }

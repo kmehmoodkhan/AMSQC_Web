@@ -11,5 +11,6 @@ namespace AMSQC.Application.Interfaces
     public interface ISurveyService
     {
         SurveyViewModel GetSurveyDetail(int surveyType);
+        int SaveSurveyReponse(List<UserQuestionResponse> userResponse);
     }
 }
