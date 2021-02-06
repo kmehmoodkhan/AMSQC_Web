@@ -107,6 +107,7 @@ namespace AMSQC_UI.Controllers
                     CreatedOn = DateTime.Now
                 });
 
+                quoteFile.QuoteDetail.UserId = userInfo.UserId;
                 var recordId = _quoteDetailService.AddQuoteDetail(quoteFile.QuoteDetail);
 
                 
@@ -121,8 +122,6 @@ namespace AMSQC_UI.Controllers
             }
             catch (Exception ex)
             {
-                //_logger.LogError(ex.Message, string.Format("QouteId=>{0}",quoteFile.QuoteId));
-
                 return new Response
                 {
                     Status = Status.Failed,

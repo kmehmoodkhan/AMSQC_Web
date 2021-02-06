@@ -17,14 +17,15 @@ namespace AMSQC.Application.Services
         {
             _userRepository = userRepository;
         }
-        public int AddUser(UserInfo user)
+        public UserInfo AddUser(UserInfo user)
         {
             var userInfo = _userRepository.GetUser(user.UserGuid);
             if (userInfo == null)
             {
-                return _userRepository.AddUser(user);
+                var result= _userRepository.AddUser(user);
+                userInfo = _userRepository.GetUser(user.UserGuid);
             }
-            return userInfo.UserId;
+            return userInfo;
         }
 
         public UserInfo GetUser(string userGuid)

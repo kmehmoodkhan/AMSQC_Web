@@ -9,7 +9,7 @@ namespace AMSQC.Application.Interfaces
 {
     public interface IUserService
     {
-        int AddUser(UserInfo user);
+        UserInfo AddUser(UserInfo user);
 
         UserInfo GetUser(string userGuid);
     }

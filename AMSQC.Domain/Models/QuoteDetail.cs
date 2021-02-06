@@ -16,7 +16,10 @@ namespace AMSQC.Domain.Models
 
         public int QuoteId { get; set; }
 
+        [NotMapped]
         public string UserGuid { get; set; }
+
+        public int UserId { get; set; }
 
         public int RegionId { get; set; }
 
