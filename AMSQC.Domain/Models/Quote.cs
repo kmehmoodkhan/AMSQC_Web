@@ -14,7 +14,6 @@ namespace AMSQC.Domain.Models
         public string Model { get; set; }
         public string Color { get; set; }
         public string Registration { get; set; }
-
         public string InsurerName { get; set; }
     }
 }

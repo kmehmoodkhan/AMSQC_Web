@@ -35,5 +35,19 @@ namespace AMSQC_UI.Controllers
                 Message = ""
             };
         }
+
+
+        [HttpPost]
+
+        public Response Post(List<UserQuestionResponse> response)
+        {
+            return new Response
+            {
+                Result = null,
+                Status = Status.Success,
+                HttpStatusCode = System.Net.HttpStatusCode.OK,
+                Message = "Surve response submitted."
+            };
+        }
     }
 }
