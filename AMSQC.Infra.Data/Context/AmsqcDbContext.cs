@@ -16,10 +16,10 @@ namespace AMSQC.Infra.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<QuoteDetail>().ToTable("QuoteDetail");
-            //modelBuilder.Entity<UserInfo>().ToTable("UserInfo");
+            modelBuilder.Entity<UserInfo>().ToTable("UserInfo");
             modelBuilder.Entity<Question>().ToTable("Question");
-            //modelBuilder.Entity<QuestionOption>().ToTable("QuestionOption");
-            //modelBuilder.Entity<UserQuestionResponse>().ToTable("UserQuestionResponse");
+            modelBuilder.Entity<QuestionOption>().ToTable("QuestionOption");
+            modelBuilder.Entity<UserQuestionResponse>().ToTable("UserQuestionResponse");
         }
     }
 }

@@ -12,7 +12,7 @@ namespace AMSQC_UI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class SurveyController : ControllerBase
     {
         ISurveyService _surveyService = null;

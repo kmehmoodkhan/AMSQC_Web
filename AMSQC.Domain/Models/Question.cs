@@ -26,8 +26,7 @@ namespace AMSQC.Domain.Models
 
         public bool IsDeleted { get; set; }
 
-        [NotMapped]
-        public List<QuestionOption> QuestionOptions{get;set;}
+        virtual public List<QuestionOption> QuestionOptions{get;set;}
 
     }
 }
