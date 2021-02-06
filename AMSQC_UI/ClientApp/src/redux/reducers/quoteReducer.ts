@@ -1,5 +1,5 @@
 import { QuoteSteps } from '../../common/enum';
-import { GET_QUOTE_DETAILS } from '../constants/quoteConstants';
+import { GET_QUOTE_DETAILS, IS_QUOTE_AVAILABLE } from '../constants/quoteConstants';
 
 type quoteReducerType = {
     carDetails: any;
@@ -22,7 +22,13 @@ const quoteReducer = (state = defaultState, action: any): quoteReducerType => {
                 ...state,
                 quoteNo: action.quoteNo,
                 carDetails: action.carDetails,
+                quoteStep: action.quoteStep,
+            };
+        case IS_QUOTE_AVAILABLE:
+            return {
+                ...state,
                 alreadySubmitted: action.alreadySubmitted,
+                carDetails: action.alreadySubmitted ? null : state.carDetails,
                 quoteStep: action.quoteStep,
             };
         default:

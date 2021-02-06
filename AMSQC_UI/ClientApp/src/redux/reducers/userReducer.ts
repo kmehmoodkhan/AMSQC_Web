@@ -1,5 +1,3 @@
-import { persistor } from '../store';
-
 type userReducerType = {
     loggedIn: boolean;
     user: any;
@@ -19,13 +17,6 @@ const userReducer = (state = defaultState, action: any): userReducerType => {
                 loggedIn: true,
                 user: { ...action.user.account },
                 accessToken: action.user.accessToken,
-            };
-        case 'LOG_OUT':
-            persistor.purge();
-            return {
-                loggedIn: false,
-                user: {},
-                accessToken: '',
             };
         default:
             return state;

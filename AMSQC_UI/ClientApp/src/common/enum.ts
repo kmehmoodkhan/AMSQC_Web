@@ -1,6 +1,7 @@
 export enum QuoteSteps {
     GetQuoteDetail = 1,
-    SubmitQuote = 2,
+    QuoteAvailability = 2,
+    SubmitQuote = 3,
 }
 
 export enum RequestStatus {

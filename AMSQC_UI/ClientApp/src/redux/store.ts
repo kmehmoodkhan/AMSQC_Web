@@ -20,7 +20,15 @@ const persistConfig = {
     stateReconciler: autoMergeLevel2,
 };
 
-const rootReducer: any = combineReducers({ user: userReducer, shared: sharedReducer, quote: quoteReducer });
+const appReducer: any = combineReducers({ user: userReducer, shared: sharedReducer, quote: quoteReducer });
+
+const rootReducer = (state: any, action: any) => {
+    if (action.type === 'LOG_OUT') {
+        state = undefined;
+    }
+
+    return appReducer(state, action);
+};
 
 const pReducer = persistReducer(persistConfig, rootReducer);
 

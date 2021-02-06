@@ -25,8 +25,10 @@ export default function LoggedInHeaderContainer(props: any) {
                 fullName={user?.name}
                 company=""
                 onLogOut={() => {
-                    logOut(user);
                     dispatch(logUserOut());
+                    // debugger;
+                    // persistor.purge();
+                    logOut(user);
                 }}
             />
             {props.children}

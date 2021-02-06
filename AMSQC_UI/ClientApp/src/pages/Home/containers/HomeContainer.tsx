@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { logIn } from '../../../azure/azure-authentication-service';
 import { QuoteSteps } from '../../../common/enum';
 import { openNotificationWithError } from '../../Shared/Components/notification';
-import { GetQuoteDetails } from '../../../redux/actions/quoteAction';
+import { GetQuoteAvailable, GetQuoteDetails } from '../../../redux/actions/quoteAction';
 import { showLoader } from '../../../redux/actions/sharedActions';
 import { RootState } from '../../../redux/store';
 import Header from '../components/Header';
@@ -47,8 +47,8 @@ export default function HomeContainer() {
                     openNotificationWithError('Please enter valid quote number', 'Quote Number validation');
                 }
                 break;
-            case QuoteSteps.SubmitQuote:
-                history.push('/file-upload');
+            case QuoteSteps.QuoteAvailability:
+                dispatch(GetQuoteAvailable(quoteId, 'RMA Burmawood'));
                 break;
         }
     };
@@ -58,6 +58,12 @@ export default function HomeContainer() {
     useEffect(() => {
         setAlreadySubmitted(alreadySubmittedVal);
     }, [alreadySubmittedVal]);
+
+    useEffect(() => {
+        if (quoteStep == QuoteSteps.SubmitQuote) {
+            history.push('/file-upload');
+        }
+    });
 
     return (
         <>

@@ -1,20 +1,33 @@
+import { Error } from '../../common/types';
+import { HIDE_LOADER, SHOW_LOADER, SHOW_NOTIFICATION } from '../constants/sharedConstants';
+
 type sharedReducerType = {
     loading: boolean;
+    error: Error | null;
 };
 
 const defaultState: sharedReducerType = {
     loading: false,
+    error: null,
 };
 
 const sharedReducer = (state = defaultState, action: any): sharedReducerType => {
     switch (action.type) {
-        case 'SHOW_LOADER':
+        case SHOW_LOADER:
             return {
+                ...state,
                 loading: true,
             };
-        case 'HIDE_LOADER':
+        case HIDE_LOADER:
             return {
+                ...state,
                 loading: false,
+            };
+        case SHOW_NOTIFICATION:
+            return {
+                ...state,
+                loading: false,
+                error: action.error,
             };
         default:
             return state;
