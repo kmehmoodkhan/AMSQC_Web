@@ -20,13 +20,13 @@ namespace AMSQC.Infra.Data.Repository
         public int AddQuoteDetail(QuoteDetail quoteDetail)
         {
             _context.QuoteDetail.Add(quoteDetail);
-            _context.SaveChanges();
-            return 1;
+            var result = _context.SaveChanges();
+            return result;
         }
 
         public QuoteDetail GetQuoteDetail(int quoteId, int regionId)
         {
-            var quoteDetail = _context.QuoteDetail.Where(t => t.QuoteId == quoteId && t.RegionId == regionId).FirstOrDefault();
+            var quoteDetail = _context.QuoteDetail.Where(t => t.QuoteId == quoteId && t.RegionId == regionId && t.IsSubmit==true).FirstOrDefault();
             return quoteDetail;
         }
 

@@ -19,16 +19,18 @@ namespace AMSQC_UI.Controllers
         IQuoteService _quouteService = null;
         IStorageService _storageService = null;
         IQuoteDetailService _quoteDetailService = null;
-        //ILogger _logger = null;
+        IUserService _userService = null;
+
         public QuoteController(
             IQuoteService quouteService, 
             IStorageService storageService, 
-            IQuoteDetailService quoteDetailService)
+            IQuoteDetailService quoteDetailService,
+            IUserService userService)
         {
             _quouteService = quouteService;
             _storageService = storageService;
             _quoteDetailService = quoteDetailService;
-            //_logger = logger;
+            _userService = userService;
         }
         [HttpGet]
         public Response Get(int quoteNo)
@@ -96,16 +98,25 @@ namespace AMSQC_UI.Controllers
                 quoteFile.QuoteDetail.VehicleRegistration = quoteFile.QuoteDetail.Registration;
                 quoteFile.QuoteDetail.VehicleMake = quoteFile.QuoteDetail.Company;
 
-                _quoteDetailService.AddQuoteDetail(quoteFile.QuoteDetail);
+                var userInfo = _userService.AddUser(new UserInfo()
+                {
+                    UserGuid = quoteFile.QuoteDetail.UserGuid,
+                    UserName = quoteFile.QuoteDetail.UserName,
+                    RegionId = CONST_REGION_ID,
+                    Region = quoteFile.QuoteDetail.Region,
+                    CreatedOn = DateTime.Now
+                });
 
-                //_logger.LogInformation("File path=>" + result, string.Format("QouteId=>{0}", quoteFile.QuoteId));
+                var recordId = _quoteDetailService.AddQuoteDetail(quoteFile.QuoteDetail);
+
+                
 
                 return new Response
                 {
                     Status = Status.Success,
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = "File uploaded successfully.",
-                    Result = ""
+                    Result = new { QuoteId = recordId } 
                 };
             }
             catch (Exception ex)

@@ -28,5 +28,9 @@ namespace AMSQC.Domain.Models
 
         virtual public List<QuestionOption> QuestionOptions{get;set;}
 
+        public bool IsSubletQuestion { get; set; }
+
+        public bool IsAdUsers { get; set; }
+
     }
 }

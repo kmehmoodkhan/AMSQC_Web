@@ -20,6 +20,9 @@ namespace AMSQC.Domain.Models
 
         public int RegionId { get; set; }
 
+        [NotMapped]
+        public string Region { get; set; }
+
         public string MappingSheetPath { get; set; }
 
         public DateTime CreatedOn { get; set; }
@@ -117,5 +120,8 @@ namespace AMSQC.Domain.Models
         public string Registration { get { return _registration; } set { _registration = value; } }
 
         string _registration = string.Empty;
+
+
+        public bool IsSubmit { get; set; }
     }
 }

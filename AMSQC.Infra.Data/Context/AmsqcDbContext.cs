@@ -13,6 +13,7 @@ namespace AMSQC.Infra.Data.Context
         public DbSet<UserQuestionResponse> UserQuestionResponse { get; set; }
 
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<QuoteDetail>().ToTable("QuoteDetail");

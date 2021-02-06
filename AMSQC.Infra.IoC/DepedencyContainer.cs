@@ -45,6 +45,9 @@ namespace AMSQC.Infra.IoC
 
             services.AddScoped<ISurveyService, SurveyService>();
             services.AddScoped<ISurveyRepository, SurveyRepository>();
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
         }    
     }
 }
