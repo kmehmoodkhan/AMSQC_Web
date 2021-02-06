@@ -24,6 +24,7 @@ namespace AMSQC.Infra.Data.Context
                     eb.Property(v => v.Color).HasColumnName("vehicle_colour");
                     eb.Property(v => v.Registration).HasColumnName("Vehicle_registration");
                     eb.Property(v => v.QuoteId).HasColumnName("estimate_number");
+                    eb.Property(v => v.InsurerName).HasColumnName("debtor_name");
                 });
         }
     }

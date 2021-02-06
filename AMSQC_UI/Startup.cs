@@ -34,6 +34,8 @@ namespace AMSQC_UI
                 $"{Configuration["AzureAD:Scope"]}"
             };
 
+            
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                  .AddJwtBearer(options =>
                  {

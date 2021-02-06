@@ -7,7 +7,19 @@ namespace AMSQC.Infra.Data.Context
     {
         public AmsqcDbContext(DbContextOptions<AmsqcDbContext> dbContextOptions) : base(dbContextOptions) { }
         public DbSet<QuoteDetail> QuoteDetail { get; set; }
+        public DbSet<UserInfo> UserInfo { get; set; }
+        public DbSet<Question> Question { get; set; }
+        public DbSet<QuestionOption> QuestionOption { get; set; }
+        public DbSet<UserQuestionResponse> UserQuestionResponse { get; set; }
 
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<QuoteDetail>().ToTable("QuoteDetail");
+            //modelBuilder.Entity<UserInfo>().ToTable("UserInfo");
+            modelBuilder.Entity<Question>().ToTable("Question");
+            //modelBuilder.Entity<QuestionOption>().ToTable("QuestionOption");
+            //modelBuilder.Entity<UserQuestionResponse>().ToTable("UserQuestionResponse");
+        }
     }
 }

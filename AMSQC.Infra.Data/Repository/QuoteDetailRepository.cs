@@ -19,7 +19,8 @@ namespace AMSQC.Infra.Data.Repository
 
         public int AddQuoteDetail(QuoteDetail quoteDetail)
         {
-            var result = _context.QuoteDetail.Add(quoteDetail);
+            _context.QuoteDetail.Add(quoteDetail);
+            _context.SaveChanges();
             return 1;
         }
 
@@ -28,5 +29,7 @@ namespace AMSQC.Infra.Data.Repository
             var quoteDetail = _context.QuoteDetail.Where(t => t.QuoteId == quoteId && t.RegionId == regionId).FirstOrDefault();
             return quoteDetail;
         }
+
+        
     }
 }
