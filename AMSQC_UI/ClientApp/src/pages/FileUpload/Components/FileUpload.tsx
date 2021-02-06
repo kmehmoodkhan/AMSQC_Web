@@ -1,3 +1,4 @@
+import { Button } from 'antd';
 import React from 'react';
 import ErrorIcon from '../../../assets/images/icon-error.svg';
 
@@ -5,8 +6,9 @@ type Props = {
     fileSelectError: boolean;
     onFileUpload: any;
     fileRef: any;
+    loading: boolean;
 };
-export default function FileUpload({ fileSelectError, onFileUpload, fileRef }: Props) {
+export default function FileUpload({ fileSelectError, onFileUpload, fileRef, loading }: Props) {
     return (
         <div className="page">
             <div className="container-fluid ">
@@ -34,21 +36,27 @@ export default function FileUpload({ fileSelectError, onFileUpload, fileRef }: P
                                                 ref={fileRef}
                                             />
                                             <label className="custom-file-label" htmlFor="customFile">
-                                                Choose file
+                                                {fileRef &&
+                                                fileRef.current &&
+                                                fileRef.current.files &&
+                                                fileRef.current.files.length > 0
+                                                    ? fileRef.current.files[0].name
+                                                    : 'Choose file'}
                                             </label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="buttons">
-                                <button
-                                    type="button"
-                                    data-toggle="dropdown"
+                                <Button
+                                    name="login"
                                     className="btn btn-primary btn-lg btn-wide"
+                                    value="Submit"
                                     onClick={() => onFileUpload()}
+                                    loading={loading}
                                 >
                                     Upload
-                                </button>
+                                </Button>
                                 <button
                                     type="button"
                                     data-toggle="dropdown"

@@ -14,13 +14,14 @@ export default function SubQuestion({ question, onAnswerChange }: Props) {
         <tr>
             {question.title && (
                 <td>
-                    <div className="name"> {question.title}</div>
+                    {question.questionType != QuestionType.Label && <div className="name"> {question.title}</div>}
+                    {question.questionType == QuestionType.Label && <p> {question.title}</p>}
                 </td>
             )}
             <td>
                 {question.questionType == QuestionType.Select && (
                     <SelectOptions
-                        options={question.options}
+                        options={question.questionOptions}
                         onAnswerChange={onAnswerChange}
                         question={question}
                         answer={question.answer}
@@ -28,17 +29,17 @@ export default function SubQuestion({ question, onAnswerChange }: Props) {
                 )}
                 {question.questionType == QuestionType.Radio && (
                     <RadioOptions
-                        options={question.options}
+                        options={question.questionOptions}
                         onAnswerChange={onAnswerChange}
                         question={question}
                         answer={question.answer}
                     />
                 )}
                 {question.questionType == QuestionType.TextBox && (
-                    <TextBoxAnswer onAnswerChange={onAnswerChange} question={question} answer={question.answer} />
+                    <TextBoxAnswer onAnswerChange={onAnswerChange} question={question} answer={question.answerText} />
                 )}
                 {question.questionType == QuestionType.TextArea && (
-                    <CustomTextArea onAnswerChange={onAnswerChange} question={question} answer={question.answer} />
+                    <CustomTextArea onAnswerChange={onAnswerChange} question={question} answer={question.answerText} />
                 )}
             </td>
         </tr>

@@ -19,6 +19,7 @@ export default function FileUploadContainer() {
     // const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
     const quote = useSelector((state: RootState) => state.quote.carDetails);
     const user = useSelector((state: RootState) => state.user.user);
+    const loading = useSelector((state: RootState) => state.shared.loading);
 
     //use states
     const [fileUploadStep, setFileUploadStep] = useState(1);
@@ -67,7 +68,12 @@ export default function FileUploadContainer() {
                 <Confirmations selectedNo={selectedNo} onConfirmationAction={onConfirmationAction} />
             )}
             {fileUploadStep === 2 && (
-                <FileUpload fileRef={fileRef} fileSelectError={fileSelectError} onFileUpload={onFileUpload} />
+                <FileUpload
+                    fileRef={fileRef}
+                    fileSelectError={fileSelectError}
+                    onFileUpload={onFileUpload}
+                    loading={loading}
+                />
             )}
             {fileUploadStep === 3 && <FileUploadSuccess onContinue={onContinue} />}
         </>

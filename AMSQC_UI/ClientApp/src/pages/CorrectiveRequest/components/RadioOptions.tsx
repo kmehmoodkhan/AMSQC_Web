@@ -17,7 +17,12 @@ export default function RadioOptions({ options, answer, onAnswerChange, question
                                 type="radio"
                                 checked={answer == item.questionOptionId}
                                 onClick={() => {
-                                    onAnswerChange(item.questionOptionId, question.parentId, question.questionId);
+                                    onAnswerChange(
+                                        item.questionOptionId,
+                                        question.parentQuestionId,
+                                        question.questionId,
+                                        item.title,
+                                    );
                                 }}
                             />{' '}
                             {item.title}

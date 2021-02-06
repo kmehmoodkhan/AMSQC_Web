@@ -6,7 +6,6 @@ type Props = {
     onAnswerChange: any;
 };
 export default function Question({ question, onAnswerChange }: Props) {
-    console.log(question);
     return (
         <div className="card">
             <div className="card-header">{question.title} </div>

@@ -13,9 +13,15 @@ export default function SelectOptions({ options, answer, onAnswerChange, questio
                 className="form-control"
                 value={answer}
                 onChange={(e) => {
-                    onAnswerChange(e.target.value, question.parentId, question.questionId);
+                    onAnswerChange(
+                        e.target.value,
+                        question.parentQuestionId,
+                        question.questionId,
+                        e.target.options[e.target.selectedIndex].text,
+                    );
                 }}
             >
+                <option value="">[Please Select]</option>
                 {options.map((item: any) => {
                     return (
                         <option value={item.questionOptionId} key={item.questionOptionId}>

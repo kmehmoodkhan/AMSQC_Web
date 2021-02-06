@@ -9,11 +9,11 @@ export default function CustomTextArea({ onAnswerChange, answer, question }: Pro
     return (
         <div className="form-group">
             <textarea
-                rows={3}
+                rows={1}
                 className="form-control"
                 value={answer}
                 onChange={(e) => {
-                    onAnswerChange(e.target.value, question.questionId);
+                    onAnswerChange('', question.parentQuestionId, question.questionId, e.target.value);
                 }}
             />
         </div>

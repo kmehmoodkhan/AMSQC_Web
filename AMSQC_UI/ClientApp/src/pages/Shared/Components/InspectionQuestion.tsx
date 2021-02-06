@@ -5,8 +5,9 @@ type Props = {
     onOptionChange: any;
     questionId: number;
     answer: string;
+    options: any;
 };
-export default function InspectionQuestion({ question, questionId, answer, onOptionChange }: Props) {
+export default function InspectionQuestion({ question, questionId, answer, onOptionChange, options }: Props) {
     return (
         <>
             <tr>
@@ -15,15 +16,19 @@ export default function InspectionQuestion({ question, questionId, answer, onOpt
                 </td>
                 <td>
                     <div className=" options-buttons color1">
-                        <label className="">
-                            <input
-                                type="radio"
-                                checked={answer === 'Yes'}
-                                onChange={() => onOptionChange('Yes', questionId)}
-                            />{' '}
-                            Yes
-                        </label>
-                        <label className="">
+                        {options.map((item: any) => {
+                            return (
+                                <label className="">
+                                    <input
+                                        type="radio"
+                                        checked={answer === item.questionOptionId}
+                                        onChange={() => onOptionChange(item.questionOptionId, questionId, item.title)}
+                                    />{' '}
+                                    {item.title}
+                                </label>
+                            );
+                        })}
+                        {/* <label className="">
                             <input
                                 type="radio"
                                 checked={answer === 'No'}
@@ -38,7 +43,7 @@ export default function InspectionQuestion({ question, questionId, answer, onOpt
                                 onChange={() => onOptionChange('N/A', questionId)}
                             />{' '}
                             Not Applicable
-                        </label>
+                        </label> */}
                     </div>
                 </td>
             </tr>

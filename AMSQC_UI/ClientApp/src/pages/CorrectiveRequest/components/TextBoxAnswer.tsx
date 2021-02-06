@@ -13,7 +13,7 @@ export default function TextBoxAnswer({ answer, question, onAnswerChange }: Prop
                 className="form-control"
                 value={answer}
                 onChange={(e) => {
-                    onAnswerChange(e.target.value, question.questionId);
+                    onAnswerChange('', question.parentQuestionId, question.questionId, e.target.value);
                 }}
             />
         </div>

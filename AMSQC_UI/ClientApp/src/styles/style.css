@@ -535,6 +535,7 @@ select.form-control {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     border: 0;
     border-radius: 15px 15px 15px 15px;
+    height: 300px;
 }
 
 .damage-categories .card.active .card-body,
@@ -1114,3 +1115,36 @@ select.form-control {
 }
 
 /* Developer CSS */
+
+.ant-btn.btn {
+    border-radius: 50px;
+    text-decoration: none;
+    padding-left: 15px;
+    padding-right: 15px;
+    min-width: 100px;
+}
+
+.ant-btn.btn-wide {
+    min-width: 140px;
+}
+
+.ant-btn.btn-primary {
+    color: #fff;
+    background-color: #91c955;
+    border-color: #91c955;
+    box-shadow: 0 5px 15px rgb(0 0 0 / 15%);
+}
+
+.ant-btn.btn-primary:hover,
+.ant-btn.btn-primary:focus {
+    background-color: #60bb46;
+    border-color: #60bb46;
+    color: #fff;
+}
+
+.ant-btn.btn-lg {
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    height: 50px;
+}

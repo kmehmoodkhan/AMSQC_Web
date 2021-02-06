@@ -1,4 +1,5 @@
 ﻿using AMSQC.Application.Interfaces;
+using AMSQC.Application.ViewModels;
 using AMSQC.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace AMSQC_UI.Controllers
 
         [HttpPost]
 
-        public Response Post(List<UserQuestionResponse> response,bool isSubletShown,bool isDefectFixed)
+        public Response Post(SurveySubmissionVM vm)
         {
             return new Response
             {

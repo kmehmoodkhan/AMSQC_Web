@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import quoteReducer from './reducers/quoteReducer';
+import surveyReducer from './reducers/surveyReducer';
 
 declare global {
     interface Window {
@@ -20,7 +21,12 @@ const persistConfig = {
     stateReconciler: autoMergeLevel2,
 };
 
-const appReducer: any = combineReducers({ user: userReducer, shared: sharedReducer, quote: quoteReducer });
+const appReducer: any = combineReducers({
+    user: userReducer,
+    shared: sharedReducer,
+    quote: quoteReducer,
+    survey: surveyReducer,
+});
 
 const rootReducer = (state: any, action: any) => {
     if (action.type === 'LOG_OUT') {

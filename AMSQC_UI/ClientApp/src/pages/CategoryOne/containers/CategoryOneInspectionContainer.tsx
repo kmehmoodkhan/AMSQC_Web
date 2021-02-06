@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { SubletCompletionStatus } from '../../../common/enum';
+import { GetCorrectiveQuestions, GetSurveyQuestions } from '../../../redux/actions/surveyAction';
+import { SET_SURVEY_QUESTIONS } from '../../../redux/constants/surveyConstants';
 import { RootState } from '../../../redux/store';
 import { openNotificationWithWarning } from '../../Shared/Components/notification';
 import CategoryOneInspection from '../components/CategoryOneInspection';
@@ -10,73 +12,75 @@ import SubletRepairs from '../components/SubletRepairs';
 export default function CategoryOneInspectionContainer() {
     //General hooks
     const location = useLocation<any>();
+
     const history = useHistory();
 
-    // useState
-    const [questions, setQuestions] = useState<any[]>([]);
+    const dispatch = useDispatch();
 
+    // useState
     const [showInspectionPage, setShowInspectionPage] = useState(location.state.category == 1 ? false : true);
 
     const [subletCompleted, setSubletCompleted] = useState<any>(null);
 
+    const [questionsArray, setQuestionsArray] = useState<any[]>([]);
+
     // useSelector
     const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
 
+    const questions = useSelector((state: RootState) => state.survey.surveyQuestions);
+
     //events
-    const onOptionChange = (answer: string, questionId: number) => {
-        const updatedQuestions = questions.map((item) => {
+    const onOptionChange = (answer: string, questionId: number, answerText: any) => {
+        const updatedQuestions = questionsArray.map((item: any) => {
             if (item.questionId == questionId) {
                 item.answer = answer;
+                item.answerText = answerText;
             }
             return item;
         });
-        setQuestions(updatedQuestions);
+        setQuestionsArray(updatedQuestions);
     };
 
     const onNext = () => {
-        if (questions.filter((item) => item.answer === '').length > 0) {
-            openNotificationWithWarning('Please answer all questions!', 'Warning');
+        if (questionsArray.filter((item: any) => !item.answer).length > 0) {
+            openNotificationWithWarning('Please attempt all questions!', 'Survey');
         } else {
-            history.push('/corrective-request');
+            dispatch({
+                type: SET_SURVEY_QUESTIONS,
+                surveyType: location.state.category,
+                surveyQuestions: questionsArray,
+            });
+            history.push({
+                pathname: '/corrective-request',
+                state: {
+                    subletCompleted,
+                },
+            });
         }
     };
 
     const setSubletCompletedStatus = (subletStatus: SubletCompletionStatus) => {
         setSubletCompleted(subletStatus);
         setShowInspectionPage(true);
-        console.log(subletCompleted);
     };
 
     //useEffect
     useEffect(() => {
-        let questionsList = [];
-        questionsList.push({ question: 'Remove and Replace', questionId: 1, answer: '' });
-        questionsList.push({ question: 'Repairs and Panel Alignment', questionId: 2, answer: '' });
-        if (location.state.category == 1) {
-            questionsList.push({ question: 'Painting', questionId: 3, answer: '' });
-            questionsList.push({ question: 'Detailing', questionId: 4, answer: '' });
-        } else if (location.state.category == 2) {
-            questionsList.push({ question: 'Welding/Bonding', questionId: 3, answer: '' });
-            questionsList.push({ question: 'Sealer, Adhesive or Foam', questionId: 4, answer: '' });
-            questionsList.push({ question: 'Painting', questionId: 5, answer: '' });
-            questionsList.push({ question: 'Detailing', questionId: 6, answer: '' });
-        } else {
-            questionsList.push({ question: 'Welding/Bonding', questionId: 3, answer: '' });
-            questionsList.push({ question: 'Paint', questionId: 4, answer: '' });
-            questionsList.push({ question: 'Road Test', questionId: 5, answer: '' });
-            questionsList.push({ question: 'Under Carriage Inspection', questionId: 6, answer: '' });
-            questionsList.push({ question: 'Detailing', questionId: 7, answer: '' });
-        }
-        setQuestions(questionsList);
+        dispatch(GetSurveyQuestions(location.state.category));
+        dispatch(GetCorrectiveQuestions(subletCompleted == SubletCompletionStatus.No ? true : false));
     }, []);
+
+    useEffect(() => {
+        setQuestionsArray(questions);
+    }, [questions]);
 
     return (
         <>
-            {showInspectionPage && (
+            {showInspectionPage && questions && (
                 <CategoryOneInspection
                     onNext={onNext}
                     onOptionChange={onOptionChange}
-                    questions={questions}
+                    questions={questionsArray}
                     quoteNo={quoteNo}
                     category={location.state.category}
                 />

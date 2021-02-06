@@ -4,4 +4,5 @@ export const Endpoints = {
         UploadMappingSheet: 'api/quote',
         QuoteAvailable: 'api/quote/isAvailable',
     },
+    SurveyAPI: 'api/Survey',
 };

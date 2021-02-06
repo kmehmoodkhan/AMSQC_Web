@@ -16,8 +16,17 @@ export enum SubletCompletionStatus {
 }
 
 export enum QuestionType {
-    Select = 1,
-    Radio = 2,
-    TextBox = 3,
-    TextArea = 4,
+    Select = 3,
+    Label = 2,
+    Radio = 1,
+    TextBox = 4,
+    TextArea = 5,
+}
+
+export enum SurveyType {
+    None = 0,
+    SurveyType1 = 1,
+    SurveyType2 = 2,
+    SurveyType3 = 3,
+    CorrectiveActionRequest = 4,
 }

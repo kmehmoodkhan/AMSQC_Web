@@ -38,11 +38,12 @@ export default function CategoryOneInspection({ quoteNo, questions, onOptionChan
                                                 <tbody>
                                                     {questions.map((item: any) => (
                                                         <InspectionQuestion
-                                                            question={item.question}
+                                                            question={item.title}
                                                             questionId={item.questionId}
                                                             answer={item.answer}
                                                             onOptionChange={onOptionChange}
                                                             key={item.questionId}
+                                                            options={item.questionOptions}
                                                         />
                                                     ))}
                                                 </tbody>

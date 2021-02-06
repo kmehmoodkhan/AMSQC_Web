@@ -73,6 +73,6 @@ export const UploadMappingSheet = async (mappingSheet: any, quote: any, user: an
     formData.append('QuoteDetail.Registration', quote.registration);
     formData.append('QuoteDetail.UserGuid', user.localAccountId);
     formData.append('QuoteDetail.UserName', user.username);
-    formData.append('QuoteDetail.InsurerName', user.InsurerName);
+    formData.append('QuoteDetail.InsurerName', user.insurerName);
     return axiosFormPost(url, formData);
 };
