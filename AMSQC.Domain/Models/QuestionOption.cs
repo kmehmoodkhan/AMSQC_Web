@@ -13,7 +13,7 @@ namespace AMSQC.Domain.Models
         public int QuestionOptionId { get; set; }
 
         public string Title { get; set; }
-        public int DisplayOrder { get; set; }
+        public int? DisplayOrder { get; set; }
         public int QuestionId { get; set; }
 
         public bool IsDeleted { get; set; }

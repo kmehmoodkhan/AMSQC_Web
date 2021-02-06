@@ -34,7 +34,7 @@ namespace AMSQC_UI.Controllers
 
         [HttpPost]
 
-        public Response Post(List<UserQuestionResponse> response,bool isSubletShown)
+        public Response Post(List<UserQuestionResponse> response,bool isSubletShown,bool isDefectFixed)
         {
             return new Response
             {
