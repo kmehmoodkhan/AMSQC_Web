@@ -7,8 +7,9 @@ type Props = {
     onFileUpload: any;
     fileRef: any;
     loading: boolean;
+    onCancel: any;
 };
-export default function FileUpload({ fileSelectError, onFileUpload, fileRef, loading }: Props) {
+export default function FileUpload({ fileSelectError, onFileUpload, fileRef, loading, onCancel }: Props) {
     return (
         <div className="page">
             <div className="container-fluid ">
@@ -34,6 +35,7 @@ export default function FileUpload({ fileSelectError, onFileUpload, fileRef, loa
                                                 className="custom-file-input"
                                                 id="customFile"
                                                 ref={fileRef}
+                                                accept="image/*"
                                             />
                                             <label className="custom-file-label" htmlFor="customFile">
                                                 {fileRef &&
@@ -61,7 +63,7 @@ export default function FileUpload({ fileSelectError, onFileUpload, fileRef, loa
                                     type="button"
                                     data-toggle="dropdown"
                                     className="btn btn-danger-outline btn-lg btn-wide"
-                                    onClick={() => {}}
+                                    onClick={onCancel}
                                 >
                                     Cancel
                                 </button>

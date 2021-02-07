@@ -28,7 +28,7 @@ export default function HomeContainer() {
 
     const loading = useSelector((state: RootState) => state.shared.loading);
 
-    const carDetails = useSelector((state: RootState) => state.quote.carDetails);
+    const quoteDetails = useSelector((state: RootState) => state.quote.quoteDetails);
 
     const quoteStep = useSelector((state: RootState) => state.quote.quoteStep);
 
@@ -76,7 +76,7 @@ export default function HomeContainer() {
                 quoteId={quoteId}
                 onSubmit={onSubmit}
                 alreadySubmitted={alreadySubmitted}
-                carDetails={carDetails}
+                quoteDetails={quoteDetails}
                 loading={loading}
             />
         </>

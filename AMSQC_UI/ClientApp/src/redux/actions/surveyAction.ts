@@ -12,8 +12,8 @@ export const setSurveyQuestions = (surveyQuestions: any, surveyType: SurveyType)
     dispatch({ type: SET_SURVEY_QUESTIONS, surveyQuestions: surveyQuestions, surveyType: surveyType });
 };
 
-export const GetSurveyQuestions = (surveyType: SurveyType) => (dispatch: any) => {
-    const url = Endpoints.SurveyAPI + `?surveyType=${surveyType}`;
+export const GetSurveyQuestions = (surveyType: SurveyType, region: string = 'RMA Burmawood') => (dispatch: any) => {
+    const url = Endpoints.SurveyAPI + `?surveyType=${surveyType}&region=${region}`;
     axiosGet(url)
         .then((response: any) => {
             if (response.data.status == RequestStatus.Success) {
@@ -34,8 +34,8 @@ export const GetSurveyQuestions = (surveyType: SurveyType) => (dispatch: any) =>
         .finally(() => dispatch({ type: HIDE_LOADER }));
 };
 
-export const GetCorrectiveQuestions = (showSublet: boolean) => (dispatch: any) => {
-    const url = Endpoints.SurveyAPI + `?surveyType=${SurveyType.CorrectiveActionRequest}`;
+export const GetCorrectiveQuestions = (showSublet: boolean, region: string = 'RMA Burmawood') => (dispatch: any) => {
+    const url = Endpoints.SurveyAPI + `?surveyType=${SurveyType.CorrectiveActionRequest}&region=${region}`;
     axiosGet(url)
         .then((response: any) => {
             if (response.data.status == RequestStatus.Success && response.data.result.survey.questions) {

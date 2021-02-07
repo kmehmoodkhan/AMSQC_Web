@@ -3,3 +3,4 @@ export const GET_QUOTE_DETAILS = 'GET_QUOTE_DETAILS';
 export const IS_QUOTE_AVAILABLE = 'IS_QUOTE_AVAILABLE';
 export const SET_QUOTE_ID = 'SET_QUOTE_ID';
 export const CLEAR_QUOTE = 'CLEAR_QUOTE';
+export const CLEAR_QUOTE_DATA = 'CLEAR_QUOTE_DATA';

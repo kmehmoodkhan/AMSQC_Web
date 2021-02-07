@@ -1,8 +1,14 @@
 import { QuoteSteps } from '../../common/enum';
-import { CLEAR_QUOTE, GET_QUOTE_DETAILS, IS_QUOTE_AVAILABLE, SET_QUOTE_ID } from '../constants/quoteConstants';
+import {
+    CLEAR_QUOTE,
+    CLEAR_QUOTE_DATA,
+    GET_QUOTE_DETAILS,
+    IS_QUOTE_AVAILABLE,
+    SET_QUOTE_ID,
+} from '../constants/quoteConstants';
 
 type quoteReducerType = {
-    carDetails: any;
+    quoteDetails: any;
     quoteNo: string;
     alreadySubmitted: boolean;
     quoteStep: QuoteSteps;
@@ -10,7 +16,7 @@ type quoteReducerType = {
 };
 
 const defaultState: quoteReducerType = {
-    carDetails: null,
+    quoteDetails: null,
     quoteNo: '',
     alreadySubmitted: false,
     quoteStep: QuoteSteps.GetQuoteDetail,
@@ -23,14 +29,14 @@ const quoteReducer = (state = defaultState, action: any): quoteReducerType => {
             return {
                 ...state,
                 quoteNo: action.quoteNo,
-                carDetails: action.carDetails,
+                quoteDetails: action.quoteDetails,
                 quoteStep: action.quoteStep,
             };
         case IS_QUOTE_AVAILABLE:
             return {
                 ...state,
                 alreadySubmitted: action.alreadySubmitted,
-                carDetails: action.alreadySubmitted ? null : state.carDetails,
+                quoteDetails: action.alreadySubmitted ? null : state.quoteDetails,
                 quoteStep: action.quoteStep,
             };
         case SET_QUOTE_ID:
@@ -43,6 +49,8 @@ const quoteReducer = (state = defaultState, action: any): quoteReducerType => {
                 ...defaultState,
                 quoteNo: state.quoteNo,
             };
+        case CLEAR_QUOTE_DATA:
+            return defaultState;
         default:
             return state;
     }

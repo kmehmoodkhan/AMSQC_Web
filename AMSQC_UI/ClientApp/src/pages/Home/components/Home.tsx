@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import React from 'react';
 import MainBanner from '../../../assets/images/main-bg.png';
-import CarDetails from './CarDetails';
+import QuoteDetails from './CarDetails';
 import Logo from '../../../assets/images/logo-login.png';
 
 type Props = {
@@ -9,10 +9,10 @@ type Props = {
     quoteId: any;
     onSubmit: any;
     alreadySubmitted: boolean;
-    carDetails: any;
+    quoteDetails: any;
     loading: boolean;
 };
-export default function Home({ onQuoteChange, quoteId, onSubmit, alreadySubmitted, carDetails, loading }: Props) {
+export default function Home({ onQuoteChange, quoteId, onSubmit, alreadySubmitted, quoteDetails, loading }: Props) {
     return (
         <>
             <div className="container-fluid ">
@@ -50,7 +50,7 @@ export default function Home({ onQuoteChange, quoteId, onSubmit, alreadySubmitte
                                             Number
                                         </div>
                                     )}
-                                    {carDetails && <CarDetails car={carDetails} />}
+                                    {quoteDetails && <QuoteDetails car={quoteDetails} />}
                                     <div className="text-right">
                                         {' '}
                                         <Button

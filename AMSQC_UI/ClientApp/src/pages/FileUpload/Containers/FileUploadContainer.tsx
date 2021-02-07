@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RequestStatus } from '../../../common/enum';
-import { UploadMappingSheet } from '../../../redux/actions/quoteAction';
+import { clearQuoteData, SetQuoteId, UploadMappingSheet } from '../../../redux/actions/quoteAction';
 import { hideLoader, showLoader } from '../../../redux/actions/sharedActions';
 import { RootState } from '../../../redux/store';
 import { openNotificationWithError } from '../../Shared/Components/notification';
@@ -17,7 +17,7 @@ export default function FileUploadContainer() {
 
     //useSelector
     // const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
-    const quote = useSelector((state: RootState) => state.quote.carDetails);
+    const quote = useSelector((state: RootState) => state.quote.quoteDetails);
     const user = useSelector((state: RootState) => state.user.user);
     const loading = useSelector((state: RootState) => state.shared.loading);
 
@@ -33,7 +33,10 @@ export default function FileUploadContainer() {
 
     // events
     const onConfirmationAction = (goToFileUpload: boolean) => {
-        if (goToFileUpload) {
+        if (goToFileUpload && selectedNo) {
+            dispatch(clearQuoteData());
+            history.push('/');
+        } else if (goToFileUpload && !selectedNo) {
             setFileUploadStep(2);
         } else {
             setSelectedNo(true);
@@ -47,6 +50,7 @@ export default function FileUploadContainer() {
                 .then((response: any) => {
                     if (response.data.status == RequestStatus.Success) {
                         setFileUploadStep(3);
+                        dispatch(SetQuoteId(response.data.result.quoteId));
                     } else {
                         openNotificationWithError(response.data.Message, 'Error');
                     }
@@ -62,6 +66,10 @@ export default function FileUploadContainer() {
         history.push('/damage-type');
     };
 
+    const onCancel = () => {
+        history.push('/');
+    };
+
     return (
         <>
             {fileUploadStep === 1 && (
@@ -73,6 +81,7 @@ export default function FileUploadContainer() {
                     fileSelectError={fileSelectError}
                     onFileUpload={onFileUpload}
                     loading={loading}
+                    onCancel={onCancel}
                 />
             )}
             {fileUploadStep === 3 && <FileUploadSuccess onContinue={onContinue} />}

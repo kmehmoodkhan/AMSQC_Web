@@ -4,7 +4,7 @@ import { QuoteDetails } from '../../../common/types';
 type Props = {
     car: QuoteDetails;
 };
-export default function CarDetails({ car }: Props) {
+export default function QuoteDetails({ car }: Props) {
     return (
         <div className="car-details">
             <div className="card">

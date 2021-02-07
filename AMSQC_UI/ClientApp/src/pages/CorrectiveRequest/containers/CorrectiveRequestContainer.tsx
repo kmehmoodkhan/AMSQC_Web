@@ -54,6 +54,7 @@ export default function CorrectiveRequestContainer() {
                 QuestionId: item.questionId,
                 Answers: item.answerText,
                 AnswerIds: item.answer.toString(),
+                IsSubletQuestion: false,
             };
             responses.push(response);
             return true;
@@ -73,6 +74,7 @@ export default function CorrectiveRequestContainer() {
                 QuestionId: item.questionId,
                 Answers: '',
                 AnswerIds: '',
+                IsSubletQuestion: item.isSubletQuestion,
             };
             response.Answers = item.subQuestions.map((item1: any) => item1.answerText).join('@@');
             response.AnswerIds = item.subQuestions.map((item1: any) => item1.answer).join('@@');

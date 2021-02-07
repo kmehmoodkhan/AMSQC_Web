@@ -4,6 +4,14 @@ import { QuoteSteps, RequestStatus } from '../../common/enum';
 import * as actionType from '../constants/quoteConstants';
 import { HIDE_LOADER, SHOW_NOTIFICATION } from '../constants/sharedConstants';
 
+export const SetQuoteId = (quoteId: any) => (dispatch: any) => {
+    dispatch({ type: actionType.SET_QUOTE_ID, quoteId: quoteId });
+};
+
+export const clearQuoteData = () => (dispatch: any) => {
+    dispatch({ type: actionType.CLEAR_QUOTE_DATA });
+};
+
 export const GetQuoteDetails = (quoteNo: string) => (dispatch: any) => {
     const url = Endpoints.QuoteAPI.SubmitQuote + `?quoteNo=${parseInt(quoteNo)}`;
     axiosGet(url)
@@ -13,14 +21,14 @@ export const GetQuoteDetails = (quoteNo: string) => (dispatch: any) => {
                     dispatch({
                         type: actionType.GET_QUOTE_DETAILS,
                         quoteNo: quoteNo,
-                        carDetails: null,
+                        quoteDetails: null,
                         quoteStep: QuoteSteps.GetQuoteDetail,
                     });
                 } else {
                     dispatch({
                         type: actionType.GET_QUOTE_DETAILS,
                         quoteNo: quoteNo,
-                        carDetails: response.data.result.quote,
+                        quoteDetails: response.data.result.quote,
                         quoteStep: QuoteSteps.QuoteAvailability,
                     });
                 }
@@ -73,6 +81,6 @@ export const UploadMappingSheet = async (mappingSheet: any, quote: any, user: an
     formData.append('QuoteDetail.Registration', quote.registration);
     formData.append('QuoteDetail.UserGuid', user.localAccountId);
     formData.append('QuoteDetail.UserName', user.username);
-    formData.append('QuoteDetail.InsurerName', user.insurerName);
+    formData.append('QuoteDetail.InsurerName', quote.insurerName);
     return axiosFormPost(url, formData);
 };
