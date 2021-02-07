@@ -19,6 +19,8 @@ namespace AMSQC.Domain.Models
         public string UserGuid { get; set; }
         public int QuoteId { get; set; }
         public int QuestionId { get; set; }
+
+        public bool IsSubletQuestion { get; set; }
         public string Answers { get; set; }
         public string AnswerIds { get; set; }
 

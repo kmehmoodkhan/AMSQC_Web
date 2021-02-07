@@ -10,7 +10,7 @@ namespace AMSQC.Application.Interfaces
 {
     public interface ISurveyService
     {
-        SurveyViewModel GetSurveyDetail(int surveyType);
+        SurveyViewModel GetSurveyDetail(int surveyType,int regionId);
         int SaveSurveyReponse(SurveyResponseViewModel surveyResponse);
     }
 }

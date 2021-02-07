@@ -12,5 +12,7 @@ namespace AMSQC.Application.ViewModels
         public int SurveyType { get; set; }
 
         public List<Question> Questions { get; set; }
+
+        public List<UserInfo> ADUsers { get; set; }
     }
 }

@@ -32,9 +32,13 @@ namespace AMSQC.Infra.Data.Repository
 
         public int DeleteQuote(int quoteId, int regionId)
         {
-            var quoteDetail = _context.QuoteDetail.Where(t => t.QuoteId == quoteId && t.RegionId == regionId && t.IsSubmit == false).FirstOrDefault();
-            _context.RemoveRange(quoteDetail);
-            int rows =_context.SaveChanges();
+            int rows = 0;
+            var quoteDetail = _context.QuoteDetail.Where(t => t.QuoteId == quoteId && t.RegionId == regionId && t.IsSubmit == false);
+            if (quoteDetail != null)
+            {
+                _context.RemoveRange(quoteDetail);
+                rows = _context.SaveChanges();
+            }
             return rows;
         }
     }

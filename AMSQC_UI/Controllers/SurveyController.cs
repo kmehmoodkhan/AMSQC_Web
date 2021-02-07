@@ -19,9 +19,10 @@ namespace AMSQC_UI.Controllers
 
 
         [HttpGet]
-        public Response Get(int surveyType)
+        public Response Get(int surveyType,string region)
         {
-            var survey = _surveyService.GetSurveyDetail(surveyType);
+            const int CONST_REGION_ID = 2102;
+            var survey = _surveyService.GetSurveyDetail(surveyType, CONST_REGION_ID);
 
             return new Response
             {

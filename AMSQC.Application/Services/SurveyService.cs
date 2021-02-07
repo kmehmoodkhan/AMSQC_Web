@@ -13,27 +13,56 @@ namespace AMSQC.Application.Services
     public class SurveyService : ISurveyService
     {
         ISurveyRepository _surveyRepository = null;
-        public SurveyService(ISurveyRepository surveyRepository)
+        IUserRepository _userRepository = null;
+        IUserADService _userService = null;
+        public SurveyService(
+            ISurveyRepository surveyRepository,
+            IUserRepository userRepository,
+            IUserADService userService
+            )
         {
             _surveyRepository = surveyRepository;
+            _userRepository = userRepository;
+            _userService = userService;
         }
 
-        public SurveyViewModel GetSurveyDetail(int surveyType)
+        public SurveyViewModel GetSurveyDetail(int surveyType,int regionId)
         {
             var surveyViewModel = new SurveyViewModel();
             surveyViewModel.Questions= _surveyRepository.GetSurveyQuestions(surveyType);
+            surveyViewModel.ADUsers = _userService.GetUsers(regionId);
             return surveyViewModel;
         }
 
         public int SaveSurveyReponse(SurveyResponseViewModel surveyResponse)
         {
             var userResponse = surveyResponse.response;
+            var userInfo= surveyResponse.response.FirstOrDefault();
 
-            //remove sublet questions if they were not shown
+            string userGuid = "";
+            int userId = 0;
+
+            if (userInfo != null)
+            {
+                userGuid = userInfo.UserGuid;
+                var user= _userRepository.GetUser(userGuid);
+
+                if(user != null)
+                {
+                    userId = user.UserId;
+                }
+            }
 
 
-            userResponse.ForEach(f => f.CreatedOn = DateTime.Now);
-            return _surveyRepository.SaveSurveyReponse(userResponse);
+            IEnumerable<UserQuestionResponse> filteredResponse = null;
+
+            if (!surveyResponse.isSubletShown)
+            {
+                filteredResponse = userResponse.Where(t => t.IsSubletQuestion == false);
+            }
+
+            filteredResponse.ToList().ForEach(f => { f.CreatedOn = DateTime.Now; f.UserId = userId; });
+            return _surveyRepository.SaveSurveyReponse(filteredResponse.ToList());
         }
 
     }
