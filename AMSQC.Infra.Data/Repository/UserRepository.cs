@@ -26,7 +26,7 @@ namespace AMSQC.Infra.Data.Repository
 
         public UserInfo GetUser(string userGuid)
         {
-            UserInfo user= _context.UserInfo.Where(u => u.UserGuid == userGuid).FirstOrDefault();
+            var user=  _context.UserInfo.Where(u => u.UserGuid == userGuid).FirstOrDefault();
             return user;
         }
     }
