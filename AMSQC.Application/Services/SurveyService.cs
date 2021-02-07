@@ -25,8 +25,13 @@ namespace AMSQC.Application.Services
             return surveyViewModel;
         }
 
-        public int SaveSurveyReponse(List<UserQuestionResponse> userResponse)
+        public int SaveSurveyReponse(SurveyResponseViewModel surveyResponse)
         {
+            var userResponse = surveyResponse.response;
+
+            //remove sublet questions if they were not shown
+
+
             userResponse.ForEach(f => f.CreatedOn = DateTime.Now);
             return _surveyRepository.SaveSurveyReponse(userResponse);
         }

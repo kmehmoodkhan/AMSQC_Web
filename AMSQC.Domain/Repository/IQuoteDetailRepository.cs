@@ -11,5 +11,6 @@ namespace AMSQC.Domain.Repository
     {
         QuoteDetail GetQuoteDetail(int quoteId, int regionId);
         int AddQuoteDetail(QuoteDetail quoteDetail);
+        int DeleteQuote(int quoteId,int regionId);
     }
 }

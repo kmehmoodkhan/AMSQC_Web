@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace AMSQC.Domain.Models
@@ -20,6 +21,8 @@ namespace AMSQC.Domain.Models
         public int QuestionId { get; set; }
         public string Answers { get; set; }
         public string AnswerIds { get; set; }
+
+        [JsonIgnore]
         public DateTime CreatedOn { get; set; }
 
 	}

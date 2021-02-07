@@ -17,11 +17,4 @@ namespace AMSQC.Application.ViewModels
             set;
         }
     }
-
-    public class SurveySubmissionVM
-    {
-        public List<UserQuestionResponse> response { get; set; }
-        public bool isSubletShown { get; set; }
-        public bool isDefectFixed { get; set; }
-    }
 }

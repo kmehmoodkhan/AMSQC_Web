@@ -66,6 +66,7 @@ namespace AMSQC_UI.Controllers
             }
             else
             {
+                var deletedRecords = _quoteDetailService.DeleteQuote(quoteId, regionId);
                 return new Response
                 {
                     Result = new { alreadySubmitted = false },

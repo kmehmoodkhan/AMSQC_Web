@@ -12,5 +12,7 @@ namespace AMSQC.Application.Interfaces
         QuoteDetail GetQuoteDetail(int quoteId, int regionId);
 
         int AddQuoteDetail(QuoteDetail quoteDetail);
+
+        int DeleteQuote(int quoteId, int regionId);
     }
 }

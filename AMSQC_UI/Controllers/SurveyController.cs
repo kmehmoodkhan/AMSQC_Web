@@ -35,8 +35,9 @@ namespace AMSQC_UI.Controllers
 
         [HttpPost]
 
-        public Response Post(SurveySubmissionVM vm)
+        public Response Post(SurveyResponseViewModel vm)
         {
+            var result = _surveyService.SaveSurveyReponse(vm);
             return new Response
             {
                 Result = null,

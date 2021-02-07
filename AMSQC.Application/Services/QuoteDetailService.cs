@@ -23,6 +23,11 @@ namespace AMSQC.Application.Services
             return result;
         }
 
+        public int DeleteQuote(int quoteId, int regionId)
+        {
+            return _quoteDetailRepository.DeleteQuote(quoteId, regionId);
+        }
+
         public QuoteDetail GetQuoteDetail(int quoteId, int regionId)
         {
             return _quoteDetailRepository.GetQuoteDetail(quoteId, regionId);
