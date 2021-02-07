@@ -1,4 +1,4 @@
-export type QuoteDetails = {
+export type QuoteDetailType = {
     company: string;
     model: string;
     color: string;

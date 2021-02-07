@@ -1,8 +1,8 @@
 import React from 'react';
-import { QuoteDetails } from '../../../common/types';
+import { QuoteDetailType } from '../../../common/types';
 
 type Props = {
-    car: QuoteDetails;
+    car: QuoteDetailType;
 };
 export default function QuoteDetails({ car }: Props) {
     return (
