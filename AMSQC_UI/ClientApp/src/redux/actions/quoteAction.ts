@@ -37,7 +37,7 @@ export const GetQuoteDetails = (quoteNo: string) => (dispatch: any) => {
             }
         })
         .catch((err) =>
-            dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: err, title: 'Error' } }),
+            dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: err.message, title: 'Error' } }),
         )
         .finally(() => dispatch({ type: HIDE_LOADER }));
 };
@@ -65,7 +65,7 @@ export const GetQuoteAvailable = (quoteId: any, region: string) => (dispatch: an
             }
         })
         .catch((err) =>
-            dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: err, title: 'Error' } }),
+            dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: err.message, title: 'Error' } }),
         )
         .finally(() => dispatch({ type: HIDE_LOADER }));
 };

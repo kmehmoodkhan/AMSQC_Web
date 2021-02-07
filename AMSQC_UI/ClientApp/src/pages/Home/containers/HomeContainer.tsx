@@ -16,11 +16,6 @@ export default function HomeContainer() {
 
     const dispatch = useDispatch();
 
-    // Use State
-    const [quoteId, setQuoteId] = useState('');
-
-    const [alreadySubmitted, setAlreadySubmitted] = useState(false);
-
     // Use Selector
     const alreadySubmittedVal = useSelector((state: RootState) => state.quote.alreadySubmitted);
 
@@ -31,6 +26,13 @@ export default function HomeContainer() {
     const quoteDetails = useSelector((state: RootState) => state.quote.quoteDetails);
 
     const quoteStep = useSelector((state: RootState) => state.quote.quoteStep);
+
+    const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
+
+    // Use State
+    const [quoteId, setQuoteId] = useState('');
+
+    const [alreadySubmitted, setAlreadySubmitted] = useState(false);
 
     // Events and helpers
     const onSubmit = () => {
@@ -48,6 +50,7 @@ export default function HomeContainer() {
                 }
                 break;
             case QuoteSteps.QuoteAvailability:
+                dispatch(showLoader());
                 dispatch(GetQuoteAvailable(quoteId, 'RMA Burmawood'));
                 break;
         }
@@ -58,6 +61,10 @@ export default function HomeContainer() {
     useEffect(() => {
         setAlreadySubmitted(alreadySubmittedVal);
     }, [alreadySubmittedVal]);
+
+    useEffect(() => {
+        setQuoteId(quoteNo);
+    }, [quoteNo]);
 
     useEffect(() => {
         if (quoteStep == QuoteSteps.SubmitQuote) {

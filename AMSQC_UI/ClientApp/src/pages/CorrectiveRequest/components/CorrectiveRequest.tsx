@@ -27,7 +27,7 @@ export default function CorrectiveRequest({ questions, onAnswerChange, submitRes
                                         />
                                     ))}
                                 <br />
-                                {showSublet && (
+                                {showSublet && questions.filter((item: any) => item.isSubletQuestion).length > 0 && (
                                     <>
                                         <div className="inspection-detail">
                                             <div className="qoute-text"> Sublet Section</div>

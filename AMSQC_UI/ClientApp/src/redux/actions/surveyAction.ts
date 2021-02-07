@@ -29,7 +29,7 @@ export const GetSurveyQuestions = (surveyType: SurveyType, region: string = 'RMA
             }
         })
         .catch((err) =>
-            dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: err, title: 'Error' } }),
+            dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: err.message, title: 'Error' } }),
         )
         .finally(() => dispatch({ type: HIDE_LOADER }));
 };
@@ -75,7 +75,7 @@ export const GetCorrectiveQuestions = (showSublet: boolean, region: string = 'RM
             }
         })
         .catch((err) =>
-            dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: err, title: 'Error' } }),
+            dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: err.message, title: 'Error' } }),
         )
         .finally(() => dispatch({ type: HIDE_LOADER }));
 };
@@ -99,7 +99,7 @@ export const SubmitSurveyResponses = (responses: any[], isIssueFixed: any, isSub
             }
         })
         .catch((err) =>
-            dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: err, title: 'Error' } }),
+            dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: err.message, title: 'Error' } }),
         )
         .finally(() => dispatch({ type: HIDE_LOADER }));
 };

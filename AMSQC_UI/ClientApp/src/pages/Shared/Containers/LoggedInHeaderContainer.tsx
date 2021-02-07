@@ -14,9 +14,10 @@ export default function LoggedInHeaderContainer(props: any) {
     // useSelector
     const user = useSelector((state: RootState) => state.user.user);
     const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
+    const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
 
     useEffect(() => {
-        if (!loggedIn) history.push('/');
+        if (!loggedIn || !quoteNo) history.push('/');
     }, []);
 
     return (

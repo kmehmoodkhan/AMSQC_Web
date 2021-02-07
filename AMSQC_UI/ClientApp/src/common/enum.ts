@@ -30,3 +30,9 @@ export enum SurveyType {
     SurveyType3 = 3,
     CorrectiveActionRequest = 4,
 }
+
+export enum DefaultAnswerIds {
+    None = 0,
+    TextBoxAnswerId = -1,
+    TextAreaAnswerId = -2,
+}

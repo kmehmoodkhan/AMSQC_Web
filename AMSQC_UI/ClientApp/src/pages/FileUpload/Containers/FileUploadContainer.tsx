@@ -55,7 +55,7 @@ export default function FileUploadContainer() {
                         openNotificationWithError(response.data.Message, 'Error');
                     }
                 })
-                .catch((err) => openNotificationWithError(err, 'Error'))
+                .catch((err) => openNotificationWithError(err.message, 'Error'))
                 .finally(() => dispatch(hideLoader()));
         } else {
             setFileSelectError(true);

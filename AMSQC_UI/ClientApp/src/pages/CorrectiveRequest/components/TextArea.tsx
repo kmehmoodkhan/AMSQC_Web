@@ -1,4 +1,5 @@
 import React from 'react';
+import { DefaultAnswerIds } from '../../../common/enum';
 
 type Props = {
     onAnswerChange: any;
@@ -13,7 +14,12 @@ export default function CustomTextArea({ onAnswerChange, answer, question }: Pro
                 className="form-control"
                 value={answer}
                 onChange={(e) => {
-                    onAnswerChange('', question.parentQuestionId, question.questionId, e.target.value);
+                    onAnswerChange(
+                        DefaultAnswerIds.TextAreaAnswerId,
+                        question.parentQuestionId,
+                        question.questionId,
+                        e.target.value,
+                    );
                 }}
             />
         </div>

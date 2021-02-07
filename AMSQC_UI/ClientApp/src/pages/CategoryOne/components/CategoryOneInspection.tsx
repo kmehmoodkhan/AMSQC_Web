@@ -1,5 +1,7 @@
 import React from 'react';
 import InspectionQuestion from '../../Shared/Components/InspectionQuestion';
+import { Document, Page, pdfjs } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 type Props = {
     questions: any;
@@ -7,8 +9,24 @@ type Props = {
     quoteNo: any;
     onNext: any;
     category: number;
+    showPDF: boolean;
+    onShowPDF: any;
+    onDocumentLoadSuccess: any;
+    numPages: any;
+    onDocumentLoadError: any;
 };
-export default function CategoryOneInspection({ quoteNo, questions, onOptionChange, onNext, category }: Props) {
+export default function CategoryOneInspection({
+    quoteNo,
+    questions,
+    onOptionChange,
+    onNext,
+    category,
+    showPDF,
+    onShowPDF,
+    onDocumentLoadSuccess,
+    numPages,
+    onDocumentLoadError,
+}: Props) {
     return (
         <div className="page">
             <div className="container-fluid">
@@ -24,8 +42,41 @@ export default function CategoryOneInspection({ quoteNo, questions, onOptionChan
                                 </div>
                                 <p className="info-text">
                                     Have the below stages of the repair process been carried out as per the{' '}
-                                    <a href=""> AMA Quality Inspection Criteria? </a>
+                                    <a
+                                        href="javascript:"
+                                        onClick={() => {
+                                            if (!showPDF) {
+                                                onShowPDF(true);
+                                            }
+                                        }}
+                                    >
+                                        {' '}
+                                        AMA Quality Inspection Criteria?{' '}
+                                    </a>
                                 </p>
+                                <div className="card" style={{ display: showPDF ? '' : 'none' }}>
+                                    <div className="card-body  ">
+                                        <Document
+                                            file={'/docs/Gemini-Quality-Charter-Inspection-Criteria.pdf'}
+                                            onLoadSuccess={onDocumentLoadSuccess}
+                                            onLoadError={onDocumentLoadError}
+                                        >
+                                            {Array.from(new Array(numPages), (el, index) => (
+                                                <Page key={`page_${index + 1}${el}`} pageNumber={index + 1} />
+                                            ))}
+                                        </Document>
+                                        <div className="buttons">
+                                            <button
+                                                type="button"
+                                                data-toggle="dropdown"
+                                                className="btn btn-primary btn-lg btn-wide"
+                                                onClick={() => onShowPDF(false)}
+                                            >
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div className="card ">
                                     <div className="card-body  ">

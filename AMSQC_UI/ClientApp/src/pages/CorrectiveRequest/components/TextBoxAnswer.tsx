@@ -1,4 +1,5 @@
 import React from 'react';
+import { DefaultAnswerIds } from '../../../common/enum';
 
 type Props = {
     question: any;
@@ -13,7 +14,12 @@ export default function TextBoxAnswer({ answer, question, onAnswerChange }: Prop
                 className="form-control"
                 value={answer}
                 onChange={(e) => {
-                    onAnswerChange('', question.parentQuestionId, question.questionId, e.target.value);
+                    onAnswerChange(
+                        DefaultAnswerIds.TextBoxAnswerId,
+                        question.parentQuestionId,
+                        question.questionId,
+                        e.target.value,
+                    );
                 }}
             />
         </div>

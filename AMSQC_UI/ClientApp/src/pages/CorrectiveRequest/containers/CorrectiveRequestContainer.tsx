@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { QuestionType } from '../../../common/enum';
 import { SubmitSurveyResponses } from '../../../redux/actions/surveyAction';
 import { SHOW_NOTIFICATION } from '../../../redux/constants/sharedConstants';
@@ -11,11 +11,11 @@ export default function CorrectiveRequestContainer() {
     // general hooks
     const history = useHistory();
     const dispatch = useDispatch();
+    const location = useLocation<any>();
 
     // use selector
     const questions = useSelector((state: RootState) => state.survey.correctiveQuestions);
     const surveyQuestions = useSelector((state: RootState) => state.survey.surveyQuestions);
-    const showSublet = useSelector((state: RootState) => state.survey.showSublet);
     const user = useSelector((state: RootState) => state.user.user);
     const quoteId = useSelector((state: RootState) => state.quote.quoteId);
     const surveySubmitted = useSelector((state: RootState) => state.survey.surveySubmitted);
@@ -68,21 +68,23 @@ export default function CorrectiveRequestContainer() {
                 allQuestionsAttempted = false;
                 return false;
             }
-            let response = {
-                UserGuid: user.localAccountId,
-                QuoteId: quoteId,
-                QuestionId: item.questionId,
-                Answers: '',
-                AnswerIds: '',
-                IsSubletQuestion: item.isSubletQuestion,
-            };
-            response.Answers = item.subQuestions.map((item1: any) => item1.answerText).join('@@');
-            response.AnswerIds = item.subQuestions.map((item1: any) => item1.answer).join('@@');
-            responses.push(response);
+            if (item.questionType != QuestionType.Label) {
+                let response = {
+                    UserGuid: user.localAccountId,
+                    QuoteId: quoteId,
+                    QuestionId: item.questionId,
+                    Answers: '',
+                    AnswerIds: '',
+                    IsSubletQuestion: item.isSubletQuestion,
+                };
+                response.Answers = item.subQuestions.map((item1: any) => item1.answerText).join('@@');
+                response.AnswerIds = item.subQuestions.map((item1: any) => item1.answer).join('@@');
+                responses.push(response);
+            }
             return true;
         });
         if (allQuestionsAttempted) {
-            dispatch(SubmitSurveyResponses(responses, rectified, showSublet));
+            dispatch(SubmitSurveyResponses(responses, rectified, location.state.subletCompleted));
         } else {
             dispatch({
                 type: SHOW_NOTIFICATION,
@@ -108,7 +110,7 @@ export default function CorrectiveRequestContainer() {
 
     return (
         <CorrectiveRequest
-            showSublet={showSublet}
+            showSublet={location.state.subletCompleted}
             questions={questionsArray}
             onAnswerChange={onAnswerChange}
             submitResponses={submitResponses}

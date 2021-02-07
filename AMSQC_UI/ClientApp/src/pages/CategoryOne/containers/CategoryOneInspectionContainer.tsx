@@ -21,8 +21,10 @@ export default function CategoryOneInspectionContainer() {
     const [showInspectionPage, setShowInspectionPage] = useState(location.state.category == 1 ? false : true);
 
     const [subletCompleted, setSubletCompleted] = useState<any>(null);
+    const [numPages, setNumPages] = useState(null);
 
     const [questionsArray, setQuestionsArray] = useState<any[]>([]);
+    const [showPDF, setShowPDF] = useState(false);
 
     // useSelector
     const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
@@ -64,6 +66,14 @@ export default function CategoryOneInspectionContainer() {
         setShowInspectionPage(true);
     };
 
+    const onDocumentLoadSuccess = ({ numPages: nextNumPages }: any) => {
+        setNumPages(nextNumPages);
+    };
+
+    const onDocumentLoadError = () => {
+        setShowPDF(false);
+    };
+
     //useEffect
     useEffect(() => {
         dispatch(GetSurveyQuestions(location.state.category));
@@ -83,6 +93,11 @@ export default function CategoryOneInspectionContainer() {
                     questions={questionsArray}
                     quoteNo={quoteNo}
                     category={location.state.category}
+                    showPDF={showPDF}
+                    onShowPDF={(val: boolean) => setShowPDF(val)}
+                    onDocumentLoadSuccess={onDocumentLoadSuccess}
+                    numPages={numPages}
+                    onDocumentLoadError={onDocumentLoadError}
                 />
             )}
             {!showInspectionPage && <SubletRepairs setSubletCompleted={setSubletCompletedStatus} />}
