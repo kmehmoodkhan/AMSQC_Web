@@ -15,10 +15,13 @@ export default function CustomTextArea({ onAnswerChange, answer, question }: Pro
                 value={answer}
                 onChange={(e) => {
                     onAnswerChange(
-                        DefaultAnswerIds.TextAreaAnswerId,
+                        question.answer == DefaultAnswerIds.OtherAnswerId
+                            ? question.answer
+                            : DefaultAnswerIds.TextAreaAnswerId,
                         question.parentQuestionId,
                         question.questionId,
                         e.target.value,
+                        question.questionType,
                     );
                 }}
             />

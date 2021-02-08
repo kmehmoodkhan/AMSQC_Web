@@ -12,6 +12,10 @@ export const setSurveyQuestions = (surveyQuestions: any, surveyType: SurveyType)
     dispatch({ type: SET_SURVEY_QUESTIONS, surveyQuestions: surveyQuestions, surveyType: surveyType });
 };
 
+export const clearSurveyState = () => (dispatch: any) => {
+    dispatch({ type: actionType.CLEAR_SURVEY_DATA });
+};
+
 export const GetSurveyQuestions = (surveyType: SurveyType, region: string = 'RMA Burmawood') => (dispatch: any) => {
     const url = Endpoints.SurveyAPI + `?surveyType=${surveyType}&region=${region}`;
     axiosGet(url)
@@ -80,10 +84,20 @@ export const GetCorrectiveQuestions = (showSublet: boolean, region: string = 'RM
         .finally(() => dispatch({ type: HIDE_LOADER }));
 };
 
-export const SubmitSurveyResponses = (responses: any[], isIssueFixed: any, isSubletShown: any) => (dispatch: any) => {
+export const SubmitSurveyResponses = (
+    responses: any[],
+    isIssueFixed: any,
+    isSubletShown: any,
+    surveyType: SurveyType,
+) => (dispatch: any) => {
     const url = Endpoints.SurveyAPI;
     dispatch({ type: showLoader });
-    axiosPost(url, { response: responses, isSubletShown: isSubletShown, isDefectFixed: isIssueFixed })
+    axiosPost(url, {
+        response: responses,
+        isSubletShown: isSubletShown,
+        isDefectFixed: isIssueFixed,
+        SurveyType: surveyType,
+    })
         .then((response: any) => {
             if (response.data.status == RequestStatus.Success) {
                 dispatch({

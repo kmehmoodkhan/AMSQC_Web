@@ -4,6 +4,7 @@ import {
     CLEAR_QUOTE_DATA,
     GET_QUOTE_DETAILS,
     IS_QUOTE_AVAILABLE,
+    MAPPING_UPLOAD,
     SET_QUOTE_ID,
 } from '../constants/quoteConstants';
 
@@ -13,6 +14,7 @@ type quoteReducerType = {
     alreadySubmitted: boolean;
     quoteStep: QuoteSteps;
     quoteId: any;
+    mappingSheetUploaded: boolean;
 };
 
 const defaultState: quoteReducerType = {
@@ -21,6 +23,7 @@ const defaultState: quoteReducerType = {
     alreadySubmitted: false,
     quoteStep: QuoteSteps.GetQuoteDetail,
     quoteId: 0,
+    mappingSheetUploaded: false,
 };
 
 const quoteReducer = (state = defaultState, action: any): quoteReducerType => {
@@ -50,7 +53,9 @@ const quoteReducer = (state = defaultState, action: any): quoteReducerType => {
                 quoteNo: state.quoteNo,
             };
         case CLEAR_QUOTE_DATA:
-            return defaultState;
+            return { ...defaultState };
+        case MAPPING_UPLOAD:
+            return { ...state, mappingSheetUploaded: true };
         default:
             return state;
     }

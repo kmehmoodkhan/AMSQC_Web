@@ -18,6 +18,7 @@ export default function SelectOptions({ options, answer, onAnswerChange, questio
                         question.parentQuestionId,
                         question.questionId,
                         e.target.options[e.target.selectedIndex].text,
+                        question.questionType,
                     );
                 }}
             >

@@ -55,7 +55,7 @@ export default function CategoryOneInspectionContainer() {
             history.push({
                 pathname: '/corrective-request',
                 state: {
-                    subletCompleted,
+                    subletCompleted: subletCompleted == SubletCompletionStatus.Yes ? false : true,
                 },
             });
         }

@@ -35,4 +35,5 @@ export enum DefaultAnswerIds {
     None = 0,
     TextBoxAnswerId = -1,
     TextAreaAnswerId = -2,
+    OtherAnswerId = -3,
 }

@@ -1,5 +1,10 @@
 import { SurveyType } from '../../common/enum';
-import { SET_CORRECTIVE_QUESTIONS, SET_SURVEY_QUESTIONS, SET_SURVEY_SUBMITTED } from '../constants/surveyConstants';
+import {
+    CLEAR_SURVEY_DATA,
+    SET_CORRECTIVE_QUESTIONS,
+    SET_SURVEY_QUESTIONS,
+    SET_SURVEY_SUBMITTED,
+} from '../constants/surveyConstants';
 
 type surveyReducerType = {
     surveyType: SurveyType;
@@ -36,6 +41,8 @@ const surveyReducer = (state = defaultState, action: any): surveyReducerType => 
                 ...state,
                 surveySubmitted: true,
             };
+        case CLEAR_SURVEY_DATA:
+            return { ...defaultState };
         default:
             return state;
     }

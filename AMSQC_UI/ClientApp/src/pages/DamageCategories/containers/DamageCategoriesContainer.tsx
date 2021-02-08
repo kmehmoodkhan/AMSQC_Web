@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { clearSurveyState } from '../../../redux/actions/surveyAction';
 import { openNotificationWithWarning } from '../../Shared/Components/notification';
 import SelectDamageCategories from '../components/SelectDamageCategories';
 
 export default function DamageCategoriesContainer() {
     //General Hooks
     const history = useHistory();
+
+    const dispatch = useDispatch();
 
     //useState
     const [selectedCategory, setSelectedCategory] = useState(0);
@@ -26,6 +30,11 @@ export default function DamageCategoriesContainer() {
             openNotificationWithWarning('Please select a category!', 'Warning');
         }
     };
+
+    //use effect
+    useEffect(() => {
+        dispatch(clearSurveyState());
+    }, []);
 
     return (
         <SelectDamageCategories

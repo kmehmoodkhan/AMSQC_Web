@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RequestStatus } from '../../../common/enum';
 import { clearQuoteData, SetQuoteId, UploadMappingSheet } from '../../../redux/actions/quoteAction';
 import { hideLoader, showLoader } from '../../../redux/actions/sharedActions';
+import { MAPPING_UPLOAD } from '../../../redux/constants/quoteConstants';
 import { RootState } from '../../../redux/store';
 import { openNotificationWithError } from '../../Shared/Components/notification';
 import Confirmations from '../Components/Confirmations';
@@ -20,6 +21,7 @@ export default function FileUploadContainer() {
     const quote = useSelector((state: RootState) => state.quote.quoteDetails);
     const user = useSelector((state: RootState) => state.user.user);
     const loading = useSelector((state: RootState) => state.shared.loading);
+    const mappingSheetAlreadyUploaded = useSelector((state: RootState) => state.quote.mappingSheetUploaded);
 
     //use states
     const [fileUploadStep, setFileUploadStep] = useState(1);
@@ -51,6 +53,7 @@ export default function FileUploadContainer() {
                     if (response.data.status == RequestStatus.Success) {
                         setFileUploadStep(3);
                         dispatch(SetQuoteId(response.data.result.quoteId));
+                        dispatch({ type: MAPPING_UPLOAD });
                     } else {
                         openNotificationWithError(response.data.Message, 'Error');
                     }
@@ -69,6 +72,13 @@ export default function FileUploadContainer() {
     const onCancel = () => {
         history.push('/');
     };
+
+    //use effect
+    useEffect(() => {
+        if (mappingSheetAlreadyUploaded && fileUploadStep === 1) {
+            history.push('/damage-type');
+        }
+    }, [mappingSheetAlreadyUploaded]);
 
     return (
         <>
