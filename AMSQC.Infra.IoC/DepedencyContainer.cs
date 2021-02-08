@@ -27,7 +27,7 @@ namespace AMSQC.Infra.IoC
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            var managedIdentityInterceptor = new ConnectionInterceptor($"{configuration["AzureAD:TenantId"]}");
+            //var managedIdentityInterceptor = new ConnectionInterceptor($"{configuration["AzureAD:TenantId"]}");
             services.AddDbContext<BodyShopDbContext>(o =>
                 o.UseSqlServer(ibodyShopConnectionString));//.AddInterceptors(managedIdentityInterceptor));
 

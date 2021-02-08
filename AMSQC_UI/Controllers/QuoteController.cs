@@ -37,6 +37,11 @@ namespace AMSQC_UI.Controllers
         {
             var quote = new Quote();
             quote.QuoteId = quoteNo;
+            //quote.Color = "Red";
+            //quote.Company = "Honda";
+            //quote.InsurerName = "GCO Insurance";
+            //quote.Registration = "YX400";
+            
             quote = _quouteService.GetQuote(quoteNo);
             return new Response
             {
