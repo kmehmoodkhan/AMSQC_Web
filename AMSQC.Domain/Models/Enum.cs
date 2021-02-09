@@ -8,5 +8,5 @@ namespace AMSQC.Domain.Models
 
     public enum SurveyType { SurveyType1 = 1, SurveyType2 = 2, SurveyType3 = 3,CorrectiveActionRequest=4};
 
-    public enum ParentType { SurveyType1 = 1, SurveyType2 = 2, SurveyType3 = 3 };
+    public enum ParentType { None = 0, SurveyType1 = 1, SurveyType2 = 2, SurveyType3 = 3};
 }
