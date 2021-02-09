@@ -123,7 +123,7 @@ namespace AMSQC_UI.Controllers
                     Status = Status.Success,
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = "File uploaded successfully.",
-                    Result = new { QuoteId = recordId } 
+                    Result = new { QuoteId = recordId, FilePath= quoteFile.QuoteDetail.MappingSheetPath } 
                 };
             }
             catch (Exception ex)

@@ -34,6 +34,7 @@ namespace AMSQC.Infra.Data.Repository
                     DisplayOrder = quest.DisplayOrder,
                     ParentQuestionId = quest.ParentQuestionId,
                     IsSubletQuestion = quest.IsSubletQuestion,
+                    IsAdUsers = quest.IsAdUsers,
                     QuestionOptions = _context.QuestionOption
                     .Where(t=>t.QuestionId == quest.QuestionId)
                     .Select(qo => new QuestionOption

@@ -7,4 +7,6 @@ namespace AMSQC.Domain.Models
     public enum Status { Failed = 0, Success = 1 };
 
     public enum SurveyType { SurveyType1 = 1, SurveyType2 = 2, SurveyType3 = 3,CorrectiveActionRequest=4};
+
+    public enum ParentType { SurveyType1 = 1, SurveyType2 = 2, SurveyType3 = 3 };
 }

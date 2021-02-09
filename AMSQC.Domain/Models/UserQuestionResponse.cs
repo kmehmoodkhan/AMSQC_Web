@@ -20,6 +20,7 @@ namespace AMSQC.Domain.Models
         public int QuoteId { get; set; }
         public int QuestionId { get; set; }
 
+        [NotMapped]
         public bool IsSubletQuestion { get; set; }
         public string Answers { get; set; }
         public string AnswerIds { get; set; }
