@@ -4,6 +4,7 @@ import DamageCategoriesContainer from '../pages/DamageCategories/containers/Dama
 import FileUploadContainer from '../pages/FileUpload/Containers/FileUploadContainer';
 import HomeContainer from '../pages/Home/containers/HomeContainer';
 import ScreenLoader from '../pages/Shared/Components/ScreenLoader';
+import SubmissionsPageContainer from '../pages/SubmissionPage/containers/SubmissionsPageContainer';
 
 export const ROUTES = {
     ROOT_URL: '/',
@@ -11,6 +12,7 @@ export const ROUTES = {
     DAMAGE_TYPE: '/damage-type',
     INSPECTION: '/inspection',
     CORRECTIVE_REQUEST: '/corrective-request',
+    SUBMIT_DATA: '/submit-data',
 };
 
 export const COMPONENTS = {
@@ -20,4 +22,5 @@ export const COMPONENTS = {
     DamageType: DamageCategoriesContainer,
     Inspection: CategoryOneInspectionContainer,
     CorrectiveRequest: CorrectiveRequestContainer,
+    SubmitData: SubmissionsPageContainer,
 };

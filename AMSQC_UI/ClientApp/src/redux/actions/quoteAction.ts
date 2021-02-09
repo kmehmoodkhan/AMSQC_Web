@@ -4,8 +4,8 @@ import { QuoteSteps, RequestStatus } from '../../common/enum';
 import * as actionType from '../constants/quoteConstants';
 import { HIDE_LOADER, SHOW_NOTIFICATION } from '../constants/sharedConstants';
 
-export const SetQuoteId = (quoteId: any) => (dispatch: any) => {
-    dispatch({ type: actionType.SET_QUOTE_ID, quoteId: quoteId });
+export const SetQuoteId = (quoteId: any, filePath: any) => (dispatch: any) => {
+    dispatch({ type: actionType.SET_QUOTE_ID, quoteId: quoteId, filePath: filePath });
 };
 
 export const clearQuoteData = () => (dispatch: any) => {

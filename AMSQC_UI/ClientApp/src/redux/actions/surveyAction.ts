@@ -6,7 +6,7 @@ import * as actionType from '../constants/surveyConstants';
 import { HIDE_LOADER, SHOW_NOTIFICATION } from '../constants/sharedConstants';
 import { dynamicSort } from '../../common/utils';
 import { showLoader } from './sharedActions';
-import { CLEAR_QUOTE } from '../constants/quoteConstants';
+import { CLEAR_QUOTE_DATA } from '../constants/quoteConstants';
 
 export const setSurveyQuestions = (surveyQuestions: any, surveyType: SurveyType) => (dispatch: any) => {
     dispatch({ type: SET_SURVEY_QUESTIONS, surveyQuestions: surveyQuestions, surveyType: surveyType });
@@ -44,8 +44,12 @@ export const GetSurveyQuestions = (surveyType: SurveyType, region: string = 'RMA
         .finally(() => dispatch({ type: HIDE_LOADER }));
 };
 
-export const GetCorrectiveQuestions = (showSublet: boolean, region: string = 'RMA Burmawood') => (dispatch: any) => {
-    const url = Endpoints.SurveyAPI + `?surveyType=${SurveyType.CorrectiveActionRequest}&region=${region}`;
+export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, region: string = 'RMA Burmawood') => (
+    dispatch: any,
+) => {
+    const url =
+        Endpoints.SurveyAPI +
+        `?surveyType=${SurveyType.CorrectiveActionRequest}&region=${region}&parentType=${parentType}`;
     axiosGet(url)
         .then((response: any) => {
             if (response.data.status == RequestStatus.Success && response.data.result.survey.questions) {
@@ -127,12 +131,16 @@ export const SubmitSurveyResponses = (
         .then((response: any) => {
             if (response.data.status == RequestStatus.Success) {
                 dispatch({
-                    type: CLEAR_QUOTE,
+                    type: CLEAR_QUOTE_DATA,
                 });
                 dispatch({ type: actionType.SET_SURVEY_SUBMITTED });
                 dispatch({
                     type: SHOW_NOTIFICATION,
-                    error: { type: 'success', description: 'Survey submitted successfully', title: 'Survey' },
+                    error: {
+                        type: 'success',
+                        description: 'The Correct Action Request was submitted successfully.',
+                        title: 'Survey',
+                    },
                 });
             } else {
                 dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error' } });

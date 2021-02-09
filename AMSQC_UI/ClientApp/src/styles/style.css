@@ -1183,3 +1183,7 @@ select.form-control {
 .no-border {
     border-bottom: 0 !important;
 }
+
+.color-red {
+    color: red !important;
+}

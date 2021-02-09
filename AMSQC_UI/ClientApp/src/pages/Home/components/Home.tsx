@@ -11,8 +11,17 @@ type Props = {
     alreadySubmitted: boolean;
     quoteDetails: any;
     loading: boolean;
+    onBlur: any;
 };
-export default function Home({ onQuoteChange, quoteId, onSubmit, alreadySubmitted, quoteDetails, loading }: Props) {
+export default function Home({
+    onQuoteChange,
+    quoteId,
+    onSubmit,
+    alreadySubmitted,
+    quoteDetails,
+    loading,
+    onBlur,
+}: Props) {
     return (
         <>
             <div className="container-fluid ">
@@ -41,6 +50,7 @@ export default function Home({ onQuoteChange, quoteId, onSubmit, alreadySubmitte
                                             type="text"
                                             className="form-control"
                                             value={quoteId}
+                                            onBlur={onBlur}
                                             onChange={(e) => onQuoteChange(e.target.value)}
                                         />
                                     </div>

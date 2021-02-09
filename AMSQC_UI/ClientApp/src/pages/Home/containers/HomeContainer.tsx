@@ -9,6 +9,7 @@ import { showLoader } from '../../../redux/actions/sharedActions';
 import { RootState } from '../../../redux/store';
 import Header from '../components/Header';
 import Home from '../components/Home';
+import { CLEAR_QUOTE_DATA } from '../../../redux/constants/quoteConstants';
 
 export default function HomeContainer() {
     // General hooks
@@ -56,6 +57,14 @@ export default function HomeContainer() {
         }
     };
 
+    const onBlur = () => {
+        if (loggedIn) {
+            dispatch({ type: CLEAR_QUOTE_DATA });
+            dispatch(showLoader());
+            dispatch(GetQuoteDetails(quoteId));
+        }
+    };
+
     // Side Effects
 
     useEffect(() => {
@@ -79,12 +88,16 @@ export default function HomeContainer() {
                 onQuoteChange={(val: string) => {
                     setQuoteId(val);
                     setAlreadySubmitted(false);
+                    if (!val) {
+                        dispatch({ type: CLEAR_QUOTE_DATA });
+                    }
                 }}
                 quoteId={quoteId}
                 onSubmit={onSubmit}
                 alreadySubmitted={alreadySubmitted}
                 quoteDetails={quoteDetails}
                 loading={loading}
+                onBlur={onBlur}
             />
         </>
     );

@@ -1,6 +1,7 @@
 import { SurveyType } from '../../common/enum';
 import {
     CLEAR_SURVEY_DATA,
+    SAVE_CORRECTIVE_REQUESTS,
     SET_CORRECTIVE_QUESTIONS,
     SET_SURVEY_QUESTIONS,
     SET_SURVEY_SUBMITTED,
@@ -12,6 +13,7 @@ type surveyReducerType = {
     correctiveQuestions: any[];
     showSublet: boolean;
     surveySubmitted: boolean;
+    rectified: boolean;
 };
 
 const defaultState: surveyReducerType = {
@@ -20,6 +22,7 @@ const defaultState: surveyReducerType = {
     surveyQuestions: [],
     showSublet: false,
     surveySubmitted: false,
+    rectified: false,
 };
 
 const surveyReducer = (state = defaultState, action: any): surveyReducerType => {
@@ -33,6 +36,13 @@ const surveyReducer = (state = defaultState, action: any): surveyReducerType => 
         case SET_CORRECTIVE_QUESTIONS:
             return {
                 ...state,
+                correctiveQuestions: action.correctiveQuestions,
+                showSublet: action.showSublet,
+            };
+        case SAVE_CORRECTIVE_REQUESTS:
+            return {
+                ...state,
+                rectified: action.rectified,
                 correctiveQuestions: action.correctiveQuestions,
                 showSublet: action.showSublet,
             };

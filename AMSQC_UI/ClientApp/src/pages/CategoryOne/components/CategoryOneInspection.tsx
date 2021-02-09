@@ -14,6 +14,7 @@ type Props = {
     onDocumentLoadSuccess: any;
     numPages: any;
     onDocumentLoadError: any;
+    mappingSheetPath: any;
 };
 export default function CategoryOneInspection({
     quoteNo,
@@ -26,6 +27,7 @@ export default function CategoryOneInspection({
     onDocumentLoadSuccess,
     numPages,
     onDocumentLoadError,
+    mappingSheetPath,
 }: Props) {
     return (
         <div className="page">
@@ -39,6 +41,11 @@ export default function CategoryOneInspection({
                             <div className="qoute-text ">
                                 Quote Number:<b> {quoteNo} </b>
                             </div>
+                            <p className="info-text">
+                                <a href={mappingSheetPath} target="_blank">
+                                    Mapping Sheet
+                                </a>
+                            </p>
                             <p className="info-text">
                                 Have the below stages of the repair process been carried out as per the{' '}
                                 <a

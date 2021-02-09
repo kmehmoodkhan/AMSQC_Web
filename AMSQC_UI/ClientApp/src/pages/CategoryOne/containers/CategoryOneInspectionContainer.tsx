@@ -18,7 +18,7 @@ export default function CategoryOneInspectionContainer() {
     const dispatch = useDispatch();
 
     // useState
-    const [showInspectionPage, setShowInspectionPage] = useState(location.state.category == 1 ? false : true);
+    const [showInspectionPage, setShowInspectionPage] = useState(false);
 
     const [subletCompleted, setSubletCompleted] = useState<any>(null);
     const [numPages, setNumPages] = useState(null);
@@ -28,6 +28,7 @@ export default function CategoryOneInspectionContainer() {
 
     // useSelector
     const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
+    const mappingSheetPath = useSelector((state: RootState) => state.quote.mappingSheetPath);
 
     const questions = useSelector((state: RootState) => state.survey.surveyQuestions);
 
@@ -64,7 +65,9 @@ export default function CategoryOneInspectionContainer() {
     const setSubletCompletedStatus = (subletStatus: SubletCompletionStatus) => {
         setSubletCompleted(subletStatus);
         setShowInspectionPage(true);
-        dispatch(GetCorrectiveQuestions(subletStatus == SubletCompletionStatus.No ? true : false));
+        dispatch(
+            GetCorrectiveQuestions(subletStatus == SubletCompletionStatus.No ? true : false, location.state.category),
+        );
     };
 
     const onDocumentLoadSuccess = ({ numPages: nextNumPages }: any) => {
@@ -77,7 +80,7 @@ export default function CategoryOneInspectionContainer() {
 
     //useEffect
     useEffect(() => {
-        dispatch(GetSurveyQuestions(location.state.category));
+        if (!questions || questions.length == 0) dispatch(GetSurveyQuestions(location.state.category));
     }, []);
 
     useEffect(() => {
@@ -98,6 +101,7 @@ export default function CategoryOneInspectionContainer() {
                     onDocumentLoadSuccess={onDocumentLoadSuccess}
                     numPages={numPages}
                     onDocumentLoadError={onDocumentLoadError}
+                    mappingSheetPath={mappingSheetPath}
                 />
             )}
             {!showInspectionPage && <SubletRepairs setSubletCompleted={setSubletCompletedStatus} />}

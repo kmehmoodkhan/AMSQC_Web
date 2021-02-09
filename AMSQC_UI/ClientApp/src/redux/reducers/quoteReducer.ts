@@ -15,6 +15,7 @@ type quoteReducerType = {
     quoteStep: QuoteSteps;
     quoteId: any;
     mappingSheetUploaded: boolean;
+    mappingSheetPath: string;
 };
 
 const defaultState: quoteReducerType = {
@@ -24,6 +25,7 @@ const defaultState: quoteReducerType = {
     quoteStep: QuoteSteps.GetQuoteDetail,
     quoteId: 0,
     mappingSheetUploaded: false,
+    mappingSheetPath: '',
 };
 
 const quoteReducer = (state = defaultState, action: any): quoteReducerType => {
@@ -46,6 +48,7 @@ const quoteReducer = (state = defaultState, action: any): quoteReducerType => {
             return {
                 ...state,
                 quoteId: action.quoteId,
+                mappingSheetPath: action.filePath,
             };
         case CLEAR_QUOTE:
             return {

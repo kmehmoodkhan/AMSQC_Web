@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { DefaultAnswerIds, QuestionType } from '../../../common/enum';
-import { SubmitSurveyResponses } from '../../../redux/actions/surveyAction';
+import { saveCorrectiveRequestQuestions } from '../../../redux/actions/surveyAction';
 import { SHOW_NOTIFICATION } from '../../../redux/constants/sharedConstants';
 import { RootState } from '../../../redux/store';
 import CorrectiveRequest from '../components/CorrectiveRequest';
@@ -15,18 +15,12 @@ export default function CorrectiveRequestContainer() {
 
     // use selector
     const questions = useSelector((state: RootState) => state.survey.correctiveQuestions);
-    const surveyQuestions = useSelector((state: RootState) => state.survey.surveyQuestions);
-    const user = useSelector((state: RootState) => state.user.user);
-    const quoteId = useSelector((state: RootState) => state.quote.quoteId);
-    const surveySubmitted = useSelector((state: RootState) => state.survey.surveySubmitted);
-    const surveyType = useSelector((state: RootState) => state.survey.surveyType);
 
     // Use State
     const [questionsArray, setQuestionsArray] = useState<any[]>([]);
 
     //events
     const onAnswerChange = (answer: any, parentId: any, questionId: any, answerText: any, questionType: any = '') => {
-        debugger;
         if (!answer && answerText == '[Please Select]') {
             return;
         }
@@ -58,19 +52,7 @@ export default function CorrectiveRequestContainer() {
 
     const submitResponses = (rectified: boolean) => {
         let allQuestionsAttempted = true;
-        let responses: any[] = [];
-        surveyQuestions.every((item: any) => {
-            let response = {
-                UserGuid: user.localAccountId,
-                QuoteId: quoteId,
-                QuestionId: item.questionId,
-                Answers: item.answerText,
-                AnswerIds: item.answer.toString(),
-                IsSubletQuestion: false,
-            };
-            responses.push(response);
-            return true;
-        });
+
         questionsArray.every((item: any) => {
             if (
                 item.subQuestions.filter(
@@ -80,28 +62,11 @@ export default function CorrectiveRequestContainer() {
                 allQuestionsAttempted = false;
                 return false;
             }
-            let response = {
-                UserGuid: user.localAccountId,
-                QuoteId: quoteId,
-                QuestionId: item.questionId,
-                Answers: '',
-                AnswerIds: '',
-                IsSubletQuestion: item.isSubletQuestion,
-            };
-            response.Answers = item.subQuestions
-                .filter((item1: any) => item1.questionType != QuestionType.Label)
-                .map((item1: any) => item1.answerText)
-                .join('@@');
-            response.AnswerIds = item.subQuestions
-                .filter((item1: any) => item1.questionType != QuestionType.Label)
-                .map((item1: any) => item1.answer)
-                .join('@@');
-            responses.push(response);
-
             return true;
         });
         if (allQuestionsAttempted) {
-            dispatch(SubmitSurveyResponses(responses, rectified, location.state.subletCompleted, surveyType));
+            dispatch(saveCorrectiveRequestQuestions(questionsArray, rectified, location.state.subletCompleted));
+            history.push('/submit-data');
         } else {
             dispatch({
                 type: SHOW_NOTIFICATION,
@@ -118,12 +83,6 @@ export default function CorrectiveRequestContainer() {
     useEffect(() => {
         setQuestionsArray(questions);
     }, [questions]);
-
-    useEffect(() => {
-        if (surveySubmitted) {
-            history.push('/');
-        }
-    }, [surveySubmitted]);
 
     return (
         <CorrectiveRequest

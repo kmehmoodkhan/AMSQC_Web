@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RequestStatus } from '../../../common/enum';
@@ -52,7 +52,7 @@ export default function FileUploadContainer() {
                 .then((response: any) => {
                     if (response.data.status == RequestStatus.Success) {
                         setFileUploadStep(3);
-                        dispatch(SetQuoteId(response.data.result.quoteId));
+                        dispatch(SetQuoteId(response.data.result.quoteId, response.data.result.filePath));
                         dispatch({ type: MAPPING_UPLOAD });
                     } else {
                         openNotificationWithError(response.data.Message, 'Error');
@@ -70,11 +70,12 @@ export default function FileUploadContainer() {
     };
 
     const onCancel = () => {
+        dispatch(clearQuoteData());
         history.push('/');
     };
 
     //use effect
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (mappingSheetAlreadyUploaded && fileUploadStep === 1) {
             history.push('/damage-type');
         }
