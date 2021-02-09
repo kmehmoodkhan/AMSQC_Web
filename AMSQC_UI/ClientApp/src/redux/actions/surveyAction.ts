@@ -72,8 +72,8 @@ export const GetCorrectiveQuestions = (showSublet: boolean, region: string = 'RM
                             })
                             .sort(dynamicSort('displayOrder'));
                     } else {
-                        if (response.data.result.survey.aDUsers) {
-                            item.subQuestions = [];
+                        item.subQuestions = [];
+                        if (response.data.result.survey.adUsers) {
                             let question = {
                                 questionId: item.questionId,
                                 title: null,
@@ -81,10 +81,11 @@ export const GetCorrectiveQuestions = (showSublet: boolean, region: string = 'RM
                                 parentQuestionId: item.questionId,
                                 answer: '',
                                 answerText: '',
-                                questionOptions: response.data.result.survey.aDUsers.map((item1: any) => {
+                                questionOptions: response.data.result.survey.adUsers.map((item1: any) => {
                                     return {
                                         questionOptionId: item1.userGuid,
                                         title: item1.userName,
+                                        questionId: item.questionId,
                                     };
                                 }),
                             };
