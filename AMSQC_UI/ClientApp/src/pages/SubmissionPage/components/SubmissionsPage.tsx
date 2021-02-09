@@ -19,7 +19,7 @@ export default function SubmissionsPage({ onSubmitSurvey, loading, isRectified }
                                     <>
                                         I am satisfied this vehicle meets the
                                         <a
-                                            href="/docs/Gemini-Quality-Charter-Inspection-Criteria.pdf'"
+                                            href="/docs/Gemini-Quality-Charter-Inspection-Criteria.pdf"
                                             target={'_blank'}
                                         >
                                             {' '}

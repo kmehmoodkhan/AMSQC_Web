@@ -59,9 +59,11 @@ export default function HomeContainer() {
 
     const onBlur = () => {
         if (loggedIn) {
-            dispatch({ type: CLEAR_QUOTE_DATA });
-            dispatch(showLoader());
-            dispatch(GetQuoteDetails(quoteId));
+            if (quoteId && quoteId.length > 0 && /^\d+$/.test(quoteId)) {
+                dispatch({ type: CLEAR_QUOTE_DATA });
+                dispatch(showLoader());
+                dispatch(GetQuoteDetails(quoteId));
+            }
         }
     };
 
