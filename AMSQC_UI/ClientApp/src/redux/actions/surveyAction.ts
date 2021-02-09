@@ -16,6 +16,12 @@ export const clearSurveyState = () => (dispatch: any) => {
     dispatch({ type: actionType.CLEAR_SURVEY_DATA });
 };
 
+export const saveCorrectiveRequestQuestions = (correctiveQuestions: any[], rectified: boolean, showSublet: boolean) => (
+    dispatch: any,
+) => {
+    dispatch({ type: actionType.SAVE_CORRECTIVE_REQUESTS, correctiveQuestions, rectified, showSublet });
+};
+
 export const GetSurveyQuestions = (surveyType: SurveyType, region: string = 'RMA Burmawood') => (dispatch: any) => {
     const url = Endpoints.SurveyAPI + `?surveyType=${surveyType}&region=${region}`;
     axiosGet(url)
@@ -43,32 +49,51 @@ export const GetCorrectiveQuestions = (showSublet: boolean, region: string = 'RM
     axiosGet(url)
         .then((response: any) => {
             if (response.data.status == RequestStatus.Success && response.data.result.survey.questions) {
-                console.log(response.data.result.survey.questions);
                 let questions = response.data.result.survey.questions
                     .filter((item: any) => !item.parentQuestionId)
                     .map((item: any) => {
                         return { ...item, answer: '', answerText: '' };
                     });
-                console.log(questions);
                 questions = questions.map((item: any) => {
-                    item.subQuestions = response.data.result.survey.questions
-                        .filter((sub: any) => sub.parentQuestionId == item.questionId)
-                        .map((sub: any) => {
-                            if (sub.questionType == QuestionType.Select) {
-                                if (sub.questionOptions[0].displayOrder) {
-                                    sub.questionOptions = sub.questionOptions.sort(dynamicSort('displayOrder'));
-                                } else {
-                                    sub.questionOptions = sub.questionOptions.sort(dynamicSort('title'));
+                    if (!item.isAdUsers) {
+                        item.subQuestions = response.data.result.survey.questions
+                            .filter((sub: any) => sub.parentQuestionId == item.questionId)
+                            .map((sub: any) => {
+                                if (sub.questionType == QuestionType.Select) {
+                                    if (sub.questionOptions[0].displayOrder) {
+                                        sub.questionOptions = sub.questionOptions.sort(dynamicSort('displayOrder'));
+                                    } else {
+                                        sub.questionOptions = sub.questionOptions.sort(dynamicSort('title'));
+                                    }
                                 }
-                            }
-                            sub.answer = '';
-                            sub.answerText = '';
-                            return sub;
-                        })
-                        .sort(dynamicSort('displayOrder'));
+                                sub.answer = '';
+                                sub.answerText = '';
+                                return sub;
+                            })
+                            .sort(dynamicSort('displayOrder'));
+                    } else {
+                        if (response.data.result.survey.aDUsers) {
+                            item.subQuestions = [];
+                            let question = {
+                                questionId: item.questionId,
+                                title: null,
+                                questionType: QuestionType.Select,
+                                parentQuestionId: item.questionId,
+                                answer: '',
+                                answerText: '',
+                                questionOptions: response.data.result.survey.aDUsers.map((item1: any) => {
+                                    return {
+                                        questionOptionId: item1.userGuid,
+                                        title: item1.userName,
+                                    };
+                                }),
+                            };
+                            item.subQuestions.push(question);
+                        }
+                    }
                     return item;
                 });
-                console.log(questions);
+
                 dispatch({
                     type: actionType.SET_CORRECTIVE_QUESTIONS,
                     correctiveQuestions: questions,
