@@ -64,6 +64,7 @@ export default function CategoryOneInspectionContainer() {
     const setSubletCompletedStatus = (subletStatus: SubletCompletionStatus) => {
         setSubletCompleted(subletStatus);
         setShowInspectionPage(true);
+        dispatch(GetCorrectiveQuestions(subletStatus == SubletCompletionStatus.No ? true : false));
     };
 
     const onDocumentLoadSuccess = ({ numPages: nextNumPages }: any) => {
@@ -77,7 +78,6 @@ export default function CategoryOneInspectionContainer() {
     //useEffect
     useEffect(() => {
         dispatch(GetSurveyQuestions(location.state.category));
-        dispatch(GetCorrectiveQuestions(subletCompleted == SubletCompletionStatus.No ? true : false));
     }, []);
 
     useEffect(() => {
