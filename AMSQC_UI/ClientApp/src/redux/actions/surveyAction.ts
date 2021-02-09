@@ -50,7 +50,7 @@ export const GetCorrectiveQuestions = (showSublet: boolean, region: string = 'RM
         .then((response: any) => {
             if (response.data.status == RequestStatus.Success && response.data.result.survey.questions) {
                 let questions = response.data.result.survey.questions
-                    .filter((item: any) => !item.parentQuestionId)
+                    .filter((item: any) => !item.parentQuestionId && (showSublet || !item.isSubletQuestion))
                     .map((item: any) => {
                         return { ...item, answer: '', answerText: '' };
                     });
