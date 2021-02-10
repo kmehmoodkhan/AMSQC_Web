@@ -1187,3 +1187,7 @@ select.form-control {
 .color-red {
     color: red !important;
 }
+
+.height-title {
+    height: 40px !important;
+}

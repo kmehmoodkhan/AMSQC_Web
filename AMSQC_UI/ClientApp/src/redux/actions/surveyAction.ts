@@ -144,7 +144,7 @@ export const SubmitSurveyResponses = (
             dispatch({
                 type: SHOW_NOTIFICATION,
                 error: {
-                    type: RequestStatus.Success == response.data.message ? 'success' : 'error',
+                    type: RequestStatus.Success == response.data.status ? 'success' : 'error',
                     description: response.data.message,
                     title: 'Survey',
                 },
