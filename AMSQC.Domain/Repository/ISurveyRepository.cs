@@ -9,7 +9,7 @@ namespace AMSQC.Domain.Repository
 {
     public interface ISurveyRepository
     {
-        List<Question> GetSurveyQuestions(int surveyType);
+        List<Question> GetSurveyQuestions(int surveyType, ParentType parentType);
 
         int SaveSurveyReponse(List<UserQuestionResponse> userResponse);
     }

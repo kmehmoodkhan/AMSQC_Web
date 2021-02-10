@@ -4,6 +4,7 @@ using AMSQC.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AMSQC_UI.Controllers
 {
@@ -24,7 +25,7 @@ namespace AMSQC_UI.Controllers
         public Response Get(int surveyType,string region, ParentType parentType=default)
         {
            
-            var survey = _surveyService.GetSurveyDetail(surveyType, CONST_REGION_ID);
+            var survey = _surveyService.GetSurveyDetail(surveyType, CONST_REGION_ID, parentType);
 
             return new Response
             {
@@ -41,14 +42,30 @@ namespace AMSQC_UI.Controllers
         public Response Post(SurveyResponseViewModel vm)
         {
             vm.RegionId = CONST_REGION_ID;
-            var result = _surveyService.SaveSurveyReponse(vm);
-            return new Response
+
+            var answerLength = vm.response.Where(t => t.Answers.Length > 0 && t.Answers.Length > 499);
+
+            if (answerLength == null)
             {
-                Result = null,
-                Status = Status.Success,
-                HttpStatusCode = System.Net.HttpStatusCode.OK,
-                Message = "Surve response submitted."
-            };
+                var result = _surveyService.SaveSurveyReponse(vm);
+                return new Response
+                {
+                    Result = null,
+                    Status = Status.Success,
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = "The Correct Action Request was submitted successfully."
+                };
+            }
+            else
+            {
+                return new Response
+                {
+                    Result = null,
+                    Status = Status.Failed,
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = "The Quote was NOT submitted successfully. There may be a connectivity issue."
+                };
+            }
         }
     }
 }

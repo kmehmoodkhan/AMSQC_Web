@@ -29,10 +29,10 @@ namespace AMSQC.Application.Services
             _quoteDetailRepository = quoteDetailRepository;
         }
 
-        public SurveyViewModel GetSurveyDetail(int surveyType,int regionId)
+        public SurveyViewModel GetSurveyDetail(int surveyType,int regionId,ParentType parentType)
         {
             var surveyViewModel = new SurveyViewModel();
-            surveyViewModel.Questions= _surveyRepository.GetSurveyQuestions(surveyType);
+            surveyViewModel.Questions= _surveyRepository.GetSurveyQuestions(surveyType,parentType);
             surveyViewModel.ADUsers = _userService.GetUsers(regionId);
             return surveyViewModel;
         }

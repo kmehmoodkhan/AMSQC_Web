@@ -32,5 +32,7 @@ namespace AMSQC.Domain.Models
 
         public bool IsAdUsers { get; set; }
 
+        public string AllowedSurveyTypes { get; set; }
+
     }
 }

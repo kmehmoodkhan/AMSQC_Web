@@ -60,7 +60,7 @@ namespace AMSQC_UI.Controllers
                     Result = new { quote, alreadySubmitted = false },
                     Status = Status.Failed,
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Message = "Invalid quote, please try another number."
+                    Message = "Sorry, there was no matching vehicle with this Quote Number."
                 };
             }
         }

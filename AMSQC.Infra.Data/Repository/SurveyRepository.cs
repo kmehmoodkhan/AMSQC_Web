@@ -19,12 +19,28 @@ namespace AMSQC.Infra.Data.Repository
             _context = context;
         }
 
-        public List<Question> GetSurveyQuestions(int surveyType)
+        public List<Question> GetSurveyQuestions(int surveyType,ParentType parentType)
         {
             byte sType =(byte) surveyType;
 
+            string allowedTypeFilter = "";
+
+            if( parentType == ParentType.SurveyType1)
+            {
+                allowedTypeFilter = "1";
+            }
+            else if (parentType == ParentType.SurveyType2)
+            {
+                allowedTypeFilter = "2";
+            }
+            else if (parentType == ParentType.SurveyType3)
+            {
+                allowedTypeFilter = "3";
+            }
+           
+
             var result = _context.Question
-                .Where(q => q.Category == sType)
+                .Where(q => q.Category == sType && q.AllowedSurveyTypes.Contains(allowedTypeFilter))
                 .Select(quest => new Question
                 {
                     QuestionId = quest.QuestionId,
