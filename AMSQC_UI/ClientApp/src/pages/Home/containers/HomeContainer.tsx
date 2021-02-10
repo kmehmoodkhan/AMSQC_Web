@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { logIn, refreshToken } from '../../../azure/azure-authentication-service';
+import { logIn } from '../../../azure/azure-authentication-service';
 import { QuoteSteps } from '../../../common/enum';
 import { GetQuoteAvailable, GetQuoteDetails } from '../../../redux/actions/quoteAction';
 import { showLoader } from '../../../redux/actions/sharedActions';
@@ -30,7 +30,7 @@ export default function HomeContainer() {
     const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
 
     const errorMessage = useSelector((state: RootState) => state.shared.errorMessage);
-    const user = useSelector((state: RootState) => state.user.user);
+    ///const user = useSelector((state: RootState) => state.user.user);
 
     // Use State
     const [quoteId, setQuoteId] = useState('');
@@ -60,7 +60,7 @@ export default function HomeContainer() {
 
     const onBlur = () => {
         if (loggedIn && quoteId) {
-            if (false) refreshToken(user, () => {});
+            // if (false) refreshToken(user, () => {});
             if (QuoteSteps.QuoteAvailability == quoteStep) {
                 dispatch({ type: CLEAR_QUOTE_DATA });
             }
