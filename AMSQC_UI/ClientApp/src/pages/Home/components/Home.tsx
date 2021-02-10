@@ -8,19 +8,21 @@ type Props = {
     onQuoteChange: any;
     quoteId: any;
     onSubmit: any;
-    alreadySubmitted: boolean;
     quoteDetails: any;
     loading: boolean;
     onBlur: any;
+    hasError: any;
+    errorMessage: String;
 };
 export default function Home({
     onQuoteChange,
     quoteId,
     onSubmit,
-    alreadySubmitted,
     quoteDetails,
     loading,
     onBlur,
+    hasError,
+    errorMessage,
 }: Props) {
     return (
         <>
@@ -54,12 +56,7 @@ export default function Home({
                                             onChange={(e) => onQuoteChange(e.target.value)}
                                         />
                                     </div>
-                                    {alreadySubmitted && (
-                                        <div className="alert alert-danger">
-                                            <strong>Sorry!</strong> A quote has beed already submitted for this Quote
-                                            Number
-                                        </div>
-                                    )}
+                                    {hasError && <div className="alert alert-danger">{errorMessage}</div>}
                                     {quoteDetails && <QuoteDetails car={quoteDetails} />}
                                     <div className="text-right">
                                         {' '}

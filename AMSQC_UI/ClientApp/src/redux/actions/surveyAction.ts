@@ -137,22 +137,18 @@ export const SubmitSurveyResponses = (
         SurveyType: surveyType,
     })
         .then((response: any) => {
-            if (response.data.status == RequestStatus.Success) {
-                dispatch({
-                    type: CLEAR_QUOTE_DATA,
-                });
-                dispatch({ type: actionType.SET_SURVEY_SUBMITTED });
-                dispatch({
-                    type: SHOW_NOTIFICATION,
-                    error: {
-                        type: 'success',
-                        description: 'The Correct Action Request was submitted successfully.',
-                        title: 'Survey',
-                    },
-                });
-            } else {
-                dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error' } });
-            }
+            dispatch({
+                type: CLEAR_QUOTE_DATA,
+            });
+            dispatch({ type: actionType.SET_SURVEY_SUBMITTED });
+            dispatch({
+                type: SHOW_NOTIFICATION,
+                error: {
+                    type: RequestStatus.Success == response.data.message ? 'success' : 'error',
+                    description: response.data.message,
+                    title: 'Survey',
+                },
+            });
         })
         .catch((err) =>
             dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: err.message, title: 'Error' } }),

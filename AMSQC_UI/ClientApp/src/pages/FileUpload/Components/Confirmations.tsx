@@ -53,7 +53,6 @@ export default function Confirmations({ selectedNo, onConfirmationAction }: Prop
                                     <div className="buttons">
                                         <button
                                             type="button"
-                                            data-toggle="dropdown"
                                             className="btn btn-primary btn-lg btn-wide"
                                             onClick={() => onConfirmationAction(true)}
                                         >

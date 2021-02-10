@@ -14,7 +14,12 @@ export default function Question({ question, onAnswerChange }: Props) {
                     <table className="table ">
                         <tbody>
                             {question.subQuestions.map((item: any) => (
-                                <SubQuestion key={item.questionId} question={item} onAnswerChange={onAnswerChange} />
+                                <SubQuestion
+                                    key={item.questionId}
+                                    question={item}
+                                    onAnswerChange={onAnswerChange}
+                                    questionsLength={question.subQuestions.length}
+                                />
                             ))}
                         </tbody>
                     </table>

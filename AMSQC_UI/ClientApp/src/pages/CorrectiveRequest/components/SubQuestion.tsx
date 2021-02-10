@@ -8,8 +8,9 @@ import TextBoxAnswer from './TextBoxAnswer';
 type Props = {
     question: any;
     onAnswerChange: any;
+    questionsLength: number;
 };
-export default function SubQuestion({ question, onAnswerChange }: Props) {
+export default function SubQuestion({ question, onAnswerChange, questionsLength }: Props) {
     return (
         <>
             <tr>
@@ -22,8 +23,10 @@ export default function SubQuestion({ question, onAnswerChange }: Props) {
                                 : ''
                         }`}
                     >
-                        {question.questionType != QuestionType.Label && <div className="name"> {question.title}</div>}
-                        {question.questionType == QuestionType.Label && <p> {question.title}</p>}
+                        {(question.questionType != QuestionType.Label || questionsLength === 1) && (
+                            <div className="name"> {question.title}</div>
+                        )}
+                        {question.questionType == QuestionType.Label && questionsLength > 1 && <p> {question.title}</p>}
                     </td>
                 )}
                 <td

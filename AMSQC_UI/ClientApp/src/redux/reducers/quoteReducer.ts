@@ -41,7 +41,6 @@ const quoteReducer = (state = defaultState, action: any): quoteReducerType => {
             return {
                 ...state,
                 alreadySubmitted: action.alreadySubmitted,
-                quoteDetails: action.alreadySubmitted ? null : state.quoteDetails,
                 quoteStep: action.quoteStep,
             };
         case SET_QUOTE_ID:

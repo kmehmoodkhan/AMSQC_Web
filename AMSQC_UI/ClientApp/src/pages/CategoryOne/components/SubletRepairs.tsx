@@ -19,7 +19,6 @@ export default function SubletRepairs({ setSubletCompleted }: Props) {
                             <div className="buttons">
                                 <button
                                     type="button"
-                                    data-toggle="dropdown"
                                     className="btn btn-primary btn-lg btn-wide"
                                     onClick={() => setSubletCompleted(SubletCompletionStatus.Yes)}
                                 >
@@ -27,7 +26,6 @@ export default function SubletRepairs({ setSubletCompleted }: Props) {
                                 </button>
                                 <button
                                     type="button"
-                                    data-toggle="dropdown"
                                     className="btn btn-outline-danger btn-lg btn-wide"
                                     onClick={() => setSubletCompleted(SubletCompletionStatus.No)}
                                 >
@@ -35,7 +33,6 @@ export default function SubletRepairs({ setSubletCompleted }: Props) {
                                 </button>
                                 <button
                                     type="button"
-                                    data-toggle="dropdown"
                                     className="btn btn-secondary-outline btn-lg btn-wide"
                                     onClick={() => setSubletCompleted(SubletCompletionStatus.NA)}
                                 >

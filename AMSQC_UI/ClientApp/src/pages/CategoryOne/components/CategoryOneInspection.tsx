@@ -44,7 +44,7 @@ export default function CategoryOneInspection({
                                 </div>
                                 <p className="info-text">
                                     <a href={mappingSheetPath} target="_blank">
-                                        Click here
+                                        Click here{' '}
                                     </a>
                                     to view Mapping Sheet
                                 </p>
@@ -81,7 +81,6 @@ export default function CategoryOneInspection({
                                             <div className="buttons">
                                                 <button
                                                     type="button"
-                                                    data-toggle="dropdown"
                                                     className="btn btn-primary btn-lg btn-wide"
                                                     onClick={() => onShowPDF(false)}
                                                 >
@@ -117,12 +116,7 @@ export default function CategoryOneInspection({
                                 </div>
 
                                 <div className="buttons">
-                                    <button
-                                        type="button"
-                                        data-toggle="dropdown"
-                                        className="btn btn-primary btn-lg btn-wide"
-                                        onClick={onNext}
-                                    >
+                                    <button type="button" className="btn btn-primary btn-lg btn-wide" onClick={onNext}>
                                         Next
                                     </button>
                                 </div>

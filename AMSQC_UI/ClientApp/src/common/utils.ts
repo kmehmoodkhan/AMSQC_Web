@@ -184,3 +184,9 @@ export function dynamicSort(property: any) {
         return result * sortOrder;
     };
 }
+
+export const htmlDecode = (content: any): any => {
+    let e = document.createElement('div');
+    e.innerHTML = content;
+    return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
+};

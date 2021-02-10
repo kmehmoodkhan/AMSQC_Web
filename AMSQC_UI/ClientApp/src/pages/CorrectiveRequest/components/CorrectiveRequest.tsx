@@ -44,12 +44,14 @@ export default function CorrectiveRequest({ questions, onAnswerChange, submitRes
                                         <br />
                                     </>
                                 )}
-                                <p className="info-text"> Has the defect been rectified? </p>
+                                <p className="info-text" style={{ fontWeight: 500 }}>
+                                    {' '}
+                                    Has the defect been rectified?{' '}
+                                </p>
 
-                                <div className="buttons">
+                                <div className="buttons" style={{ marginTop: '40px' }}>
                                     <button
                                         type="button"
-                                        data-toggle="dropdown"
                                         className="btn btn-primary btn-lg btn-wide "
                                         onClick={() => submitResponses(true)}
                                     >
@@ -57,7 +59,6 @@ export default function CorrectiveRequest({ questions, onAnswerChange, submitRes
                                     </button>
                                     <button
                                         type="button"
-                                        data-toggle="dropdown"
                                         className="btn btn-lg btn-danger-outline btn-wide "
                                         onClick={() => submitResponses(false)}
                                     >

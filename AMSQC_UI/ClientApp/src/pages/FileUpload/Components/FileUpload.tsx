@@ -9,8 +9,21 @@ type Props = {
     loading: boolean;
     onCancel: any;
     fileName: string;
+    onFileChange: any;
+    extensions: string;
+    message: string;
 };
-export default function FileUpload({ fileSelectError, onFileUpload, fileRef, loading, onCancel, fileName }: Props) {
+export default function FileUpload({
+    fileSelectError,
+    onFileUpload,
+    fileRef,
+    loading,
+    onCancel,
+    fileName,
+    onFileChange,
+    extensions,
+    message,
+}: Props) {
     return (
         <div className="page">
             <div className="container-fluid ">
@@ -24,7 +37,7 @@ export default function FileUpload({ fileSelectError, onFileUpload, fileRef, loa
                                     <div className="message-icon">
                                         <img src={ErrorIcon} />
                                     </div>
-                                    <strong>Error!</strong> Please select a photo to upload
+                                    {message}
                                 </div>
                             )}
                             <div className="row justify-content-center">
@@ -36,7 +49,8 @@ export default function FileUpload({ fileSelectError, onFileUpload, fileRef, loa
                                                 className="custom-file-input"
                                                 id="customFile"
                                                 ref={fileRef}
-                                                accept="image/*"
+                                                accept={extensions}
+                                                onChange={onFileChange}
                                             />
                                             <label className="custom-file-label" htmlFor="customFile">
                                                 {fileName ? fileName : 'Choose file'}
@@ -57,7 +71,6 @@ export default function FileUpload({ fileSelectError, onFileUpload, fileRef, loa
                                 </Button>
                                 <button
                                     type="button"
-                                    data-toggle="dropdown"
                                     className="btn btn-danger-outline btn-lg btn-wide"
                                     onClick={onCancel}
                                 >

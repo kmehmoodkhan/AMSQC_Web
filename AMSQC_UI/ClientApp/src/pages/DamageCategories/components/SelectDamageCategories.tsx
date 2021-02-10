@@ -60,12 +60,7 @@ export default function SelectDamageCategories({ onContinue, selectCategory, sel
                                 </div>
                             </div>
                             <div className="buttons" style={{ paddingBottom: '0px', marginTop: '40px' }}>
-                                <button
-                                    type="button"
-                                    data-toggle="dropdown"
-                                    className="btn btn-primary btn-lg btn-wide"
-                                    onClick={onContinue}
-                                >
+                                <button type="button" className="btn btn-primary btn-lg btn-wide" onClick={onContinue}>
                                     Continue
                                 </button>
                             </div>

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { logIn } from '../../../azure/azure-authentication-service';
+import { logIn, refreshToken } from '../../../azure/azure-authentication-service';
 import { QuoteSteps } from '../../../common/enum';
-import { openNotificationWithError } from '../../Shared/Components/notification';
 import { GetQuoteAvailable, GetQuoteDetails } from '../../../redux/actions/quoteAction';
 import { showLoader } from '../../../redux/actions/sharedActions';
 import { RootState } from '../../../redux/store';
 import Header from '../components/Header';
 import Home from '../components/Home';
 import { CLEAR_QUOTE_DATA } from '../../../redux/constants/quoteConstants';
+import { SET_ERROR_MESSAGE } from '../../../redux/constants/sharedConstants';
 
 export default function HomeContainer() {
     // General hooks
@@ -18,7 +18,6 @@ export default function HomeContainer() {
     const dispatch = useDispatch();
 
     // Use Selector
-    const alreadySubmittedVal = useSelector((state: RootState) => state.quote.alreadySubmitted);
 
     const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
 
@@ -30,10 +29,12 @@ export default function HomeContainer() {
 
     const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
 
+    const errorMessage = useSelector((state: RootState) => state.shared.errorMessage);
+    const user = useSelector((state: RootState) => state.user.user);
+
     // Use State
     const [quoteId, setQuoteId] = useState('');
-
-    const [alreadySubmitted, setAlreadySubmitted] = useState(false);
+    const [hasError, setHasError] = useState(false);
 
     // Events and helpers
     const onSubmit = () => {
@@ -47,7 +48,7 @@ export default function HomeContainer() {
                         dispatch(GetQuoteDetails(quoteId));
                     }
                 } else {
-                    openNotificationWithError('Please enter valid quote number', 'Quote Number validation');
+                    dispatch({ type: SET_ERROR_MESSAGE, errorMessage: 'Please enter valid quote number' });
                 }
                 break;
             case QuoteSteps.QuoteAvailability:
@@ -58,20 +59,21 @@ export default function HomeContainer() {
     };
 
     const onBlur = () => {
-        if (loggedIn) {
-            if (quoteId && quoteId.length > 0 && /^\d+$/.test(quoteId)) {
+        if (loggedIn && quoteId) {
+            if (false) refreshToken(user, () => {});
+            if (QuoteSteps.QuoteAvailability == quoteStep) {
                 dispatch({ type: CLEAR_QUOTE_DATA });
+            }
+            if (quoteId && quoteId.length > 0 && /^\d+$/.test(quoteId)) {
                 dispatch(showLoader());
                 dispatch(GetQuoteDetails(quoteId));
+            } else {
+                dispatch({ type: SET_ERROR_MESSAGE, errorMessage: 'Please enter valid quote number' });
             }
         }
     };
 
     // Side Effects
-
-    useEffect(() => {
-        setAlreadySubmitted(alreadySubmittedVal);
-    }, [alreadySubmittedVal]);
 
     useEffect(() => {
         setQuoteId(quoteNo);
@@ -83,23 +85,29 @@ export default function HomeContainer() {
         }
     });
 
+    useEffect(() => {
+        if (errorMessage) setHasError(true);
+    }, [errorMessage]);
+
     return (
         <>
             <Header />
             <Home
                 onQuoteChange={(val: string) => {
                     setQuoteId(val);
-                    setAlreadySubmitted(false);
+                    setHasError(false);
                     if (!val) {
                         dispatch({ type: CLEAR_QUOTE_DATA });
                     }
+                    if (errorMessage) dispatch({ type: SET_ERROR_MESSAGE, errorMessage: '' });
                 }}
                 quoteId={quoteId}
                 onSubmit={onSubmit}
-                alreadySubmitted={alreadySubmitted}
                 quoteDetails={quoteDetails}
                 loading={loading}
                 onBlur={onBlur}
+                hasError={hasError}
+                errorMessage={errorMessage}
             />
         </>
     );

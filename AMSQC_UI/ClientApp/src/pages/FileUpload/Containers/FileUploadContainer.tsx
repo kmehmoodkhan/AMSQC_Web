@@ -32,6 +32,9 @@ export default function FileUploadContainer() {
 
     const [fileName, setFileName] = useState('');
 
+    const [extensions, setExtensions] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
     // refs
     const fileRef = useRef<HTMLInputElement>(null);
 
@@ -64,6 +67,7 @@ export default function FileUploadContainer() {
                 .finally(() => dispatch(hideLoader()));
         } else {
             setFileSelectError(true);
+            setErrorMessage('Error! Please select a photo to upload');
         }
     };
 
@@ -76,6 +80,28 @@ export default function FileUploadContainer() {
         history.push('/');
     };
 
+    const onFileChange = (event: any) => {
+        if (!event || !event.target || !event.target.files || event.target.files.length === 0) {
+            return;
+        }
+
+        const name = event.target.files[0].name;
+        const lastDot = name.lastIndexOf('.');
+
+        const ext = name.substring(lastDot + 1);
+        if (!ext.match(/(jpg|jpeg|png|gif|bmp)$/i)) {
+            openNotificationWithError('Please select image file', 'File Upload');
+            setFileName('');
+            event.target.value = null;
+            setErrorMessage('Please select image file');
+            setFileSelectError(true);
+        } else {
+            setFileName(name);
+            setFileSelectError(false);
+            setErrorMessage('');
+        }
+    };
+
     //use effect
     useLayoutEffect(() => {
         if (mappingSheetAlreadyUploaded && fileUploadStep === 1) {
@@ -84,12 +110,8 @@ export default function FileUploadContainer() {
     }, [mappingSheetAlreadyUploaded]);
 
     useEffect(() => {
-        if (fileRef && fileRef.current && fileRef.current.files && fileRef.current.files.length > 0) {
-            setFileName(fileRef.current.files[0].name);
-        } else {
-            setFileName('');
-        }
-    }, [fileRef.current]);
+        setExtensions('.png,.jpeg,.jpg,.bmp,.gif');
+    });
 
     return (
         <>
@@ -104,6 +126,9 @@ export default function FileUploadContainer() {
                     loading={loading}
                     onCancel={onCancel}
                     fileName={fileName}
+                    onFileChange={onFileChange}
+                    extensions={extensions}
+                    message={errorMessage}
                 />
             )}
             {fileUploadStep === 3 && <FileUploadSuccess onContinue={onContinue} />}

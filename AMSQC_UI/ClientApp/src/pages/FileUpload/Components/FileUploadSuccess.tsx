@@ -20,12 +20,7 @@ export default function FileUploadSuccess({ onContinue }: Props) {
                                 File uploaded successfully
                             </div>
                             <div className="buttons">
-                                <button
-                                    type="button"
-                                    data-toggle="dropdown"
-                                    className="btn btn-primary btn-lg btn-wide"
-                                    onClick={onContinue}
-                                >
+                                <button type="button" className="btn btn-primary btn-lg btn-wide" onClick={onContinue}>
                                     Continue
                                 </button>
                             </div>

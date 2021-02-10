@@ -2,7 +2,7 @@ import { axiosFormPost, axiosGet } from '../../api/apiutils';
 import { Endpoints } from '../../api/endpoints';
 import { QuoteSteps, RequestStatus } from '../../common/enum';
 import * as actionType from '../constants/quoteConstants';
-import { HIDE_LOADER, SHOW_NOTIFICATION } from '../constants/sharedConstants';
+import { HIDE_LOADER, SET_ERROR_MESSAGE, SHOW_NOTIFICATION } from '../constants/sharedConstants';
 
 export const SetQuoteId = (quoteId: any, filePath: any) => (dispatch: any) => {
     dispatch({ type: actionType.SET_QUOTE_ID, quoteId: quoteId, filePath: filePath });
@@ -17,23 +17,17 @@ export const GetQuoteDetails = (quoteNo: string) => (dispatch: any) => {
     axiosGet(url)
         .then((response: any) => {
             if (response.data.status == RequestStatus.Success) {
-                if (response.data.result.alreadySubmitted) {
-                    dispatch({
-                        type: actionType.GET_QUOTE_DETAILS,
-                        quoteNo: quoteNo,
-                        quoteDetails: null,
-                        quoteStep: QuoteSteps.GetQuoteDetail,
-                    });
-                } else {
-                    dispatch({
-                        type: actionType.GET_QUOTE_DETAILS,
-                        quoteNo: quoteNo,
-                        quoteDetails: response.data.result.quote,
-                        quoteStep: QuoteSteps.QuoteAvailability,
-                    });
-                }
+                dispatch({
+                    type: actionType.GET_QUOTE_DETAILS,
+                    quoteNo: quoteNo,
+                    quoteDetails: response.data.result.quote,
+                    quoteStep: QuoteSteps.QuoteAvailability,
+                });
             } else {
-                dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: response.data.message } });
+                dispatch({
+                    type: SET_ERROR_MESSAGE,
+                    errorMessage: response.data.message,
+                });
             }
         })
         .catch((err) =>
@@ -52,6 +46,10 @@ export const GetQuoteAvailable = (quoteId: any, region: string) => (dispatch: an
                         type: actionType.IS_QUOTE_AVAILABLE,
                         alreadySubmitted: true,
                         quoteStep: QuoteSteps.GetQuoteDetail,
+                    });
+                    dispatch({
+                        type: SET_ERROR_MESSAGE,
+                        errorMessage: 'Sorry! A quote has beed already submitted for this Quote Number',
                     });
                 } else {
                     dispatch({
