@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RequestStatus } from '../../../common/enum';
@@ -29,6 +29,8 @@ export default function FileUploadContainer() {
     const [selectedNo, setSelectedNo] = useState(false);
 
     const [fileSelectError, setFileSelectError] = useState(false);
+
+    const [fileName, setFileName] = useState('');
 
     // refs
     const fileRef = useRef<HTMLInputElement>(null);
@@ -81,6 +83,14 @@ export default function FileUploadContainer() {
         }
     }, [mappingSheetAlreadyUploaded]);
 
+    useEffect(() => {
+        if (fileRef && fileRef.current && fileRef.current.files && fileRef.current.files.length > 0) {
+            setFileName(fileRef.current.files[0].name);
+        } else {
+            setFileName('');
+        }
+    }, [fileRef.current]);
+
     return (
         <>
             {fileUploadStep === 1 && (
@@ -93,6 +103,7 @@ export default function FileUploadContainer() {
                     onFileUpload={onFileUpload}
                     loading={loading}
                     onCancel={onCancel}
+                    fileName={fileName}
                 />
             )}
             {fileUploadStep === 3 && <FileUploadSuccess onContinue={onContinue} />}

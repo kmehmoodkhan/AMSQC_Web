@@ -33,7 +33,7 @@ export const GetQuoteDetails = (quoteNo: string) => (dispatch: any) => {
                     });
                 }
             } else {
-                dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error' } });
+                dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: response.data.message } });
             }
         })
         .catch((err) =>

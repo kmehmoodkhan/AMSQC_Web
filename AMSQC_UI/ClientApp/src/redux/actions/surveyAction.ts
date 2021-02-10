@@ -27,12 +27,20 @@ export const GetSurveyQuestions = (surveyType: SurveyType, region: string = 'RMA
     axiosGet(url)
         .then((response: any) => {
             if (response.data.status == RequestStatus.Success) {
+                let questions = response.data.result.survey.questions
+                    .map((item: any) => {
+                        return {
+                            ...item,
+                            answer: item.questionOptions.filter((item1: any) => item1.title == 'No')[0]
+                                .questionOptionId,
+                            answerText: item.questionOptions.filter((item1: any) => item1.title == 'No')[0].title,
+                        };
+                    })
+                    .sort(dynamicSort('displayOrder'));
                 dispatch({
                     type: actionType.SET_SURVEY_QUESTIONS,
                     surveyType: surveyType,
-                    surveyQuestions: response.data.result.survey.questions.map((item: any) => {
-                        return { ...item, answer: '', answerText: '' };
-                    }),
+                    surveyQuestions: questions,
                 });
             } else {
                 dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error' } });
