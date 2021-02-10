@@ -1,6 +1,7 @@
 ﻿using AMSQC.Application.Interfaces;
 using AMSQC.Application.ViewModels;
 using AMSQC.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -8,9 +9,10 @@ namespace AMSQC_UI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class SurveyController : ControllerBase
     {
+        const int CONST_REGION_ID = 2102;
         ISurveyService _surveyService = null;
         public SurveyController(ISurveyService surveyService)
         {
@@ -21,7 +23,7 @@ namespace AMSQC_UI.Controllers
         [HttpGet]
         public Response Get(int surveyType,string region, ParentType parentType=default)
         {
-            const int CONST_REGION_ID = 2102;
+           
             var survey = _surveyService.GetSurveyDetail(surveyType, CONST_REGION_ID);
 
             return new Response
@@ -38,6 +40,7 @@ namespace AMSQC_UI.Controllers
 
         public Response Post(SurveyResponseViewModel vm)
         {
+            vm.RegionId = CONST_REGION_ID;
             var result = _surveyService.SaveSurveyReponse(vm);
             return new Response
             {

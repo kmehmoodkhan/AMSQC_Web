@@ -12,7 +12,7 @@ namespace AMSQC.Application.ViewModels
         public List<UserQuestionResponse> response { get; set; }
         public bool isSubletShown { get; set; }
         public bool isDefectFixed { get; set; }
-
+        public int RegionId { get; set; }
         public SurveyType SurveyType { get; set; }
     }
 }
