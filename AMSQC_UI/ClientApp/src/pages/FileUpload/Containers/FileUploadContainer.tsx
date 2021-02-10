@@ -90,7 +90,6 @@ export default function FileUploadContainer() {
 
         const ext = name.substring(lastDot + 1);
         if (!ext.match(/(jpg|jpeg|png|gif|bmp)$/i)) {
-            openNotificationWithError('Please select image file', 'File Upload');
             setFileName('');
             event.target.value = null;
             setErrorMessage('Please select image file');
