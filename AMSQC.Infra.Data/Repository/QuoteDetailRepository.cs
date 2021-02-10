@@ -21,7 +21,7 @@ namespace AMSQC.Infra.Data.Repository
         {
             _context.QuoteDetail.Add(quoteDetail);
             var result = _context.SaveChanges();
-            return result;
+            return quoteDetail.QuoteDetailId;
         }
 
         public QuoteDetail GetQuoteDetail(int quoteId, int regionId)
@@ -40,6 +40,19 @@ namespace AMSQC.Infra.Data.Repository
                 rows = _context.SaveChanges();
             }
             return rows;
+        }
+
+        public int UpdateQuote(int quoteId, int regionId, int userId)
+        {
+            int result = 0;
+            var quoteDetail = _context.QuoteDetail.Where(t => t.QuoteDetailId==quoteId).FirstOrDefault();
+            if (quoteDetail != null)
+            {
+                quoteDetail.IsSubmit = true;
+                _context.QuoteDetail.Update(quoteDetail);
+                result = _context.SaveChanges();
+            }
+            return result;
         }
     }
 }

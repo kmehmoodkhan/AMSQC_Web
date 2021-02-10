@@ -15,15 +15,18 @@ namespace AMSQC.Application.Services
         ISurveyRepository _surveyRepository = null;
         IUserRepository _userRepository = null;
         IUserADService _userService = null;
+        IQuoteDetailRepository _quoteDetailRepository = null;
         public SurveyService(
             ISurveyRepository surveyRepository,
             IUserRepository userRepository,
-            IUserADService userService
+            IUserADService userService,
+            IQuoteDetailRepository quoteDetailRepository
             )
         {
             _surveyRepository = surveyRepository;
             _userRepository = userRepository;
             _userService = userService;
+            _quoteDetailRepository = quoteDetailRepository;
         }
 
         public SurveyViewModel GetSurveyDetail(int surveyType,int regionId)
@@ -41,6 +44,7 @@ namespace AMSQC.Application.Services
 
             string userGuid = "";
             int userId = 0;
+            int regionId = 0;
 
             if (userInfo != null)
             {
@@ -50,6 +54,7 @@ namespace AMSQC.Application.Services
                 if(user != null)
                 {
                     userId = user.UserId;
+                    regionId = user.RegionId;
                 }
             }
 
@@ -62,7 +67,11 @@ namespace AMSQC.Application.Services
             }
 
             filteredResponse.ToList().ForEach(f => { f.CreatedOn = DateTime.Now; f.UserId = userId; });
-            return _surveyRepository.SaveSurveyReponse(filteredResponse.ToList());
+            var result= _surveyRepository.SaveSurveyReponse(filteredResponse.ToList());
+
+            _quoteDetailRepository.UpdateQuote(userResponse.FirstOrDefault().QuoteId, regionId, userId);
+
+            return result;
         }
 
     }

@@ -41,15 +41,28 @@ namespace AMSQC_UI.Controllers
             //quote.Company = "Honda";
             //quote.InsurerName = "GCO Insurance";
             //quote.Registration = "YX400";
-            
+
             quote = _quouteService.GetQuote(quoteNo);
-            return new Response
+            if (quote != null)
             {
-                Result = new { quote, alreadySubmitted = false },
-                Status = Status.Success,
-                HttpStatusCode = System.Net.HttpStatusCode.OK,
-                Message = ""
-            };
+                return new Response
+                {
+                    Result = new { quote, alreadySubmitted = false },
+                    Status = Status.Success,
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = ""
+                };
+            }
+            else
+            {
+                return new Response
+                {
+                    Result = new { quote, alreadySubmitted = false },
+                    Status = Status.Failed,
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = "Invalid quote, please try another number."
+                };
+            }
         }
 
 
