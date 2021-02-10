@@ -22,7 +22,10 @@ export default function SubQuestion({ question, onAnswerChange }: Props) {
                                 : ''
                         }`}
                     >
-                        <div className={`name ${QuestionType.Label ? 'height-title' : ''}`}> {question.title}</div>
+                        <div className={`name ${QuestionType.Label == question.questionType ? 'height-title' : ''}`}>
+                            {' '}
+                            {question.title}
+                        </div>
                     </td>
                 )}
                 <td
