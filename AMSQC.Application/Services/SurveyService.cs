@@ -61,17 +61,30 @@ namespace AMSQC.Application.Services
 
             IEnumerable<UserQuestionResponse> filteredResponse = null;
 
+            int records = 0;
+
             if (!surveyResponse.isSubletShown)
             {
                 filteredResponse = userResponse.Where(t => t.IsSubletQuestion == false);
-            }
 
-            filteredResponse.ToList().ForEach(f => { f.CreatedOn = DateTime.Now; f.UserId = userId; });
-            var result= _surveyRepository.SaveSurveyReponse(filteredResponse.ToList());
+                if (filteredResponse != null && filteredResponse.Count() > 0)
+                {
+                    filteredResponse.ToList().ForEach(f => { f.CreatedOn = DateTime.Now; f.UserId = userId; });
+                    records = _surveyRepository.SaveSurveyReponse(filteredResponse.ToList());
+                }
+            }
+            else
+            {
+                userResponse.ToList().ForEach(f => { f.CreatedOn = DateTime.Now; f.UserId = userId; });
+                records = _surveyRepository.SaveSurveyReponse(userResponse.ToList());
+            }
+                    
+
+            
 
             _quoteDetailRepository.UpdateQuote(userResponse.FirstOrDefault().QuoteId, regionId, userId);
 
-            return result;
+            return records;
         }
 
     }
