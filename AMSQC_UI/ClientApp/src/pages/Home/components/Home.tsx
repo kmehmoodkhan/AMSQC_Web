@@ -45,34 +45,37 @@ export default function Home({
                     <div className="col-lg-5  col-md-12 col-sm-12 login-section">
                         <div className=" my-auto">
                             <div className="wrapper">
-                                <form>
-                                    <div className="form-group">
-                                        <label htmlFor="email">Quote number</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            value={quoteId}
-                                            onBlur={onBlur}
-                                            onChange={(e) => onQuoteChange(e.target.value)}
-                                        />
-                                    </div>
-                                    {hasError && <div className="alert alert-danger">{errorMessage}</div>}
-                                    {quoteDetails && <QuoteDetails car={quoteDetails} />}
-                                    <div className="text-right">
-                                        {' '}
-                                        <Button
-                                            name="login"
-                                            className="btn btn-secondary-outline"
-                                            value="Submit"
-                                            onClick={() => onSubmit()}
-                                            loading={loading}
-                                            shape="round"
-                                            size="large"
-                                        >
-                                            Submit
-                                        </Button>
-                                    </div>
-                                </form>
+                                <div className="form-group">
+                                    <label htmlFor="email">Quote number</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={quoteId}
+                                        onBlur={onBlur}
+                                        onChange={(e) => onQuoteChange(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                                onSubmit();
+                                            }
+                                        }}
+                                    />
+                                </div>
+                                {hasError && <div className="alert alert-danger">{errorMessage}</div>}
+                                {quoteDetails && <QuoteDetails car={quoteDetails} />}
+                                <div className="text-right">
+                                    {' '}
+                                    <Button
+                                        name="login"
+                                        className="btn btn-secondary-outline"
+                                        value="Submit"
+                                        onClick={() => onSubmit()}
+                                        loading={loading}
+                                        shape="round"
+                                        size="large"
+                                    >
+                                        Submit
+                                    </Button>
+                                </div>
                             </div>
                         </div>
                     </div>

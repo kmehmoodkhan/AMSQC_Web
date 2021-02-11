@@ -18,6 +18,11 @@ export const logIn = (method: string, callback: any): any => {
     authenticationModule.login(logInType, returnedAccountInfo, callback);
 };
 
+export const refreshToken = (user: any, callback: any): any => {
+    // Azure Login
+    authenticationModule.refreshToken(user, returnedAccountInfo, callback);
+};
+
 export const logOut = (user: any) => {
     if (user) {
         // Azure Logout

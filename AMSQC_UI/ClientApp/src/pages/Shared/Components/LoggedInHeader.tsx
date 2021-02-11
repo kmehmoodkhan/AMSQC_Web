@@ -27,7 +27,7 @@ export default function LoggedInHeader({ fullName, company, onLogOut }: Props) {
                             </div>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link btn btn-info btn-login" href="#" onClick={onLogOut}>
+                            <a className="nav-link btn btn-info btn-login" onClick={onLogOut}>
                                 Logout
                             </a>
                         </li>

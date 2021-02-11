@@ -30,7 +30,8 @@ export default function HomeContainer() {
     const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
 
     const errorMessage = useSelector((state: RootState) => state.shared.errorMessage);
-    ///const user = useSelector((state: RootState) => state.user.user);
+
+    const expiresOn = useSelector((state: RootState) => state.user.tokenExpiresOn);
 
     // Use State
     const [quoteId, setQuoteId] = useState('');
@@ -60,7 +61,6 @@ export default function HomeContainer() {
 
     const onBlur = () => {
         if (loggedIn && quoteId) {
-            // if (false) refreshToken(user, () => {});
             if (QuoteSteps.QuoteAvailability == quoteStep) {
                 dispatch({ type: CLEAR_QUOTE_DATA });
             }
@@ -86,6 +86,22 @@ export default function HomeContainer() {
     });
 
     useEffect(() => {
+        if (expiresOn) {
+            var expiry;
+            if (expiresOn && typeof expiresOn === 'string') {
+                expiry = new Date(expiresOn);
+            } else {
+                expiry = expiresOn;
+            }
+            const now = new Date();
+            if (expiry < now) {
+                dispatch({ type: 'LOG_OUT' });
+                history.push('/');
+            }
+        }
+    }, [expiresOn]);
+
+    useEffect(() => {
         if (errorMessage) setHasError(true);
     }, [errorMessage]);
 
@@ -94,6 +110,12 @@ export default function HomeContainer() {
             <Header />
             <Home
                 onQuoteChange={(val: string) => {
+                    if (val) {
+                        val = val.replace(/[^0-9]/g, '');
+                        if (val.length > 6) {
+                            val = val.substring(0, 6);
+                        }
+                    }
                     setQuoteId(val);
                     setHasError(false);
                     if (!val) {

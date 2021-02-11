@@ -55,10 +55,28 @@ export class AzureAuthenticationContext {
         }
     }
 
+    refreshToken(user: any, setUser: any, callback: any): void {
+        //console.log(this.myMSALObj.getAllAccounts(), user);
+        this.myMSALObj.setActiveAccount(user);
+        //console.log(this.myMSALObj.getAllAccounts(), user);
+        this.myMSALObj
+            .acquireTokenSilent(PopUpRequest)
+            .then((resp: AuthenticationResult) => {
+                if (!resp.fromCache) {
+                    this.handleResponse(resp, setUser, callback);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                this.login('loginPopup', setUser, callback);
+                //store.dispatch({ type: 'HIDE_LOADER' });
+            });
+    }
+
     logout(account: AccountInfo): Promise<void> {
         const logOutRequest: EndSessionRequest = {
             account,
-            postLogoutRedirectUri: '/',
+            postLogoutRedirectUri: '/log-out/' + account.localAccountId,
         };
 
         return this.myMSALObj.logout(logOutRequest);

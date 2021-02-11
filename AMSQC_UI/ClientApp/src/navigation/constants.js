@@ -4,6 +4,7 @@ import DamageCategoriesContainer from '../pages/DamageCategories/containers/Dama
 import FileUploadContainer from '../pages/FileUpload/Containers/FileUploadContainer';
 import HomeContainer from '../pages/Home/containers/HomeContainer';
 import ScreenLoader from '../pages/Shared/Components/ScreenLoader';
+import LogOutContainer from '../pages/Shared/Containers/LogOutContainer';
 import SubmissionsPageContainer from '../pages/SubmissionPage/containers/SubmissionsPageContainer';
 
 export const ROUTES = {
@@ -13,6 +14,7 @@ export const ROUTES = {
     INSPECTION: '/inspection',
     CORRECTIVE_REQUEST: '/corrective-request',
     SUBMIT_DATA: '/submit-data',
+    LOG_OUT: '/log-out/:accountid',
 };
 
 export const COMPONENTS = {
@@ -23,4 +25,5 @@ export const COMPONENTS = {
     Inspection: CategoryOneInspectionContainer,
     CorrectiveRequest: CorrectiveRequestContainer,
     SubmitData: SubmissionsPageContainer,
+    LogOut: LogOutContainer,
 };

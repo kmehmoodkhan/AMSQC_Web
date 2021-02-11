@@ -10,15 +10,19 @@ export default function TextBoxAnswer({ answer, question, onAnswerChange }: Prop
     return (
         <div className="form-group">
             <input
-                type="text"
+                type={question.title && question.title.includes('$') ? 'number' : 'text'}
                 className="form-control"
                 value={answer}
                 onChange={(e) => {
+                    let val = e.target.value;
+                    if (val && question.title && question.title.includes('$') && val.length > 7) {
+                        val = val.substring(0, 7);
+                    }
                     onAnswerChange(
                         DefaultAnswerIds.TextBoxAnswerId,
                         question.parentQuestionId,
                         question.questionId,
-                        e.target.value,
+                        val,
                     );
                 }}
             />

@@ -11,6 +11,7 @@ const RouterConfig = () => {
         <React.Suspense fallback={<COMPONENTS.ScreenLoader />}>
             <Switch>
                 <Route exact path={ROUTES.ROOT_URL} component={COMPONENTS.Home} />
+                <Route exact path={ROUTES.LOG_OUT} component={COMPONENTS.LogOut} />
                 <LoggedInHeaderContainer>
                     <LoggedInRouterConfig />
                 </LoggedInHeaderContainer>

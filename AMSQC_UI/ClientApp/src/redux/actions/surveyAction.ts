@@ -34,6 +34,9 @@ export const GetSurveyQuestions = (surveyType: SurveyType, region: string = 'RMA
                             answer: item.questionOptions.filter((item1: any) => item1.title == 'No')[0]
                                 .questionOptionId,
                             answerText: item.questionOptions.filter((item1: any) => item1.title == 'No')[0].title,
+                            questionOptions: item.questionOptions
+                                ? item.questionOptions.sort(dynamicSort('displayOrder'))
+                                : [],
                         };
                     })
                     .sort(dynamicSort('displayOrder'));
@@ -66,6 +69,7 @@ export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, reg
                     .map((item: any) => {
                         return { ...item, answer: '', answerText: '' };
                     });
+                let index = 0;
                 questions = questions.map((item: any) => {
                     if (!item.isAdUsers) {
                         item.subQuestions = response.data.result.survey.questions
@@ -103,6 +107,9 @@ export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, reg
                             };
                             item.subQuestions.push(question);
                         }
+                    }
+                    if (item.questionType != QuestionType.Label) {
+                        item.index = index++;
                     }
                     return item;
                 });
