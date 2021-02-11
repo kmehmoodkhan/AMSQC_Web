@@ -45,7 +45,7 @@ namespace AMSQC_UI.Controllers
 
             var answerLength = vm.response.Where(t => t.Answers.Length > 0 && t.Answers.Length > 499);
 
-            if (answerLength == null)
+            if (answerLength.Count()<1)
             {
                 var result = _surveyService.SaveSurveyReponse(vm);
                 return new Response
