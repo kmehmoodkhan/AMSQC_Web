@@ -16,7 +16,7 @@ export default function CorrectiveRequest({ questions, onAnswerChange, submitRes
                         <div className="block-section">
                             <div className="action-details box1">
                                 <div className="main-title mb-5"> Corrective Action Request</div>
-
+                                <div className="row alert alert-danger" style={{ paddingBottom: "5px", marginBottom:"5px" }}>* All fields are mandatory</div>
                                 {questions
                                     .filter((item: any) => !item.isSubletQuestion)
                                     .map((item: any) => (
