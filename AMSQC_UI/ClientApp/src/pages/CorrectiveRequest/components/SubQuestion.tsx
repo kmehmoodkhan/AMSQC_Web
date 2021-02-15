@@ -8,8 +8,10 @@ import TextBoxAnswer from './TextBoxAnswer';
 type Props = {
     question: any;
     onAnswerChange: any;
+    registerFormRef: any;
+    errors: any;
 };
-export default function SubQuestion({ question, onAnswerChange }: Props) {
+export default function SubQuestion({ question, onAnswerChange, registerFormRef, errors }: Props) {
     return (
         <>
             <tr>
@@ -47,6 +49,14 @@ export default function SubQuestion({ question, onAnswerChange }: Props) {
                                           .questionOptionId
                                     : question.answer
                             }
+                            registerFormRef={registerFormRef}
+                            errors={
+                                question.answer == DefaultAnswerIds.OtherAnswerId
+                                    ? null
+                                    : question.answer != DefaultAnswerIds.OtherAnswerId && question.answer
+                                    ? null
+                                    : errors
+                            }
                         />
                     )}
                     {question.questionType == QuestionType.Radio && (
@@ -55,6 +65,8 @@ export default function SubQuestion({ question, onAnswerChange }: Props) {
                             onAnswerChange={onAnswerChange}
                             question={question}
                             answer={question.answer}
+                            registerFormRef={registerFormRef}
+                            errors={errors}
                         />
                     )}
                     {question.questionType == QuestionType.TextBox && (
@@ -62,6 +74,8 @@ export default function SubQuestion({ question, onAnswerChange }: Props) {
                             onAnswerChange={onAnswerChange}
                             question={question}
                             answer={question.answerText}
+                            registerFormRef={registerFormRef}
+                            errors={errors}
                         />
                     )}
                     {question.questionType == QuestionType.TextArea && (
@@ -69,6 +83,8 @@ export default function SubQuestion({ question, onAnswerChange }: Props) {
                             onAnswerChange={onAnswerChange}
                             question={question}
                             answer={question.answerText}
+                            registerFormRef={registerFormRef}
+                            errors={errors}
                         />
                     )}
                 </td>
@@ -80,6 +96,8 @@ export default function SubQuestion({ question, onAnswerChange }: Props) {
                             onAnswerChange={onAnswerChange}
                             question={question}
                             answer={question.answerText}
+                            registerFormRef={registerFormRef}
+                            errors={errors}
                         />
                     </td>
                 </tr>

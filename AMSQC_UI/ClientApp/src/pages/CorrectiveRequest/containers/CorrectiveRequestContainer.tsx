@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { DefaultAnswerIds, QuestionType } from '../../../common/enum';
@@ -12,17 +13,19 @@ export default function CorrectiveRequestContainer() {
     const history = useHistory();
     const dispatch = useDispatch();
     const location = useLocation<any>();
+    const { register, handleSubmit, errors } = useForm();
 
     // use selector
     const questions = useSelector((state: RootState) => state.survey.correctiveQuestions);
 
     // Use State
     const [questionsArray, setQuestionsArray] = useState<any[]>([]);
+    const [rectified, setRectified] = useState(false);
 
     //events
     const onAnswerChange = (answer: any, parentId: any, questionId: any, answerText: any, questionType: any = '') => {
         if (!answer && answerText == '[Please Select]') {
-            return;
+            answerText = '';
         }
         if (
             answer &&
@@ -51,6 +54,10 @@ export default function CorrectiveRequestContainer() {
     };
 
     const submitResponses = (rectified: boolean) => {
+        setRectified(rectified);
+    };
+
+    const onSubmit = () => {
         let allQuestionsAttempted = true;
 
         questionsArray.every((item: any) => {
@@ -85,11 +92,15 @@ export default function CorrectiveRequestContainer() {
     }, [questions]);
 
     return (
-        <CorrectiveRequest
-            showSublet={location.state.subletCompleted}
-            questions={questionsArray}
-            onAnswerChange={onAnswerChange}
-            submitResponses={submitResponses}
-        />
+        <form ref={register} onSubmit={handleSubmit(onSubmit)}>
+            <CorrectiveRequest
+                showSublet={location.state.subletCompleted}
+                questions={questionsArray}
+                onAnswerChange={onAnswerChange}
+                submitResponses={submitResponses}
+                registerFormRef={register}
+                errors={errors}
+            />
+        </form>
     );
 }

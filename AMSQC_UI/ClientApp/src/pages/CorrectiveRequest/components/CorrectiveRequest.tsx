@@ -6,8 +6,17 @@ type Props = {
     onAnswerChange: any;
     submitResponses: any;
     showSublet: boolean;
+    registerFormRef: any;
+    errors: any;
 };
-export default function CorrectiveRequest({ questions, onAnswerChange, submitResponses, showSublet }: Props) {
+export default function CorrectiveRequest({
+    questions,
+    onAnswerChange,
+    submitResponses,
+    showSublet,
+    registerFormRef,
+    errors,
+}: Props) {
     return (
         <div className="page ">
             <div className="container-fluid">
@@ -16,7 +25,12 @@ export default function CorrectiveRequest({ questions, onAnswerChange, submitRes
                         <div className="block-section">
                             <div className="action-details box1">
                                 <div className="main-title mb-5"> Corrective Action Request</div>
-                                <div className="row alert alert-danger" style={{ paddingBottom: "5px", marginBottom:"5px" }}>* All fields are mandatory</div>
+                                <div
+                                    className="row alert alert-danger"
+                                    style={{ paddingBottom: '5px', marginBottom: '5px' }}
+                                >
+                                    * All fields are mandatory
+                                </div>
                                 {questions
                                     .filter((item: any) => !item.isSubletQuestion)
                                     .map((item: any) => (
@@ -24,6 +38,8 @@ export default function CorrectiveRequest({ questions, onAnswerChange, submitRes
                                             onAnswerChange={onAnswerChange}
                                             question={item}
                                             key={item.questionId}
+                                            registerFormRef={registerFormRef}
+                                            errors={errors}
                                         />
                                     ))}
                                 <br />
@@ -39,6 +55,8 @@ export default function CorrectiveRequest({ questions, onAnswerChange, submitRes
                                                     onAnswerChange={onAnswerChange}
                                                     question={item}
                                                     key={item.questionId}
+                                                    errors={errors}
+                                                    registerFormRef={registerFormRef}
                                                 />
                                             ))}
                                         <br />
@@ -51,16 +69,16 @@ export default function CorrectiveRequest({ questions, onAnswerChange, submitRes
 
                                 <div className="buttons" style={{ marginTop: '40px' }}>
                                     <button
-                                        type="button"
                                         className="btn btn-primary btn-lg btn-wide "
                                         onClick={() => submitResponses(true)}
+                                        type="submit"
                                     >
                                         Yes{' '}
                                     </button>
                                     <button
-                                        type="button"
                                         className="btn btn-lg btn-danger-outline btn-wide "
                                         onClick={() => submitResponses(false)}
+                                        type="submit"
                                     >
                                         No
                                     </button>

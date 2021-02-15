@@ -4,8 +4,10 @@ import SubQuestion from './SubQuestion';
 type Props = {
     question: any;
     onAnswerChange: any;
+    registerFormRef: any;
+    errors: any;
 };
-export default function Question({ question, onAnswerChange }: Props) {
+export default function Question({ question, onAnswerChange, registerFormRef, errors }: Props) {
     return (
         <div className="card">
             <div className="card-header">{question.title} </div>
@@ -14,7 +16,13 @@ export default function Question({ question, onAnswerChange }: Props) {
                     <table className="table ">
                         <tbody>
                             {question.subQuestions.map((item: any) => (
-                                <SubQuestion key={item.questionId} question={item} onAnswerChange={onAnswerChange} />
+                                <SubQuestion
+                                    key={item.questionId}
+                                    question={item}
+                                    onAnswerChange={onAnswerChange}
+                                    registerFormRef={registerFormRef}
+                                    errors={errors}
+                                />
                             ))}
                         </tbody>
                     </table>
