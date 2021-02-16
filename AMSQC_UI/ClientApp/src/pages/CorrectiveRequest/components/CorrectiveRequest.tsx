@@ -8,6 +8,7 @@ type Props = {
     showSublet: boolean;
     registerFormRef: any;
     errors: any;
+    getValue: any;
 };
 export default function CorrectiveRequest({
     questions,
@@ -16,6 +17,7 @@ export default function CorrectiveRequest({
     showSublet,
     registerFormRef,
     errors,
+    getValue,
 }: Props) {
     return (
         <div className="page ">
@@ -40,6 +42,7 @@ export default function CorrectiveRequest({
                                             key={item.questionId}
                                             registerFormRef={registerFormRef}
                                             errors={errors}
+                                            getValue={getValue}
                                         />
                                     ))}
                                 <br />
@@ -57,6 +60,7 @@ export default function CorrectiveRequest({
                                                     key={item.questionId}
                                                     errors={errors}
                                                     registerFormRef={registerFormRef}
+                                                    getValue={getValue}
                                                 />
                                             ))}
                                         <br />

@@ -6,8 +6,9 @@ type Props = {
     onAnswerChange: any;
     registerFormRef: any;
     errors: any;
+    getValue: any;
 };
-export default function Question({ question, onAnswerChange, registerFormRef, errors }: Props) {
+export default function Question({ question, onAnswerChange, registerFormRef, errors, getValue }: Props) {
     return (
         <div className="card">
             <div className="card-header">{question.title} </div>
@@ -22,6 +23,7 @@ export default function Question({ question, onAnswerChange, registerFormRef, er
                                     onAnswerChange={onAnswerChange}
                                     registerFormRef={registerFormRef}
                                     errors={errors}
+                                    getValue={getValue}
                                 />
                             ))}
                         </tbody>

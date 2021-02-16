@@ -7,18 +7,19 @@ type Props = {
     answer: any;
     registerFormRef: any;
     errors: any;
+    getValue: any;
 };
-export default function TextBoxAnswer({ answer, question, onAnswerChange, registerFormRef, errors }: Props) {
+export default function TextBoxAnswer({ question, onAnswerChange, registerFormRef, errors, getValue }: Props) {
     const fieldName = `question${question.questionId}`;
     return (
         <div className="form-group">
             <input
                 type={question.title && question.title.includes('$') ? 'number' : 'text'}
                 className="form-control"
-                value={answer}
-                name={`question${question.questionId}`}
-                onChange={(e) => {
-                    let val = e.target.value;
+                value={getValue(fieldName)}
+                name={fieldName}
+                onChange={() => {
+                    let val = getValue(fieldName);
                     if (val && question.title && question.title.includes('$') && val.length > 7) {
                         val = val.substring(0, 7);
                     }

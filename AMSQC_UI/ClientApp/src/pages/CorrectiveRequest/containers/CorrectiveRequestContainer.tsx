@@ -13,7 +13,7 @@ export default function CorrectiveRequestContainer() {
     const history = useHistory();
     const dispatch = useDispatch();
     const location = useLocation<any>();
-    const { register, handleSubmit, errors } = useForm();
+    const { register, handleSubmit, errors, getValues } = useForm();
 
     // use selector
     const questions = useSelector((state: RootState) => state.survey.correctiveQuestions);
@@ -24,6 +24,7 @@ export default function CorrectiveRequestContainer() {
 
     //events
     const onAnswerChange = (answer: any, parentId: any, questionId: any, answerText: any, questionType: any = '') => {
+        console.log(answerText, answer);
         if (!answer && answerText == '[Please Select]') {
             answerText = '';
         }
@@ -100,6 +101,7 @@ export default function CorrectiveRequestContainer() {
                 submitResponses={submitResponses}
                 registerFormRef={register}
                 errors={errors}
+                getValue={getValues}
             />
         </form>
     );
