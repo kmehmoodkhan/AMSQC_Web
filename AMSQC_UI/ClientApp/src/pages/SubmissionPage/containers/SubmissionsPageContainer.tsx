@@ -38,6 +38,10 @@ export default function SubmissionsPageContainer() {
             return true;
         });
         correctiveQuestions.every((item: any) => {
+            if (!item.answer) {
+                return true;
+            }
+
             let response = {
                 UserGuid: user.localAccountId,
                 QuoteId: quoteId,

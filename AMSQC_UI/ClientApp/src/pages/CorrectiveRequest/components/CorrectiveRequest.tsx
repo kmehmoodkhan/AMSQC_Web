@@ -9,6 +9,7 @@ type Props = {
     registerFormRef: any;
     errors: any;
     getValue: any;
+    showOnlySublet: boolean;
 };
 export default function CorrectiveRequest({
     questions,
@@ -18,6 +19,7 @@ export default function CorrectiveRequest({
     registerFormRef,
     errors,
     getValue,
+    showOnlySublet,
 }: Props) {
     return (
         <div className="page ">
@@ -33,18 +35,19 @@ export default function CorrectiveRequest({
                                 >
                                     * All fields are mandatory
                                 </div>
-                                {questions
-                                    .filter((item: any) => !item.isSubletQuestion)
-                                    .map((item: any) => (
-                                        <Question
-                                            onAnswerChange={onAnswerChange}
-                                            question={item}
-                                            key={item.questionId}
-                                            registerFormRef={registerFormRef}
-                                            errors={errors}
-                                            getValue={getValue}
-                                        />
-                                    ))}
+                                {!showOnlySublet &&
+                                    questions
+                                        .filter((item: any) => !item.isSubletQuestion)
+                                        .map((item: any) => (
+                                            <Question
+                                                onAnswerChange={onAnswerChange}
+                                                question={item}
+                                                key={item.questionId}
+                                                registerFormRef={registerFormRef}
+                                                errors={errors}
+                                                getValue={getValue}
+                                            />
+                                        ))}
                                 <br />
                                 {showSublet && questions.filter((item: any) => item.isSubletQuestion).length > 0 && (
                                     <>

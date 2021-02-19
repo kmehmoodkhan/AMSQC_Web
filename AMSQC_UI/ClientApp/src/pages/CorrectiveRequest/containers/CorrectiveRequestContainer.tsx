@@ -17,6 +17,7 @@ export default function CorrectiveRequestContainer() {
 
     // use selector
     const questions = useSelector((state: RootState) => state.survey.correctiveQuestions);
+    const showOnlySublet = useSelector((state: RootState) => state.survey.showOnlySublet);
 
     // Use State
     const [questionsArray, setQuestionsArray] = useState<any[]>([]);
@@ -102,6 +103,7 @@ export default function CorrectiveRequestContainer() {
                 registerFormRef={register}
                 errors={errors}
                 getValue={getValues}
+                showOnlySublet={showOnlySublet}
             />
         </form>
     );

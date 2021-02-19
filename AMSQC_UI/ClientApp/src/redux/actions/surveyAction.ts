@@ -115,8 +115,9 @@ export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, reg
                 });
 
                 dispatch({
-                    type: actionType.SET_CORRECTIVE_QUESTIONS,
+                    type: actionType.SET_CORRECTIVE_QUESTIONS_FROM_API,
                     correctiveQuestions: questions,
+                    originalCorrectiveQuestions: [...questions],
                     showSublet: showSublet,
                 });
             } else {

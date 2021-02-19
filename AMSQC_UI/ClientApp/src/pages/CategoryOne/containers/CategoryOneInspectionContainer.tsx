@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { SubletCompletionStatus } from '../../../common/enum';
 import { GetCorrectiveQuestions, GetSurveyQuestions } from '../../../redux/actions/surveyAction';
-import { SET_SURVEY_QUESTIONS } from '../../../redux/constants/surveyConstants';
+import { SET_CORRECTIVE_QUESTIONS, SET_SURVEY_QUESTIONS } from '../../../redux/constants/surveyConstants';
 import { RootState } from '../../../redux/store';
 import { openNotificationWithWarning } from '../../Shared/Components/notification';
 import CategoryOneInspection from '../components/CategoryOneInspection';
@@ -29,8 +29,8 @@ export default function CategoryOneInspectionContainer() {
     // useSelector
     const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
     const mappingSheetPath = useSelector((state: RootState) => state.quote.mappingSheetPath);
-
     const questions = useSelector((state: RootState) => state.survey.surveyQuestions);
+    const originalCorrectiveQuestions = useSelector((state: RootState) => state.survey.originalCorrectiveQuestions);
 
     //events
     const onOptionChange = (answer: string, questionId: number, answerText: any) => {
@@ -48,17 +48,75 @@ export default function CategoryOneInspectionContainer() {
         if (questionsArray.filter((item: any) => !item.answer).length > 0) {
             openNotificationWithWarning('Please attempt all questions!', 'Survey');
         } else {
-            dispatch({
-                type: SET_SURVEY_QUESTIONS,
-                surveyType: location.state.category,
-                surveyQuestions: questionsArray,
-            });
-            history.push({
-                pathname: '/corrective-request',
-                state: {
-                    subletCompleted: subletCompleted == SubletCompletionStatus.Yes ? false : true,
-                },
-            });
+            if (
+                questionsArray.filter((item: any) => item.answerText.toLowerCase() != 'no').length == 0 &&
+                subletCompleted == SubletCompletionStatus.Yes
+            ) {
+                dispatch({
+                    type: SET_SURVEY_QUESTIONS,
+                    surveyType: location.state.category,
+                    surveyQuestions: questionsArray,
+                    showOnlySublet: false,
+                    showSublet: subletCompleted == SubletCompletionStatus.Yes ? false : true,
+                });
+                history.push('/submit-data');
+            } else if (
+                questionsArray.filter((item: any) => item.answerText.toLowerCase() != 'no').length == 0 &&
+                subletCompleted != SubletCompletionStatus.Yes
+            ) {
+                dispatch({
+                    type: SET_SURVEY_QUESTIONS,
+                    surveyType: location.state.category,
+                    surveyQuestions: questionsArray,
+                    showOnlySublet: true,
+                    showSublet: subletCompleted == SubletCompletionStatus.Yes ? false : true,
+                });
+                history.push({
+                    pathname: '/corrective-request',
+                    state: {
+                        subletCompleted: subletCompleted == SubletCompletionStatus.Yes ? false : true,
+                    },
+                });
+            } else {
+                if (questionsArray.filter((item: any) => item.answerText.toLowerCase() == 'no').length > 0) {
+                    const noAnswers = questionsArray
+                        .filter((item: any) => item.answerText.toLowerCase() == 'no')
+                        .map((item: any) => parseInt(item.questionId));
+
+                    let correctives = [...originalCorrectiveQuestions];
+
+                    originalCorrectiveQuestions.every((item: any, index: number) => {
+                        if (index >= 3) {
+                            return false;
+                        } else {
+                            correctives[index].subQuestions = [
+                                ...item.subQuestions.filter(
+                                    (item1: any) => !noAnswers.includes(parseInt(item1.surveyQuestionId)),
+                                ),
+                            ];
+                            return true;
+                        }
+                    });
+                    dispatch({
+                        type: SET_CORRECTIVE_QUESTIONS,
+                        correctiveQuestions: correctives,
+                        showSublet: subletCompleted == SubletCompletionStatus.Yes ? false : true,
+                    });
+                }
+                dispatch({
+                    type: SET_SURVEY_QUESTIONS,
+                    surveyType: location.state.category,
+                    surveyQuestions: questionsArray,
+                    showOnlySublet: false,
+                    showSublet: subletCompleted == SubletCompletionStatus.Yes ? false : true,
+                });
+                history.push({
+                    pathname: '/corrective-request',
+                    state: {
+                        subletCompleted: subletCompleted == SubletCompletionStatus.Yes ? false : true,
+                    },
+                });
+            }
         }
     };
 

@@ -38,6 +38,7 @@ export default function SubQuestion({ question, onAnswerChange, registerFormRef,
                             ? 'no-border'
                             : ''
                     }`}
+                    colSpan={question.title ? 1 : 3}
                 >
                     {question.questionType == QuestionType.Select && (
                         <SelectOptions
@@ -94,7 +95,7 @@ export default function SubQuestion({ question, onAnswerChange, registerFormRef,
             </tr>
             {question.questionType == QuestionType.Select && question.answer == DefaultAnswerIds.OtherAnswerId && (
                 <tr>
-                    <td colSpan={2}>
+                    <td colSpan={3}>
                         <CustomTextArea
                             onAnswerChange={onAnswerChange}
                             question={question}

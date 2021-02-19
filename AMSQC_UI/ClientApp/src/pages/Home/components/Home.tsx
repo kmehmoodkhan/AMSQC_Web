@@ -36,7 +36,7 @@ export default function Home({
                                     <h2>
                                         Welcome to <img src={Logo} className="logo" />
                                     </h2>
-                                    <h3> Quality Charter Program</h3>
+                                    <h3> Quality Charter</h3>
                                     <p>Please provide your Active directory user name and password to get access.</p>
                                 </div>
                             </div>
