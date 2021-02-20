@@ -49,39 +49,39 @@ export default function CategoryOneInspectionContainer() {
             openNotificationWithWarning('Please attempt all questions!', 'Survey');
         } else {
             if (
-                questionsArray.filter((item: any) => item.answerText.toLowerCase() != 'no').length == 0 &&
-                subletCompleted == SubletCompletionStatus.Yes
+                questionsArray.filter((item: any) => item.answerText.toLowerCase() == 'no').length == 0 &&
+                subletCompleted != SubletCompletionStatus.No
             ) {
                 dispatch({
                     type: SET_SURVEY_QUESTIONS,
                     surveyType: location.state.category,
                     surveyQuestions: questionsArray,
                     showOnlySublet: false,
-                    showSublet: subletCompleted == SubletCompletionStatus.Yes ? false : true,
+                    showSublet: subletCompleted == SubletCompletionStatus.No ? true : false,
                 });
                 history.push('/submit-data');
             } else if (
-                questionsArray.filter((item: any) => item.answerText.toLowerCase() != 'no').length == 0 &&
-                subletCompleted != SubletCompletionStatus.Yes
+                questionsArray.filter((item: any) => item.answerText.toLowerCase() == 'no').length == 0 &&
+                subletCompleted == SubletCompletionStatus.No
             ) {
                 dispatch({
                     type: SET_SURVEY_QUESTIONS,
                     surveyType: location.state.category,
                     surveyQuestions: questionsArray,
                     showOnlySublet: true,
-                    showSublet: subletCompleted == SubletCompletionStatus.Yes ? false : true,
+                    showSublet: subletCompleted == SubletCompletionStatus.No ? true : false,
                 });
                 history.push({
                     pathname: '/corrective-request',
                     state: {
-                        subletCompleted: subletCompleted == SubletCompletionStatus.Yes ? false : true,
+                        subletCompleted: subletCompleted == SubletCompletionStatus.No ? true : false,
                     },
                 });
             } else {
-                if (questionsArray.filter((item: any) => item.answerText.toLowerCase() == 'no').length > 0) {
+                if (questionsArray.filter((item: any) => item.answerText.toLowerCase() != 'no').length > 0) {
                     const noAnswers = questionsArray
                         .filter((item: any) => item.answerText.toLowerCase() == 'no')
-                        .map((item: any) => parseInt(item.questionId));
+                        .map((item: any) => item.questionId.toString());
 
                     let correctives = [...originalCorrectiveQuestions];
 
@@ -91,7 +91,9 @@ export default function CategoryOneInspectionContainer() {
                         } else {
                             correctives[index].subQuestions = [
                                 ...item.subQuestions.filter(
-                                    (item1: any) => !noAnswers.includes(parseInt(item1.surveyQuestionId)),
+                                    (item1: any) =>
+                                        noAnswers.filter((item2: any) => item1.surveyQuestionId.includes(item2))
+                                            .length > 0,
                                 ),
                             ];
                             return true;
@@ -100,7 +102,7 @@ export default function CategoryOneInspectionContainer() {
                     dispatch({
                         type: SET_CORRECTIVE_QUESTIONS,
                         correctiveQuestions: correctives,
-                        showSublet: subletCompleted == SubletCompletionStatus.Yes ? false : true,
+                        showSublet: subletCompleted == SubletCompletionStatus.No ? true : false,
                     });
                 }
                 dispatch({
@@ -108,12 +110,12 @@ export default function CategoryOneInspectionContainer() {
                     surveyType: location.state.category,
                     surveyQuestions: questionsArray,
                     showOnlySublet: false,
-                    showSublet: subletCompleted == SubletCompletionStatus.Yes ? false : true,
+                    showSublet: subletCompleted == SubletCompletionStatus.No ? true : false,
                 });
                 history.push({
                     pathname: '/corrective-request',
                     state: {
-                        subletCompleted: subletCompleted == SubletCompletionStatus.Yes ? false : true,
+                        subletCompleted: subletCompleted == SubletCompletionStatus.No ? true : false,
                     },
                 });
             }

@@ -94,7 +94,7 @@ export default function CorrectiveRequestContainer() {
     }, [questions]);
 
     return (
-        <form ref={register} onSubmit={handleSubmit(onSubmit)}>
+        <form name="crform" ref={register} onSubmit={handleSubmit(onSubmit)}>
             <CorrectiveRequest
                 showSublet={location.state.subletCompleted}
                 questions={questionsArray}
