@@ -92,8 +92,10 @@ export default function CategoryOneInspectionContainer() {
                             correctives[index].subQuestions = [
                                 ...item.subQuestions.filter(
                                     (item1: any) =>
-                                        noAnswers.filter((item2: any) => item1.surveyQuestionId.includes(item2))
-                                            .length > 0,
+                                        noAnswers.filter(
+                                            (item2: any) =>
+                                                item1.surveyQuestionId && item1.surveyQuestionId.includes(item2),
+                                        ).length > 0,
                                 ),
                             ];
                             return true;
