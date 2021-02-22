@@ -82,8 +82,24 @@ export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, reg
                                         sub.questionOptions = sub.questionOptions.sort(dynamicSort('title'));
                                     }
                                 }
-                                sub.answer = '';
-                                sub.answerText = '';
+                                sub.answer =
+                                    sub.questionType == QuestionType.Radio
+                                        ? sub.questionOptions.filter((opt: any) => opt.title.toLowerCase() == 'no')
+                                              .length > 0
+                                            ? sub.questionOptions.filter(
+                                                  (opt: any) => opt.title.toLowerCase() == 'no',
+                                              )[0].questionOptionId
+                                            : ''
+                                        : '';
+                                sub.answerText =
+                                    sub.questionType == QuestionType.Radio
+                                        ? sub.questionOptions.filter((opt: any) => opt.title.toLowerCase() == 'no')
+                                              .length > 0
+                                            ? sub.questionOptions.filter(
+                                                  (opt: any) => opt.title.toLowerCase() == 'no',
+                                              )[0].title
+                                            : ''
+                                        : '';
                                 return sub;
                             })
                             .sort(dynamicSort('displayOrder'));

@@ -1,5 +1,5 @@
 import React from 'react';
-import Question from './Question';
+import QuestionContainer from '../containers/QuestionContainer';
 
 type Props = {
     questions: any;
@@ -39,7 +39,7 @@ export default function CorrectiveRequest({
                                     questions
                                         .filter((item: any) => !item.isSubletQuestion)
                                         .map((item: any) => (
-                                            <Question
+                                            <QuestionContainer
                                                 onAnswerChange={onAnswerChange}
                                                 question={item}
                                                 key={item.questionId}
@@ -57,7 +57,7 @@ export default function CorrectiveRequest({
                                         {questions
                                             .filter((item: any) => item.isSubletQuestion)
                                             .map((item: any) => (
-                                                <Question
+                                                <QuestionContainer
                                                     onAnswerChange={onAnswerChange}
                                                     question={item}
                                                     key={item.questionId}

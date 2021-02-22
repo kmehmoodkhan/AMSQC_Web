@@ -8,8 +8,18 @@ type Props = {
     registerFormRef: any;
     errors: any;
     getValue: any;
+    hasRadioSibling: boolean;
+    isRadioNo: boolean;
 };
-export default function CustomTextArea({ onAnswerChange, question, registerFormRef, errors, getValue }: Props) {
+export default function CustomTextArea({
+    onAnswerChange,
+    question,
+    registerFormRef,
+    errors,
+    getValue,
+    isRadioNo,
+    hasRadioSibling,
+}: Props) {
     const fieldName = `question${question.questionId}`;
     const value =
         question.questionType == QuestionType.Select &&
@@ -18,6 +28,7 @@ export default function CustomTextArea({ onAnswerChange, question, registerFormR
             getValue(fieldName)
             ? ''
             : getValue(fieldName);
+
     return (
         <div className="form-group">
             <textarea
@@ -36,9 +47,9 @@ export default function CustomTextArea({ onAnswerChange, question, registerFormR
                         question.questionType,
                     );
                 }}
-                ref={registerFormRef({ required: true, maxLength: 500 })}
+                ref={registerFormRef({ required: !(hasRadioSibling && isRadioNo), maxLength: 500 })}
             />
-            {errors[fieldName] && errors[fieldName].type == 'required' && (
+            {errors[fieldName] && errors[fieldName].type == 'required' && !(hasRadioSibling && isRadioNo) && (
                 <div className="row alert alert-danger" style={{ paddingBottom: '5px', marginBottom: '5px' }}>
                     This field is required
                 </div>

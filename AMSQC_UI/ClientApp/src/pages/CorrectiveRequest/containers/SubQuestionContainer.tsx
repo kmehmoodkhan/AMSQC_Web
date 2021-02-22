@@ -1,9 +1,9 @@
 import React from 'react';
 import { DefaultAnswerIds, QuestionType } from '../../../common/enum';
-import RadioOptions from './RadioOptions';
-import SelectOptions from './SelectOptions';
-import CustomTextArea from './TextArea';
-import TextBoxAnswer from './TextBoxAnswer';
+import RadioOptions from '../components/RadioOptions';
+import SelectOptions from '../components/SelectOptions';
+import CustomTextArea from '../components/TextArea';
+import TextBoxAnswer from '../components/TextBoxAnswer';
 
 type Props = {
     question: any;
@@ -11,8 +11,18 @@ type Props = {
     registerFormRef: any;
     errors: any;
     getValue: any;
+    isRadioNo: boolean;
+    hasRadioSibling: boolean;
 };
-export default function SubQuestion({ question, onAnswerChange, registerFormRef, errors, getValue }: Props) {
+export default function SubQuestionContainer({
+    question,
+    onAnswerChange,
+    registerFormRef,
+    errors,
+    getValue,
+    hasRadioSibling,
+    isRadioNo,
+}: Props) {
     return (
         <>
             <tr>
@@ -89,6 +99,8 @@ export default function SubQuestion({ question, onAnswerChange, registerFormRef,
                             registerFormRef={registerFormRef}
                             errors={errors}
                             getValue={getValue}
+                            hasRadioSibling={hasRadioSibling}
+                            isRadioNo={isRadioNo}
                         />
                     )}
                 </td>
@@ -103,6 +115,8 @@ export default function SubQuestion({ question, onAnswerChange, registerFormRef,
                             registerFormRef={registerFormRef}
                             errors={errors}
                             getValue={getValue}
+                            hasRadioSibling={hasRadioSibling}
+                            isRadioNo={isRadioNo}
                         />
                     </td>
                 </tr>

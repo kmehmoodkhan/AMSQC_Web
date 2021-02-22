@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { DefaultAnswerIds, QuestionType } from '../../../common/enum';
 import { saveCorrectiveRequestQuestions } from '../../../redux/actions/surveyAction';
-import { SHOW_NOTIFICATION } from '../../../redux/constants/sharedConstants';
 import { RootState } from '../../../redux/store';
 import CorrectiveRequest from '../components/CorrectiveRequest';
 
@@ -60,32 +59,30 @@ export default function CorrectiveRequestContainer() {
     };
 
     const onSubmit = () => {
-        let allQuestionsAttempted = true;
-
         questionsArray.every((item: any) => {
             if (
                 item.subQuestions.filter(
                     (item1: any) => (!item1.answer || !item1.answerText) && item1.questionType != QuestionType.Label,
                 ).length > 0
             ) {
-                allQuestionsAttempted = false;
                 return false;
             }
             return true;
         });
-        if (allQuestionsAttempted) {
-            dispatch(saveCorrectiveRequestQuestions(questionsArray, rectified, location.state.subletCompleted));
-            history.push('/submit-data');
-        } else {
-            dispatch({
-                type: SHOW_NOTIFICATION,
-                error: {
-                    type: 'warning',
-                    description: 'Please attempt all questions before submitting',
-                    title: 'Survey',
-                },
-            });
-        }
+        //if (allQuestionsAttempted) {
+        dispatch(saveCorrectiveRequestQuestions(questionsArray, rectified, location.state.subletCompleted));
+        history.push('/submit-data');
+        //}
+        // } else {
+        //     dispatch({
+        //         type: SHOW_NOTIFICATION,
+        //         error: {
+        //             type: 'warning',
+        //             description: 'Please attempt all questions before submitting',
+        //             title: 'Survey',
+        //         },
+        //     });
+        // }
     };
 
     // useEffects

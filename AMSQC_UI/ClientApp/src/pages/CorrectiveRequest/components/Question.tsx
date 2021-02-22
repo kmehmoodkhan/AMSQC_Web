@@ -1,5 +1,5 @@
 import React from 'react';
-import SubQuestion from './SubQuestion';
+import SubQuestionContainer from '../containers/SubQuestionContainer';
 
 type Props = {
     question: any;
@@ -7,8 +7,18 @@ type Props = {
     registerFormRef: any;
     errors: any;
     getValue: any;
+    isRadioNo: boolean;
+    hasRadioSibling: boolean;
 };
-export default function Question({ question, onAnswerChange, registerFormRef, errors, getValue }: Props) {
+export default function Question({
+    question,
+    onAnswerChange,
+    registerFormRef,
+    errors,
+    getValue,
+    hasRadioSibling,
+    isRadioNo,
+}: Props) {
     return (
         <div className="card">
             <div className="card-header">{question.title} </div>
@@ -17,13 +27,15 @@ export default function Question({ question, onAnswerChange, registerFormRef, er
                     <table className="table ">
                         <tbody>
                             {question.subQuestions.map((item: any) => (
-                                <SubQuestion
+                                <SubQuestionContainer
                                     key={item.questionId}
                                     question={item}
                                     onAnswerChange={onAnswerChange}
                                     registerFormRef={registerFormRef}
                                     errors={errors}
                                     getValue={getValue}
+                                    hasRadioSibling={hasRadioSibling}
+                                    isRadioNo={isRadioNo}
                                 />
                             ))}
                         </tbody>

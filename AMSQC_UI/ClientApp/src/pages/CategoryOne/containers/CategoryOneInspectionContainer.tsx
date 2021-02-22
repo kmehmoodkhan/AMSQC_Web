@@ -49,8 +49,12 @@ export default function CategoryOneInspectionContainer() {
             openNotificationWithWarning('Please attempt all questions!', 'Survey');
         } else {
             if (
-                questionsArray.filter((item: any) => item.answerText.toLowerCase() == 'no').length == 0 &&
-                subletCompleted != SubletCompletionStatus.No
+                (questionsArray.filter((item: any) => item.answerText.toLowerCase() == 'no').length == 0 &&
+                    subletCompleted != SubletCompletionStatus.No) ||
+                (questionsArray.filter((item: any) => item.answerText.toLowerCase() == 'no').length == 0 &&
+                    questionsArray.filter((item: any) => item.answerText.toLowerCase() == 'not applicable').length >
+                        0 &&
+                    subletCompleted == SubletCompletionStatus.No)
             ) {
                 dispatch({
                     type: SET_SURVEY_QUESTIONS,
