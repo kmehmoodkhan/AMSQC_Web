@@ -51,6 +51,7 @@ namespace AMSQC.Infra.Data.Repository
                     ParentQuestionId = quest.ParentQuestionId,
                     IsSubletQuestion = quest.IsSubletQuestion,
                     IsAdUsers = quest.IsAdUsers,
+                    SurveyQuestionId = quest.SurveyQuestionId,
                     QuestionOptions = _context.QuestionOption
                     .Where(t=>t.QuestionId == quest.QuestionId)
                     .Select(qo => new QuestionOption

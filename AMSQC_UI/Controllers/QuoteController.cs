@@ -20,23 +20,29 @@ namespace AMSQC_UI.Controllers
         IStorageService _storageService = null;
         IQuoteDetailService _quoteDetailService = null;
         IUserService _userService = null;
+        IUserADService _userAdService = null;
 
         public QuoteController(
             IQuoteService quouteService, 
             IStorageService storageService, 
             IQuoteDetailService quoteDetailService,
-            IUserService userService)
+            IUserService userService,
+            IUserADService userADService)
         {
             _quouteService = quouteService;
             _storageService = storageService;
             _quoteDetailService = quoteDetailService;
             _userService = userService;
+            _userAdService = userADService;
         }
         [HttpGet]
         public Response Get(int quoteNo)
         {
             var quote = new Quote();
             quote.QuoteId = quoteNo;
+
+            var regionName = _userAdService.GetRegion("");
+
             //quote.Color = "Red";
             //quote.Company = "Honda";
             //quote.InsurerName = "GCO Insurance";

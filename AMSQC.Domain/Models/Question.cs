@@ -34,5 +34,7 @@ namespace AMSQC.Domain.Models
 
         public string AllowedSurveyTypes { get; set; }
 
+        public string SurveyQuestionId { get; set; }
+
     }
 }

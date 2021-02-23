@@ -98,7 +98,7 @@ export default function CategoryOneInspectionContainer() {
                                     (item1: any) =>
                                         noAnswers.filter(
                                             (item2: any) =>
-                                                item1.surveyQuestionId && item1.surveyQuestionId.includes(item2),
+                                                item1.surveyQuestionId && item1.surveyQuestionId.split(",").includes(item2),
                                         ).length > 0,
                                 ),
                             ];
