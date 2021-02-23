@@ -13,6 +13,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Text;
 using Microsoft.Data.SqlClient;
+using Microsoft.Identity.Web;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Graph;
+using Microsoft.Identity.Web.TokenCacheProviders.InMemory;
+using Microsoft.AspNetCore.Builder;
 
 namespace AMSQC.Infra.IoC
 {
@@ -20,12 +25,26 @@ namespace AMSQC.Infra.IoC
     {
         public static void RegisterServices(IServiceCollection services, IConfiguration configuration)
         {
+            //services.AddScoped<IAuthenticationProvider, GraphAuthenticationProvider>();
+            services.AddScoped<GraphAuthenticationProvider>();
+            //services.AddScoped<IGraphServiceClient, GraphServiceClient>();
+            services.AddScoped<IGraphProvider, MicrosoftGraphProvider>();
+            //services.AddHttpClient()
+            ////services.AddScoped<GraphClientAuthProvider>();
+            //services.AddScoped<GraphClient>();
+
             SqlAuthenticationProvider.SetProvider(SqlAuthenticationMethod.ActiveDirectoryInteractive, new SqlAppAuthenticationProvider());
 
             var ibodyShopConnectionString = $"{configuration["ConnectionStrings:IBodyShopDb"]}";
             var defaultConnectionString = $"{configuration["ConnectionStrings:Default"]}";
 
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+
+            services.Configure<AzureAdOptions>(configuration.GetSection("AzureAd"));
+            //services.AddScoped<IAuthenticationProvider, GraphAuthenticationProvider>();
+            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            //services.AddScoped<IIdentityService, AzureAdIdentityService>();
 
             //var managedIdentityInterceptor = new ConnectionInterceptor($"{configuration["AzureAD:TenantId"]}");
             services.AddDbContext<BodyShopDbContext>(o =>
@@ -50,6 +69,10 @@ namespace AMSQC.Infra.IoC
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddScoped<IUserADService, UserADService>();
+
+            //services.AddScoped<GraphClientAuthProvider>();
+            //services.AddScoped<GraphClient>();
+            //services.AddScoped<GraphServiceClient>();
         }    
     }
 }

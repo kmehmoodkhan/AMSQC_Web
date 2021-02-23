@@ -1,4 +1,5 @@
 using AMSQC.Application.ViewModels;
+using AMSQC.Infra.Data.Context;
 using AMSQC.Infra.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +12,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using System.Net;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.TokenCacheProviders.InMemory;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace AMSQC_UI
 {
@@ -25,6 +30,16 @@ namespace AMSQC_UI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var configSection = Configuration.GetSection("AzureAd");
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //   .AddMicrosoftIdentityWebApp(configSection)
+            //       .EnableTokenAcquisitionToCallDownstreamApi(new string[]{ "user.read", "User.ReadBasic.All" })
+            //           .AddMicrosoftGraph(Configuration.GetSection("GraphSettings"))
+            //           .AddDistributedTokenCaches();
+
+
+
+
             var tenantId = $"{Configuration["AzureAD:TenantId"]}";
             var authority = $"{Configuration["AzureAD:Instance"]}/{tenantId}";
 
@@ -34,7 +49,9 @@ namespace AMSQC_UI
                 $"{Configuration["AzureAD:Scope"]}"
             };
 
-            
+            services.Configure<AzureAdOptions>(Configuration.GetSection("AzureAd"));
+
+           
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                  .AddJwtBearer(options =>
@@ -50,6 +67,7 @@ namespace AMSQC_UI
                          }
                      };
                  });
+                 
 
             services.AddCors(options =>
             {
@@ -67,6 +85,7 @@ namespace AMSQC_UI
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
 
             services.AddSwaggerGen();
 
