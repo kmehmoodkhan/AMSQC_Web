@@ -78,11 +78,14 @@ namespace AMSQC_UI.Controllers
         {
             int regionId = CONST_REGION_ID;
             var detail = _quoteDetailService.GetQuoteDetail(quoteId, regionId);
+
+            UserInfo loggedinUser = new UserInfo() { UserName= "qc.appusr1@amagroupsolutions.com.au", Region = "RMA Burwood" };
+
             if (detail != null)
             {
                 return new Response
                 {
-                    Result = new { alreadySubmitted = true },
+                    Result = new { alreadySubmitted = true},
                     Status = Status.Success,
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = "Sorry, a quote has already been submitted for this Quote Number."
@@ -93,7 +96,7 @@ namespace AMSQC_UI.Controllers
                 var deletedRecords =_quoteDetailService.DeleteQuote(quoteId, regionId);
                 return new Response
                 {
-                    Result = new { alreadySubmitted = false },
+                    Result = new { alreadySubmitted = false, currentUser = loggedinUser },
                     Status = Status.Success,
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = ""
