@@ -60,10 +60,7 @@ export default function HomeContainer() {
     };
 
     const onBlur = () => {
-        if (loggedIn && quoteId) {
-            if (QuoteSteps.QuoteAvailability == quoteStep) {
-                dispatch({ type: CLEAR_QUOTE_DATA });
-            }
+        if (loggedIn && quoteId && QuoteSteps.QuoteAvailability != quoteStep) {
             if (quoteId && quoteId.length > 0 && /^\d+$/.test(quoteId)) {
                 dispatch(showLoader());
                 dispatch(GetQuoteDetails(quoteId));
@@ -76,7 +73,7 @@ export default function HomeContainer() {
     // Side Effects
 
     useEffect(() => {
-        setQuoteId(quoteNo);
+        if (quoteNo) setQuoteId(quoteNo);
     }, [quoteNo]);
 
     useEffect(() => {
