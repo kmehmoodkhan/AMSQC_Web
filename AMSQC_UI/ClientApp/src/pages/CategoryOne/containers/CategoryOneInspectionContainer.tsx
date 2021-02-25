@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { SubletCompletionStatus } from '../../../common/enum';
 import { GetCorrectiveQuestions, GetSurveyQuestions } from '../../../redux/actions/surveyAction';
-import { SET_CORRECTIVE_QUESTIONS, SET_SURVEY_QUESTIONS } from '../../../redux/constants/surveyConstants';
+import {
+    SET_CORRECTIVE_QUESTIONS,
+    SET_SURVEY_QUESTIONS,
+    SHOW_INSPECTION_PAGE,
+} from '../../../redux/constants/surveyConstants';
 import { RootState } from '../../../redux/store';
 import { openNotificationWithWarning } from '../../Shared/Components/notification';
 import CategoryOneInspection from '../components/CategoryOneInspection';
@@ -18,7 +22,6 @@ export default function CategoryOneInspectionContainer() {
     const dispatch = useDispatch();
 
     // useState
-    const [showInspectionPage, setShowInspectionPage] = useState(false);
 
     const [subletCompleted, setSubletCompleted] = useState<any>(null);
     const [numPages, setNumPages] = useState(null);
@@ -31,6 +34,7 @@ export default function CategoryOneInspectionContainer() {
     const mappingSheetPath = useSelector((state: RootState) => state.quote.mappingSheetPath);
     const questions = useSelector((state: RootState) => state.survey.surveyQuestions);
     const originalCorrectiveQuestions = useSelector((state: RootState) => state.survey.originalCorrectiveQuestions);
+    const showInspectionPage = useSelector((state: RootState) => state.survey.showInspectionPage);
 
     //events
     const onOptionChange = (answer: string, questionId: number, answerText: any) => {
@@ -98,7 +102,8 @@ export default function CategoryOneInspectionContainer() {
                                     (item1: any) =>
                                         noAnswers.filter(
                                             (item2: any) =>
-                                                item1.surveyQuestionId && item1.surveyQuestionId.split(",").includes(item2),
+                                                item1.surveyQuestionId &&
+                                                item1.surveyQuestionId.split(',').includes(item2),
                                         ).length > 0,
                                 ),
                             ];
@@ -130,7 +135,7 @@ export default function CategoryOneInspectionContainer() {
 
     const setSubletCompletedStatus = (subletStatus: SubletCompletionStatus) => {
         setSubletCompleted(subletStatus);
-        setShowInspectionPage(true);
+        dispatch({ type: SHOW_INSPECTION_PAGE, showInspectionPage: true });
         dispatch(
             GetCorrectiveQuestions(subletStatus == SubletCompletionStatus.No ? true : false, location.state.category),
         );

@@ -6,6 +6,7 @@ import {
     SET_CORRECTIVE_QUESTIONS_FROM_API,
     SET_SURVEY_QUESTIONS,
     SET_SURVEY_SUBMITTED,
+    SHOW_INSPECTION_PAGE,
 } from '../constants/surveyConstants';
 
 type surveyReducerType = {
@@ -17,6 +18,7 @@ type surveyReducerType = {
     rectified: boolean;
     showOnlySublet: boolean;
     originalCorrectiveQuestions: any[];
+    showInspectionPage: boolean;
 };
 
 const defaultState: surveyReducerType = {
@@ -28,6 +30,7 @@ const defaultState: surveyReducerType = {
     surveySubmitted: false,
     rectified: true,
     showOnlySublet: false,
+    showInspectionPage: false,
 };
 
 const surveyReducer = (state = defaultState, action: any): surveyReducerType => {
@@ -67,6 +70,9 @@ const surveyReducer = (state = defaultState, action: any): surveyReducerType => 
             };
         case CLEAR_SURVEY_DATA:
             return { ...defaultState };
+        case SHOW_INSPECTION_PAGE: {
+            return { ...state, showInspectionPage: action.showInspectionPage };
+        }
         default:
             return state;
     }

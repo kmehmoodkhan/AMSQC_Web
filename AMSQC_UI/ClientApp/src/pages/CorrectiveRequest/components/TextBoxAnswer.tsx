@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { DefaultAnswerIds } from '../../../common/enum';
 
 type Props = {
@@ -11,6 +11,7 @@ type Props = {
 };
 export default function TextBoxAnswer({ question, onAnswerChange, registerFormRef, errors, getValue }: Props) {
     const fieldName = `question${question.questionId}`;
+    const style: CSSProperties = { textAlign: 'right' };
     return (
         <div className="form-group">
             <input
@@ -18,6 +19,7 @@ export default function TextBoxAnswer({ question, onAnswerChange, registerFormRe
                 className="form-control"
                 value={getValue(fieldName)}
                 name={fieldName}
+                style={question.title && question.title.includes('$') ? style : {}}
                 onChange={() => {
                     let val = getValue(fieldName);
                     if (val && question.title && question.title.includes('$') && val.length > 7) {
