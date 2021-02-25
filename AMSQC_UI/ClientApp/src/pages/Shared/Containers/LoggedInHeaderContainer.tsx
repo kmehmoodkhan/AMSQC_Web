@@ -12,6 +12,7 @@ export default function LoggedInHeaderContainer(props: any) {
 
     // useSelector
     const user = useSelector((state: RootState) => state.user.user);
+    const region = useSelector((state: RootState) => state.user.region);
     const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
     const expiresOn = useSelector((state: RootState) => state.user.tokenExpiresOn);
     const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
@@ -39,7 +40,7 @@ export default function LoggedInHeaderContainer(props: any) {
         <>
             <LoggedInHeader
                 fullName={user?.name}
-                company=""
+                region={region}
                 onLogOut={() => {
                     // debugger;
                     // persistor.purge();

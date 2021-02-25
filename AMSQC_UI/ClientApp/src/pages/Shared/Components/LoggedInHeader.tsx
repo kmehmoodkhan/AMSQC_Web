@@ -4,10 +4,10 @@ import Logo from '../../../assets/images/logo.png';
 
 type Props = {
     fullName: string;
-    company: string;
+    region: string;
     onLogOut: any;
 };
-export default function LoggedInHeader({ fullName, company, onLogOut }: Props) {
+export default function LoggedInHeader({ fullName, region, onLogOut }: Props) {
     return (
         <nav className="navbar fixed-top  navbar-expand-lg header shadow ">
             <div className="container-fluid">
@@ -23,7 +23,7 @@ export default function LoggedInHeader({ fullName, company, onLogOut }: Props) {
                         <li className="nav-item">
                             <div className="nav-link  site-user">
                                 {' '}
-                                Welcome <b> {fullName}</b>, your site is<b> {company} </b>{' '}
+                                Welcome <b> {fullName}</b>, your site is<b> {region} </b>{' '}
                             </div>
                         </li>
                         <li className="nav-item">

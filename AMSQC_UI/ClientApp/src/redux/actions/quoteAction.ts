@@ -3,6 +3,7 @@ import { Endpoints } from '../../api/endpoints';
 import { QuoteSteps, RequestStatus } from '../../common/enum';
 import * as actionType from '../constants/quoteConstants';
 import { HIDE_LOADER, SET_ERROR_MESSAGE, SHOW_NOTIFICATION } from '../constants/sharedConstants';
+import { SET_REGION } from '../constants/userConstants';
 
 export const SetQuoteId = (quoteId: any, filePath: any) => (dispatch: any) => {
     dispatch({ type: actionType.SET_QUOTE_ID, quoteId: quoteId, filePath: filePath });
@@ -56,6 +57,10 @@ export const GetQuoteAvailable = (quoteId: any, region: string) => (dispatch: an
                         type: actionType.IS_QUOTE_AVAILABLE,
                         alreadySubmitted: false,
                         quoteStep: QuoteSteps.SubmitQuote,
+                    });
+                    dispatch({
+                        type: SET_REGION,
+                        region: response.data.result.currentUser.region,
                     });
                 }
             } else {
