@@ -26,10 +26,9 @@ namespace AMSQC_UI.Controllers
         {
             string token = HttpContext.Request.Headers["Authorization"];
 
-            var regionName = _userADService.GetRegion(token);
             return new Response
             {
-                Result = new { region = regionName },
+                Result = new { region = "" },
                 Status = Status.Success,
                 HttpStatusCode = System.Net.HttpStatusCode.OK,
                 Message = ""

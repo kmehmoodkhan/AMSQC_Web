@@ -1,8 +1,10 @@
 ﻿using AMSQC.Application.Interfaces;
 using AMSQC.Domain.Models;
 using AMSQC.Infra.Data.Context;
+using Microsoft.Extensions.Options;
 using Microsoft.Graph;
 using Microsoft.Identity.Client;
+using Microsoft.Identity.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,28 +15,40 @@ namespace AMSQC.Application.Services
 {
     public class UserADService : IUserADService
     {
-        private IGraphProvider _graphClient;
-
-        public UserADService(IGraphProvider graphClient)
+        public UserADService(ITokenAcquisition tokenAcquisition, GraphServiceClient graphServiceClient, IOptions<MicrosoftGraphOptions> graphOptions)
         {
-            _graphClient = graphClient;
+            _tokenAcquisition = tokenAcquisition;
+            _graphServiceClient = graphServiceClient;
+            _graphOptions = graphOptions;
         }
-        public async Task<string> GetRegion(string token)
+
+        private readonly ITokenAcquisition _tokenAcquisition;
+        private readonly GraphServiceClient _graphServiceClient;
+        private readonly IOptions<MicrosoftGraphOptions> _graphOptions;
+
+        public UserInfo GetUserProfile()
         {
+            User user = _graphServiceClient.Me.Request().GetAsync().GetAwaiter().GetResult();
 
-
-            var user = await _graphClient.GetRegion("")
-                .ConfigureAwait(false);
-
-            return "";
+            UserInfo userInfo = new UserInfo();
+            userInfo.UserName = user.UserPrincipalName;
+            userInfo.UserGuid = user.EmployeeId;
+            userInfo.Region = user.OfficeLocation;
+            return userInfo;
         }
 
         public List<UserInfo> GetUsers(int regionId)
         {
-            List<UserInfo> users = new List<UserInfo>();
-            users.Add(new UserInfo() { UserGuid = "12344", UserName = "John Martin" });
-            users.Add(new UserInfo() { UserGuid = "56633", UserName = "Maria Zegara" });
-            return users;
+            User currentUser = _graphServiceClient.Me.Request().GetAsync().GetAwaiter().GetResult();
+            var usersList = _graphServiceClient.Users.Request().Top(999).GetAsync().GetAwaiter().GetResult();
+
+            var usersList1 = usersList.Where(t => t.OfficeLocation == currentUser.OfficeLocation)
+                    .Select(usr => new UserInfo {
+                        UserGuid = usr.Id,
+                        UserName = usr.DisplayName
+                    }).ToList();
+
+            return usersList1;
         }
 
    
