@@ -5,12 +5,14 @@ using AMSQC.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Web.Resource;
 using System;
 using System.Threading.Tasks;
 
 namespace AMSQC_UI.Controllers
 {
     [Route("api/[controller]")]
+    [RequiredScope("web-access")]
     [ApiController]
     [Authorize]
     public class QuoteController : ControllerBase
@@ -41,12 +43,6 @@ namespace AMSQC_UI.Controllers
             var quote = new Quote();
             quote.QuoteId = quoteNo;
 
-            var regionName = _userAdService.GetRegion("");
-
-            //quote.Color = "Red";
-            //quote.Company = "Honda";
-            //quote.InsurerName = "GCO Insurance";
-            //quote.Registration = "YX400";
 
             quote = _quouteService.GetQuote(quoteNo);
             if (quote != null)
@@ -79,7 +75,7 @@ namespace AMSQC_UI.Controllers
             int regionId = CONST_REGION_ID;
             var detail = _quoteDetailService.GetQuoteDetail(quoteId, regionId);
 
-            UserInfo loggedinUser = new UserInfo() { UserName= "qc.appusr1@amagroupsolutions.com.au", Region = "RMA Burwood" };
+            UserInfo loggedinUser = _userAdService.GetUserProfile();
 
             if (detail != null)
             {

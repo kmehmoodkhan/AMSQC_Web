@@ -30,43 +30,31 @@ namespace AMSQC_UI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var configSection = Configuration.GetSection("AzureAd");
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //   .AddMicrosoftIdentityWebApp(configSection)
-            //       .EnableTokenAcquisitionToCallDownstreamApi(new string[]{ "user.read", "User.ReadBasic.All" })
-            //           .AddMicrosoftGraph(Configuration.GetSection("GraphSettings"))
-            //           .AddDistributedTokenCaches();
+            services.AddMicrosoftIdentityWebApiAuthentication(Configuration)
+                    .EnableTokenAcquisitionToCallDownstreamApi()
+                        .AddMicrosoftGraph(Configuration.GetSection("GraphSettings"))
+                        .AddInMemoryTokenCaches();
 
 
-
-
-            var tenantId = $"{Configuration["AzureAD:TenantId"]}";
-            var authority = $"{Configuration["AzureAD:Instance"]}/{tenantId}";
-
-            var audience = new List<string>
-            {
-                $"{Configuration["AzureAD:TenantId"]}",
-                $"{Configuration["AzureAD:Scope"]}"
-            };
 
             services.Configure<AzureAdOptions>(Configuration.GetSection("AzureAd"));
 
            
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                 .AddJwtBearer(options =>
-                 {
-                     options.Authority = authority;
-                     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                     {
-                         ValidAudiences = audience,
-                         ValidIssuers = new List<string>
-                         {
-                            $"https://sts.windows.net/{tenantId}",
-                            $"https://sts.windows.net/{tenantId}/v2.0",
-                         }
-                     };
-                 });
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //     .AddJwtBearer(options =>
+            //     {
+            //         options.Authority = authority;
+            //         options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            //         {
+            //             ValidAudiences = audience,
+            //             ValidIssuers = new List<string>
+            //             {
+            //                $"https://sts.windows.net/{tenantId}",
+            //                $"https://sts.windows.net/{tenantId}/v2.0",
+            //             }
+            //         };
+            //     });
                  
 
             services.AddCors(options =>
