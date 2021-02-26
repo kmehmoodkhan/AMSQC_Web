@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { SubletCompletionStatus } from '../../../common/enum';
-import { GetCorrectiveQuestions, GetSurveyQuestions } from '../../../redux/actions/surveyAction';
-import {
-    SET_CORRECTIVE_QUESTIONS,
-    SET_SURVEY_QUESTIONS,
-    SHOW_INSPECTION_PAGE,
-} from '../../../redux/constants/surveyConstants';
+import { SET_CORRECTIVE_QUESTIONS, SET_SURVEY_QUESTIONS } from '../../../redux/constants/surveyConstants';
 import { RootState } from '../../../redux/store';
 import { openNotificationWithWarning } from '../../Shared/Components/notification';
 import CategoryOneInspection from '../components/CategoryOneInspection';
-import SubletRepairs from '../components/SubletRepairs';
 
 export default function CategoryOneInspectionContainer() {
     //General hooks
@@ -22,8 +16,6 @@ export default function CategoryOneInspectionContainer() {
     const dispatch = useDispatch();
 
     // useState
-
-    const [subletCompleted, setSubletCompleted] = useState<any>(null);
     const [numPages, setNumPages] = useState(null);
 
     const [questionsArray, setQuestionsArray] = useState<any[]>([]);
@@ -34,7 +26,8 @@ export default function CategoryOneInspectionContainer() {
     const mappingSheetPath = useSelector((state: RootState) => state.quote.mappingSheetPath);
     const questions = useSelector((state: RootState) => state.survey.surveyQuestions);
     const originalCorrectiveQuestions = useSelector((state: RootState) => state.survey.originalCorrectiveQuestions);
-    const showInspectionPage = useSelector((state: RootState) => state.survey.showInspectionPage);
+    const subletCompleted = useSelector((state: RootState) => state.survey.showSublet);
+    //const region = useSelector((state: RootState) => state.user.region);
 
     //events
     const onOptionChange = (answer: string, questionId: number, answerText: any) => {
@@ -65,7 +58,7 @@ export default function CategoryOneInspectionContainer() {
                     surveyType: location.state.category,
                     surveyQuestions: questionsArray,
                     showOnlySublet: false,
-                    showSublet: subletCompleted == SubletCompletionStatus.No ? true : false,
+                    showSublet: subletCompleted,
                 });
                 history.push('/submit-data');
             } else if (
@@ -77,12 +70,12 @@ export default function CategoryOneInspectionContainer() {
                     surveyType: location.state.category,
                     surveyQuestions: questionsArray,
                     showOnlySublet: true,
-                    showSublet: subletCompleted == SubletCompletionStatus.No ? true : false,
+                    showSublet: subletCompleted,
                 });
                 history.push({
                     pathname: '/corrective-request',
                     state: {
-                        subletCompleted: subletCompleted == SubletCompletionStatus.No ? true : false,
+                        subletCompleted: subletCompleted,
                     },
                 });
             } else {
@@ -113,7 +106,7 @@ export default function CategoryOneInspectionContainer() {
                     dispatch({
                         type: SET_CORRECTIVE_QUESTIONS,
                         correctiveQuestions: correctives,
-                        showSublet: subletCompleted == SubletCompletionStatus.No ? true : false,
+                        showSublet: subletCompleted,
                     });
                 }
                 dispatch({
@@ -121,24 +114,16 @@ export default function CategoryOneInspectionContainer() {
                     surveyType: location.state.category,
                     surveyQuestions: questionsArray,
                     showOnlySublet: false,
-                    showSublet: subletCompleted == SubletCompletionStatus.No ? true : false,
+                    showSublet: subletCompleted,
                 });
                 history.push({
                     pathname: '/corrective-request',
                     state: {
-                        subletCompleted: subletCompleted == SubletCompletionStatus.No ? true : false,
+                        subletCompleted: subletCompleted,
                     },
                 });
             }
         }
-    };
-
-    const setSubletCompletedStatus = (subletStatus: SubletCompletionStatus) => {
-        setSubletCompleted(subletStatus);
-        dispatch({ type: SHOW_INSPECTION_PAGE, showInspectionPage: true });
-        dispatch(
-            GetCorrectiveQuestions(subletStatus == SubletCompletionStatus.No ? true : false, location.state.category),
-        );
     };
 
     const onDocumentLoadSuccess = ({ numPages: nextNumPages }: any) => {
@@ -149,18 +134,18 @@ export default function CategoryOneInspectionContainer() {
         setShowPDF(false);
     };
 
-    //useEffect
-    useEffect(() => {
-        if (!questions || questions.length == 0) dispatch(GetSurveyQuestions(location.state.category));
-    }, []);
+    // //useEffect
+    // useEffect(() => {
+    //     if (!questions || questions.length == 0) dispatch(GetSurveyQuestions(location.state.category, region));
+    // }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setQuestionsArray(questions);
     }, [questions]);
 
     return (
         <>
-            {showInspectionPage && questions && (
+            {questionsArray && questionsArray.length > 0 && (
                 <CategoryOneInspection
                     onNext={onNext}
                     onOptionChange={onOptionChange}
@@ -175,7 +160,6 @@ export default function CategoryOneInspectionContainer() {
                     mappingSheetPath={mappingSheetPath}
                 />
             )}
-            {!showInspectionPage && <SubletRepairs setSubletCompleted={setSubletCompletedStatus} />}
         </>
     );
 }

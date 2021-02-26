@@ -3,7 +3,7 @@ import { Endpoints } from '../../api/endpoints';
 import { QuestionType, RequestStatus, SurveyType } from '../../common/enum';
 import { SET_SURVEY_QUESTIONS } from '../constants/surveyConstants';
 import * as actionType from '../constants/surveyConstants';
-import { HIDE_LOADER, SHOW_NOTIFICATION } from '../constants/sharedConstants';
+import { HIDE_LOADER, SET_GO_NEXT, SHOW_NOTIFICATION } from '../constants/sharedConstants';
 import { dynamicSort } from '../../common/utils';
 import { showLoader } from './sharedActions';
 import { CLEAR_QUOTE_DATA } from '../constants/quoteConstants';
@@ -22,8 +22,8 @@ export const saveCorrectiveRequestQuestions = (correctiveQuestions: any[], recti
     dispatch({ type: actionType.SAVE_CORRECTIVE_REQUESTS, correctiveQuestions, rectified, showSublet });
 };
 
-export const GetSurveyQuestions = (surveyType: SurveyType, region: string = 'RMA Burmawood') => (dispatch: any) => {
-    const url = Endpoints.SurveyAPI + `?surveyType=${surveyType}&region=${region}`;
+export const GetSurveyQuestions = (surveyType: SurveyType, region: any) => (dispatch: any) => {
+    const url = Endpoints.SurveyAPI + `?surveyType=${surveyType}&regionId=${region}`;
     axiosGet(url)
         .then((response: any) => {
             if (response.data.status == RequestStatus.Success) {
@@ -55,12 +55,10 @@ export const GetSurveyQuestions = (surveyType: SurveyType, region: string = 'RMA
         .finally(() => dispatch({ type: HIDE_LOADER }));
 };
 
-export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, region: string = 'RMA Burmawood') => (
-    dispatch: any,
-) => {
+export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, region: any) => (dispatch: any) => {
     const url =
         Endpoints.SurveyAPI +
-        `?surveyType=${SurveyType.CorrectiveActionRequest}&region=${region}&parentType=${parentType}`;
+        `?surveyType=${SurveyType.CorrectiveActionRequest}&regionId=${region}&parentType=${parentType}`;
     axiosGet(url)
         .then((response: any) => {
             if (response.data.status == RequestStatus.Success && response.data.result.survey.questions) {
@@ -136,6 +134,7 @@ export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, reg
                     originalCorrectiveQuestions: [...questions],
                     showSublet: showSublet,
                 });
+                dispatch({ type: SET_GO_NEXT, goToNext: true });
             } else {
                 dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error' } });
             }

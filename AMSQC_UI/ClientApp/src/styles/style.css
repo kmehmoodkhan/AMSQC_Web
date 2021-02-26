@@ -1141,6 +1141,31 @@ select.form-control {
     color: #fff;
 }
 
+.ant-btn.btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+.ant-btn.btn-outline-danger:hover,
+.ant-btn.btn-outline-danger:focus {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.ant-btn.btn-secondary-outline {
+    color: #656565;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.ant-btn.btn-secondary-outline:hover,
+.ant-btn.btn-secondary-outline:focus {
+    color: #656565;
+    border: 1px solid #656565;
+    background-color: #fff;
+}
+
 .ant-btn.btn-lg {
     padding: 0.5rem 1rem;
     font-size: 1.25rem;

@@ -20,6 +20,8 @@ export default function FileUploadContainer() {
     // const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
     const quote = useSelector((state: RootState) => state.quote.quoteDetails);
     const user = useSelector((state: RootState) => state.user.user);
+    const region = useSelector((state: RootState) => state.user.region);
+    const regionId = useSelector((state: RootState) => state.user.regionId);
     const loading = useSelector((state: RootState) => state.shared.loading);
     const mappingSheetAlreadyUploaded = useSelector((state: RootState) => state.quote.mappingSheetUploaded);
 
@@ -53,7 +55,7 @@ export default function FileUploadContainer() {
     const onFileUpload = () => {
         if (fileRef && fileRef.current && fileRef.current.files && fileRef.current.files.length > 0) {
             dispatch(showLoader());
-            UploadMappingSheet(fileRef.current.files[0], quote, user)
+            UploadMappingSheet(fileRef.current.files[0], quote, user, region, regionId)
                 .then((response: any) => {
                     if (response.data.status == RequestStatus.Success) {
                         setFileUploadStep(3);

@@ -1,10 +1,14 @@
+import { Button } from 'antd';
 import React from 'react';
 import { SubletCompletionStatus } from '../../../common/enum';
 
 type Props = {
     setSubletCompleted: any;
+    subletCompletion: SubletCompletionStatus;
+    loading: boolean;
 };
-export default function SubletRepairs({ setSubletCompleted }: Props) {
+
+export default function SubletRepairs({ setSubletCompleted, subletCompletion, loading }: Props) {
     return (
         <div className="page ">
             <div className="container-fluid">
@@ -17,7 +21,37 @@ export default function SubletRepairs({ setSubletCompleted }: Props) {
                                 defects?
                             </p>
                             <div className="buttons">
-                                <button
+                                <Button
+                                    name="yes"
+                                    className="btn btn-primary btn-lg btn-wide"
+                                    value="Submit"
+                                    onClick={() => setSubletCompleted(SubletCompletionStatus.Yes)}
+                                    loading={loading && subletCompletion == SubletCompletionStatus.Yes}
+                                    disabled={loading && subletCompletion != SubletCompletionStatus.Yes}
+                                >
+                                    Yes
+                                </Button>
+                                <Button
+                                    name="yes"
+                                    className="btn btn-outline-danger btn-lg btn-wide"
+                                    value="Submit"
+                                    onClick={() => setSubletCompleted(SubletCompletionStatus.No)}
+                                    loading={loading && subletCompletion == SubletCompletionStatus.No}
+                                    disabled={loading && subletCompletion != SubletCompletionStatus.No}
+                                >
+                                    No
+                                </Button>
+                                <Button
+                                    name="yes"
+                                    className="btn btn-secondary-outline btn-lg btn-wide"
+                                    value="Submit"
+                                    onClick={() => setSubletCompleted(SubletCompletionStatus.NA)}
+                                    loading={loading && subletCompletion == SubletCompletionStatus.NA}
+                                    disabled={loading && subletCompletion != SubletCompletionStatus.NA}
+                                >
+                                    N/A
+                                </Button>
+                                {/* <button
                                     type="button"
                                     className="btn btn-primary btn-lg btn-wide"
                                     onClick={() => setSubletCompleted(SubletCompletionStatus.Yes)}
@@ -37,7 +71,7 @@ export default function SubletRepairs({ setSubletCompleted }: Props) {
                                     onClick={() => setSubletCompleted(SubletCompletionStatus.NA)}
                                 >
                                     N/A
-                                </button>
+                                </button> */}
                             </div>
                         </div>
                     </div>

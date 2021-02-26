@@ -34,6 +34,8 @@ export default function HomeContainer() {
 
     const expiresOn = useSelector((state: RootState) => state.user.tokenExpiresOn);
 
+    const region = useSelector((state: RootState) => state.user.region);
+
     // Use State
     const [quoteId, setQuoteId] = useState('');
     const [hasError, setHasError] = useState(false);
@@ -55,7 +57,7 @@ export default function HomeContainer() {
                 break;
             case QuoteSteps.QuoteAvailability:
                 dispatch(showLoader());
-                dispatch(GetQuoteAvailable(quoteId, 'RMA Burmawood'));
+                dispatch(GetQuoteAvailable(quoteId, region));
                 break;
         }
     };

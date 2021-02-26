@@ -1,4 +1,5 @@
 import CategoryOneInspectionContainer from '../pages/CategoryOne/containers/CategoryOneInspectionContainer';
+import SubletRepairsContainer from '../pages/CategoryOne/containers/SubletRepairsContainer';
 import CorrectiveRequestContainer from '../pages/CorrectiveRequest/containers/CorrectiveRequestContainer';
 import DamageCategoriesContainer from '../pages/DamageCategories/containers/DamageCategoriesContainer';
 import FileUploadContainer from '../pages/FileUpload/Containers/FileUploadContainer';
@@ -15,6 +16,7 @@ export const ROUTES = {
     CORRECTIVE_REQUEST: '/corrective-request',
     SUBMIT_DATA: '/submit-data',
     LOG_OUT: '/log-out/:accountid',
+    SUBLET_REPAIR: '/sublet-repair',
 };
 
 export const COMPONENTS = {
@@ -26,4 +28,5 @@ export const COMPONENTS = {
     CorrectiveRequest: CorrectiveRequestContainer,
     SubmitData: SubmissionsPageContainer,
     LogOut: LogOutContainer,
+    SubletRepair: SubletRepairsContainer,
 };

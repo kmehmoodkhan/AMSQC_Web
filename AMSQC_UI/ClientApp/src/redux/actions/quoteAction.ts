@@ -61,6 +61,7 @@ export const GetQuoteAvailable = (quoteId: any, region: string) => (dispatch: an
                     dispatch({
                         type: SET_REGION,
                         region: response.data.result.currentUser.region,
+                        regionId: response.data.result.currentUser.regionId,
                     });
                 }
             } else {
@@ -73,7 +74,7 @@ export const GetQuoteAvailable = (quoteId: any, region: string) => (dispatch: an
         .finally(() => dispatch({ type: HIDE_LOADER }));
 };
 
-export const UploadMappingSheet = async (mappingSheet: any, quote: any, user: any) => {
+export const UploadMappingSheet = async (mappingSheet: any, quote: any, user: any, region: any, regionId: any) => {
     const url = Endpoints.QuoteAPI.UploadMappingSheet;
     const formData = new FormData();
     formData.append('MappingSheet', mappingSheet);
@@ -85,5 +86,7 @@ export const UploadMappingSheet = async (mappingSheet: any, quote: any, user: an
     formData.append('QuoteDetail.UserGuid', user.localAccountId);
     formData.append('QuoteDetail.UserName', user.username);
     formData.append('QuoteDetail.InsurerName', quote.insurerName);
+    formData.append('QuoteDetail.Region', region);
+    formData.append('QuoteDetail.RegionId', regionId);
     return axiosFormPost(url, formData);
 };

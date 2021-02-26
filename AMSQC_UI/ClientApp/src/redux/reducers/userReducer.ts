@@ -6,6 +6,7 @@ type userReducerType = {
     accessToken: string;
     tokenExpiresOn: Date | null;
     region: string | null;
+    regionId: number;
 };
 
 const defaultState: userReducerType = {
@@ -14,6 +15,7 @@ const defaultState: userReducerType = {
     accessToken: '',
     tokenExpiresOn: null,
     region: '',
+    regionId: 0,
 };
 
 const userReducer = (state = defaultState, action: any): userReducerType => {
@@ -25,9 +27,10 @@ const userReducer = (state = defaultState, action: any): userReducerType => {
                 accessToken: action.user.accessToken,
                 tokenExpiresOn: action.user.expiresOn,
                 region: '',
+                regionId: 0,
             };
         case SET_REGION:
-            return { ...state, region: action.region };
+            return { ...state, region: action.region, regionId: action.regionId };
         default:
             return state;
     }

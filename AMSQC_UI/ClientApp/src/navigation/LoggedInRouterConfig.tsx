@@ -10,6 +10,7 @@ export default function LoggedInRouterConfig() {
             <Route exact path={ROUTES.INSPECTION} component={COMPONENTS.Inspection} />
             <Route exact path={ROUTES.CORRECTIVE_REQUEST} component={COMPONENTS.CorrectiveRequest} />
             <Route exact path={ROUTES.SUBMIT_DATA} component={COMPONENTS.SubmitData} />
+            <Route exact path={ROUTES.SUBLET_REPAIR} component={COMPONENTS.SubletRepair} />
         </>
     );
 }

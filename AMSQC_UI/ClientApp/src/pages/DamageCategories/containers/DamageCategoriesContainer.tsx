@@ -23,7 +23,7 @@ export default function DamageCategoriesContainer() {
     const onContinue = () => {
         if (selectedCategory > 0) {
             history.push({
-                pathname: '/inspection',
+                pathname: '/sublet-repair',
                 state: { category: selectedCategory },
             });
         } else {
