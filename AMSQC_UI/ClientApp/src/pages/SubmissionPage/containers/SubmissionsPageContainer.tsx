@@ -38,10 +38,6 @@ export default function SubmissionsPageContainer() {
             return true;
         });
         correctiveQuestions.every((item: any) => {
-            if (!item.answer) {
-                return true;
-            }
-
             let response = {
                 UserGuid: user.localAccountId,
                 QuoteId: quoteId,
@@ -51,11 +47,11 @@ export default function SubmissionsPageContainer() {
                 IsSubletQuestion: item.isSubletQuestion,
             };
             response.Answers = item.subQuestions
-                .filter((item1: any) => item1.questionType != QuestionType.Label)
+                .filter((item1: any) => item1.questionType != QuestionType.Label && item1.answerText)
                 .map((item1: any) => item1.answerText)
                 .join('@@');
             response.AnswerIds = item.subQuestions
-                .filter((item1: any) => item1.questionType != QuestionType.Label)
+                .filter((item1: any) => item1.questionType != QuestionType.Label && item1.answer)
                 .map((item1: any) => item1.answer)
                 .join('@@');
             responses.push(response);

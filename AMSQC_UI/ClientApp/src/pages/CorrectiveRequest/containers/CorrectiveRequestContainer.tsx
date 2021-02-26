@@ -24,7 +24,6 @@ export default function CorrectiveRequestContainer() {
 
     //events
     const onAnswerChange = (answer: any, parentId: any, questionId: any, answerText: any, questionType: any = '') => {
-        console.log(answerText, answer);
         if (!answer && answerText == '[Please Select]') {
             answerText = '';
         }
