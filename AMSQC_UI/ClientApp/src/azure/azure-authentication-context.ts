@@ -59,24 +59,25 @@ export class AzureAuthenticationContext {
         //console.log(this.myMSALObj.getAllAccounts(), user);
         this.myMSALObj.setActiveAccount(user);
         //console.log(this.myMSALObj.getAllAccounts(), user);
-        this.myMSALObj
-            .acquireTokenSilent(PopUpRequest)
-            .then((resp: AuthenticationResult) => {
-                if (!resp.fromCache) {
-                    this.handleResponse(resp, setUser, callback);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-                this.login('loginPopup', setUser, callback);
-                //store.dispatch({ type: 'HIDE_LOADER' });
-            });
+        if (this.myMSALObj.getActiveAccount())
+            this.myMSALObj
+                .acquireTokenSilent(PopUpRequest)
+                .then((resp: AuthenticationResult) => {
+                    if (!resp.fromCache) {
+                        this.handleResponse(resp, setUser, callback);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                    this.login('loginPopup', setUser, callback);
+                    //store.dispatch({ type: 'HIDE_LOADER' });
+                });
     }
 
     logout(account: AccountInfo): Promise<void> {
         const logOutRequest: EndSessionRequest = {
             account,
-            postLogoutRedirectUri: '/log-out/' + account.localAccountId,
+            postLogoutRedirectUri: '/log-out',
         };
 
         return this.myMSALObj.logout(logOutRequest);

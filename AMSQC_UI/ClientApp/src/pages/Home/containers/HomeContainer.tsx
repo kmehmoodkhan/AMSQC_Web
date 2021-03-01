@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { logIn } from '../../../azure/azure-authentication-service';
@@ -79,7 +79,7 @@ export default function HomeContainer() {
         if (quoteNo) setQuoteId(quoteNo);
     }, [quoteNo]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setTimeout(() => {
             dispatch({ type: CLEAR_QUOTE_DATA });
             dispatch({ type: CLEAR_SURVEY_DATA });

@@ -26,6 +26,7 @@ export default function TokenRefreshContainer() {
                 window.clearInterval(intervalId);
             }
             if (expiry > now) {
+                refreshToken(user, () => {});
                 let id = window.setInterval(() => {
                     refreshToken(user, () => {});
                 }, 30000);

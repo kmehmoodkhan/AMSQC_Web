@@ -15,7 +15,7 @@ export const ROUTES = {
     INSPECTION: '/inspection',
     CORRECTIVE_REQUEST: '/corrective-request',
     SUBMIT_DATA: '/submit-data',
-    LOG_OUT: '/log-out/:accountid',
+    LOG_OUT: '/log-out',
     SUBLET_REPAIR: '/sublet-repair',
 };
 

@@ -8,7 +8,7 @@ export const MSAL_CONFIG: Configuration = {
         authority: 'https://login.microsoftonline.com/24e5c438-26c7-4e34-9d59-32f09f793bc9',
     },
     cache: {
-        cacheLocation: 'sessionStorage',
+        cacheLocation: 'localStorage',
         storeAuthStateInCookie: false,
     },
     system: {
