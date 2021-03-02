@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { QuestionType } from '../../../common/enum';
+import { DefaultAnswerIds, QuestionType } from '../../../common/enum';
 import { SubmitSurveyResponses } from '../../../redux/actions/surveyAction';
 import { RootState } from '../../../redux/store';
 import SubmissionsPage from '../components/SubmissionsPage';
@@ -38,6 +38,7 @@ export default function SubmissionsPageContainer() {
             return true;
         });
         correctiveQuestions.every((item: any) => {
+            debugger;
             let response = {
                 UserGuid: user.localAccountId,
                 QuoteId: quoteId,
@@ -52,7 +53,9 @@ export default function SubmissionsPageContainer() {
                 .join('@@');
             response.AnswerIds = item.subQuestions
                 .filter((item1: any) => item1.questionType != QuestionType.Label && item1.answer)
-                .map((item1: any) => item1.answer)
+                .map((item1: any) => {
+                    return item1.isOtherSelected ? DefaultAnswerIds.OtherAnswerId : item1.answer;
+                })
                 .join('@@');
             responses.push(response);
 
