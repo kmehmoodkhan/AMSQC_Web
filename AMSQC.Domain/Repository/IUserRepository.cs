@@ -11,6 +11,10 @@ namespace AMSQC.Domain.Repository
     {
         int AddUser(UserInfo user);
 
-        UserInfo GetUser(string userGuid);
+        UserInfo GetUser(Guid userGuid);
+
+        List<UserInfo> GetUsers(int regionId);
+
+        int AddUsers(List<UserInfo> users);
     }
 }

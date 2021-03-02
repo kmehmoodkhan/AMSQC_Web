@@ -42,13 +42,13 @@ namespace AMSQC.Application.Services
             var userResponse = surveyResponse.response;
             var userInfo= surveyResponse.response.FirstOrDefault();
 
-            string userGuid = "";
+           
             int userId = 0;
             int regionId = 0;
 
             if (userInfo != null)
             {
-                userGuid = userInfo.UserGuid;
+                Guid userGuid = userInfo.UserGuid;
                 var user= _userRepository.GetUser(userGuid);
 
                 if(user != null)

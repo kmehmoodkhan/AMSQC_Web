@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace AMSQC.Application.Interfaces
 {
-    public interface IUserADService
+    public interface IRegionService
     {
-        List<UserInfo> GetUsers(int regionId);
-        UserInfo GetUserProfile();
+        public Region GetRegion(string title);
+        public Region GetRegion(int Id);
+
+        public List<Region> GetRegions();
     }
 }

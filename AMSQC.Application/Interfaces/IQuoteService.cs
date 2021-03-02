@@ -7,6 +7,6 @@ namespace AMSQC.Application.Interfaces
 {
     public interface IQuoteService
     {
-        Quote GetQuote(int id);
+        Quote GetQuote(int id,int regionId);
     }
 }

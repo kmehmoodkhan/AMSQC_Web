@@ -13,7 +13,6 @@ namespace AMSQC_UI.Controllers
     [Authorize]
     public class SurveyController : ControllerBase
     {
-        const int CONST_REGION_ID = 2102;
         ISurveyService _surveyService = null;
         public SurveyController(ISurveyService surveyService)
         {
@@ -22,10 +21,10 @@ namespace AMSQC_UI.Controllers
 
 
         [HttpGet]
-        public Response Get(int surveyType,string region, ParentType parentType=default)
+        public Response Get(int surveyType,int regionId, ParentType parentType=default)
         {
            
-            var survey = _surveyService.GetSurveyDetail(surveyType, CONST_REGION_ID, parentType);
+            var survey = _surveyService.GetSurveyDetail(surveyType, regionId, parentType);
 
             return new Response
             {
@@ -41,8 +40,6 @@ namespace AMSQC_UI.Controllers
 
         public Response Post(SurveyResponseViewModel vm)
         {
-            vm.RegionId = CONST_REGION_ID;
-
             var answerLength = vm.response.Where(t => t.Answers.Length > 0 && t.Answers.Length > 499);
 
             if (answerLength.Count()<1)

@@ -7,6 +7,6 @@ namespace AMSQC.Domain.Repository
 {
     public interface IQuoteRepository
     {
-        Quote GetQuote(int id);
+        Quote GetQuote(int id,int regionId);
     }
 }

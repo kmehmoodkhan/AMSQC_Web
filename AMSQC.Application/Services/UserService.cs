@@ -28,9 +28,21 @@ namespace AMSQC.Application.Services
             return userInfo;
         }
 
-        public UserInfo GetUser(string userGuid)
+        public UserInfo GetUser(Guid userGuid)
         {
             var result = _userRepository.GetUser(userGuid);
+            return result;
+        }
+
+        public List<UserInfo> GetUsers(int regionId)
+        {
+            var result = _userRepository.GetUsers(regionId);
+            return result;
+        }
+
+        public int AddUsers(List<UserInfo> users)
+        {
+            var result = _userRepository.AddUsers(users);
             return result;
         }
     }
