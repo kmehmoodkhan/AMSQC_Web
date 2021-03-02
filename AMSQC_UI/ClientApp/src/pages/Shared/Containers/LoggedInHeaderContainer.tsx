@@ -16,6 +16,7 @@ export default function LoggedInHeaderContainer(props: any) {
     const loggedIn = useSelector((state: RootState) => state.user.loggedIn);
     const expiresOn = useSelector((state: RootState) => state.user.tokenExpiresOn);
     const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
+    const forceLogout = useSelector((state: RootState) => state.shared.forceLogout);
 
     useEffect(() => {
         if (expiresOn) {
@@ -35,6 +36,12 @@ export default function LoggedInHeaderContainer(props: any) {
             history.push('/');
         }
     }, [loggedIn, expiresOn, quoteNo]);
+
+    useEffect(() => {
+        if (forceLogout) {
+            history.push('/log-out');
+        }
+    }, [forceLogout]);
 
     return (
         <>

@@ -2,6 +2,7 @@ import AzureAuthenticationContext from './azure-authentication-context';
 import { AuthenticationResult } from '@azure/msal-browser';
 import store from '../redux/store';
 import { SET_USER } from '../redux/constants/userConstants';
+import { FORCE_LOG_OUT } from '../redux/constants/sharedConstants';
 
 const ua = window.navigator.userAgent;
 const msie = ua.indexOf('MSIE ');
@@ -26,7 +27,9 @@ export const refreshToken = (user: any, callback: any): any => {
 export const logOut = (user: any) => {
     if (user) {
         // Azure Logout
-        authenticationModule.logout(user);
+        authenticationModule.logout(user).catch(() => {
+            store.dispatch({ type: FORCE_LOG_OUT });
+        });
     }
 };
 
