@@ -38,7 +38,6 @@ export default function SubmissionsPageContainer() {
             return true;
         });
         correctiveQuestions.every((item: any) => {
-            debugger;
             let response = {
                 UserGuid: user.localAccountId,
                 QuoteId: quoteId,
