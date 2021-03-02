@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
-import { DefaultAnswerIds, QuestionType } from '../../../common/enum';
+import { QuestionType } from '../../../common/enum';
 import { saveCorrectiveRequestQuestions } from '../../../redux/actions/surveyAction';
 import { RootState } from '../../../redux/store';
 import CorrectiveRequest from '../components/CorrectiveRequest';
@@ -24,18 +24,16 @@ export default function CorrectiveRequestContainer() {
 
     //events
     const onAnswerChange = (answer: any, parentId: any, questionId: any, answerText: any, questionType: any = '') => {
+        let isOtherSelected = false;
         if (!answer && answerText == '[Please Select]') {
             answerText = '';
         }
-        if (
-            answer &&
-            (answerText == 'Other' || answer == DefaultAnswerIds.OtherAnswerId) &&
-            questionType == QuestionType.Select
-        ) {
-            if (answer != DefaultAnswerIds.OtherAnswerId) {
-                answerText = '';
-            }
-            answer = DefaultAnswerIds.OtherAnswerId;
+        if (answer && answerText == 'Other' && questionType == QuestionType.Select) {
+            answerText = '';
+            isOtherSelected = true;
+        }
+        if (answer && questionType == QuestionType.Select && answer == -2) {
+            isOtherSelected = true;
         }
         let updatedQuestions = [...questionsArray];
         updatedQuestions = updatedQuestions.map((item: any) => {
@@ -44,6 +42,7 @@ export default function CorrectiveRequestContainer() {
                     if (item1.questionId == questionId) {
                         item1.answer = answer;
                         item1.answerText = answerText;
+                        item1.isOtherSelected = isOtherSelected;
                     }
                     return item1;
                 });

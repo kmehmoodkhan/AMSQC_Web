@@ -13,6 +13,7 @@ type Props = {
     onBlur: any;
     hasError: any;
     errorMessage: String;
+    quoteRef: any;
 };
 export default function Home({
     onQuoteChange,
@@ -23,6 +24,7 @@ export default function Home({
     onBlur,
     hasError,
     errorMessage,
+    quoteRef,
 }: Props) {
     return (
         <>
@@ -58,6 +60,7 @@ export default function Home({
                                                 onSubmit();
                                             }
                                         }}
+                                        ref={quoteRef}
                                     />
                                 </div>
                                 {hasError && <div className="alert alert-danger">{errorMessage}</div>}

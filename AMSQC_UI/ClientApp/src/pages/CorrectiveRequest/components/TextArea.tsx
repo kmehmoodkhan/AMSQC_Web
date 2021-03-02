@@ -20,7 +20,7 @@ export default function CustomTextArea({
     isRadioNo,
     hasRadioSibling,
 }: Props) {
-    const fieldName = `question${question.questionId}`;
+    const fieldName = `textArea${question.questionId}`;
     const value =
         question.questionType == QuestionType.Select &&
         question.questionOptions.filter((item: any) => item.title.toLowerCase() === 'other').length > 0 &&
@@ -35,12 +35,10 @@ export default function CustomTextArea({
                 rows={3}
                 className="form-control"
                 value={value}
-                name={`question${question.questionId}`}
+                name={`textArea${question.questionId}`}
                 onChange={() => {
                     onAnswerChange(
-                        question.answer == DefaultAnswerIds.OtherAnswerId
-                            ? question.answer
-                            : DefaultAnswerIds.TextAreaAnswerId,
+                        DefaultAnswerIds.TextAreaAnswerId,
                         question.parentQuestionId,
                         question.questionId,
                         getValue(fieldName),

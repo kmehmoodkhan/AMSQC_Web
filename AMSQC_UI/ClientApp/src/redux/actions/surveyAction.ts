@@ -98,6 +98,7 @@ export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, reg
                                               )[0].title
                                             : ''
                                         : '';
+                                sub.isOtherSelected = false;
                                 return sub;
                             })
                             .sort(dynamicSort('displayOrder'));
@@ -118,6 +119,7 @@ export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, reg
                                         questionId: item.questionId,
                                     };
                                 }),
+                                isOtherSelected: false,
                             };
                             item.subQuestions.push(question);
                         }

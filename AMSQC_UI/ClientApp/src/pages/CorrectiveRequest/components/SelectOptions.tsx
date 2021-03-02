@@ -7,18 +7,21 @@ type Props = {
     question: any;
     registerFormRef: any;
     errors: any;
+    getValue: any;
 };
-export default function SelectOptions({ options, answer, onAnswerChange, question, registerFormRef, errors }: Props) {
+export default function SelectOptions({ options, onAnswerChange, question, registerFormRef, errors, getValue }: Props) {
     const fieldName = `question${question.questionId}`;
+    const val = getValue(fieldName);
     return (
         <div className="form-group">
             <select
                 className="form-control"
-                value={answer}
-                name={`question${question.questionId}`}
+                value={val}
+                name={fieldName}
+                id={fieldName}
                 onChange={(e) => {
                     onAnswerChange(
-                        e.target.value,
+                        getValue(fieldName),
                         question.parentQuestionId,
                         question.questionId,
                         e.target.options[e.target.selectedIndex].text,

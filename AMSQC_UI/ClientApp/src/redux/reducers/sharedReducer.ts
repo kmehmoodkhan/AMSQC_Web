@@ -1,6 +1,8 @@
 import { Error } from '../../common/types';
 import {
+    FORCE_LOG_OUT,
     HIDE_LOADER,
+    RESET_LOG_OUT,
     SET_ERROR_MESSAGE,
     SET_GO_NEXT,
     SHOW_LOADER,
@@ -12,6 +14,7 @@ type sharedReducerType = {
     error: Error | null;
     errorMessage: string;
     goToNext: boolean;
+    forceLogout: boolean;
 };
 
 const defaultState: sharedReducerType = {
@@ -19,6 +22,7 @@ const defaultState: sharedReducerType = {
     error: null,
     errorMessage: '',
     goToNext: false,
+    forceLogout: false,
 };
 
 const sharedReducer = (state = defaultState, action: any): sharedReducerType => {
@@ -48,6 +52,16 @@ const sharedReducer = (state = defaultState, action: any): sharedReducerType => 
             return {
                 ...state,
                 goToNext: action.goToNext,
+            };
+        case FORCE_LOG_OUT:
+            return {
+                ...state,
+                forceLogout: true,
+            };
+        case RESET_LOG_OUT:
+            return {
+                ...state,
+                forceLogout: false,
             };
         default:
             return state;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { DefaultAnswerIds, QuestionType } from '../../../common/enum';
+import { QuestionType } from '../../../common/enum';
 import RadioOptions from '../components/RadioOptions';
 import SelectOptions from '../components/SelectOptions';
 import CustomTextArea from '../components/TextArea';
@@ -29,10 +29,7 @@ export default function SubQuestionContainer({
                 {question.title && (
                     <td
                         className={`${
-                            question.questionType == QuestionType.Select &&
-                            question.answer == DefaultAnswerIds.OtherAnswerId
-                                ? 'no-border'
-                                : ''
+                            question.questionType == QuestionType.Select && question.isOtherSelected ? 'no-border' : ''
                         }`}
                     >
                         <div className={`name ${QuestionType.Label == question.questionType ? 'height-title' : ''}`}>
@@ -43,10 +40,7 @@ export default function SubQuestionContainer({
                 )}
                 <td
                     className={`${
-                        question.questionType == QuestionType.Select &&
-                        question.answer == DefaultAnswerIds.OtherAnswerId
-                            ? 'no-border'
-                            : ''
+                        question.questionType == QuestionType.Select && question.isOtherSelected ? 'no-border' : ''
                     }`}
                     colSpan={question.title ? 1 : 3}
                 >
@@ -56,19 +50,20 @@ export default function SubQuestionContainer({
                             onAnswerChange={onAnswerChange}
                             question={question}
                             answer={
-                                question.answer == DefaultAnswerIds.OtherAnswerId
+                                question.isOtherSelected
                                     ? question.questionOptions.filter((item: any) => item.title == 'Other')[0]
                                           .questionOptionId
                                     : question.answer
                             }
                             registerFormRef={registerFormRef}
                             errors={
-                                question.answer == DefaultAnswerIds.OtherAnswerId
+                                question.isOtherSelected
                                     ? null
-                                    : question.answer != DefaultAnswerIds.OtherAnswerId && question.answer
+                                    : !question.isOtherSelected && question.answer
                                     ? null
                                     : errors
                             }
+                            getValue={getValue}
                         />
                     )}
                     {question.questionType == QuestionType.Radio && (
@@ -105,7 +100,7 @@ export default function SubQuestionContainer({
                     )}
                 </td>
             </tr>
-            {question.questionType == QuestionType.Select && question.answer == DefaultAnswerIds.OtherAnswerId && (
+            {question.questionType == QuestionType.Select && question.isOtherSelected && (
                 <tr>
                     <td colSpan={3}>
                         <CustomTextArea

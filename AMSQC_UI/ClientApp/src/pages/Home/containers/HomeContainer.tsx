@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { logIn } from '../../../azure/azure-authentication-service';
@@ -39,6 +39,10 @@ export default function HomeContainer() {
     // Use State
     const [quoteId, setQuoteId] = useState('');
     const [hasError, setHasError] = useState(false);
+
+    //useREf
+
+    const quoteRef = useRef<any>();
 
     // Events and helpers
     const onSubmit = () => {
@@ -85,6 +89,7 @@ export default function HomeContainer() {
             dispatch({ type: CLEAR_SURVEY_DATA });
             setQuoteId('');
         }, 100);
+        quoteRef.current.focus();
     }, []);
 
     useEffect(() => {
@@ -138,6 +143,7 @@ export default function HomeContainer() {
                 onBlur={onBlur}
                 hasError={hasError}
                 errorMessage={errorMessage}
+                quoteRef={quoteRef}
             />
         </>
     );
