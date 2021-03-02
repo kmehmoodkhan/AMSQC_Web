@@ -15,16 +15,16 @@ namespace AMSQC.Application.Services
 {
     public class UserADService : IUserADService
     {
-        public UserADService(ITokenAcquisition tokenAcquisition, GraphServiceClient graphServiceClient, IOptions<MicrosoftGraphOptions> graphOptions)
+        IUserService _userService = null;
+        IRegionService _regionService = null;
+        public UserADService(GraphServiceClient graphServiceClient, IUserService userService, IRegionService regionService)
         {
-            _tokenAcquisition = tokenAcquisition;
             _graphServiceClient = graphServiceClient;
-            _graphOptions = graphOptions;
+            _userService = userService;
+            _regionService = regionService;
         }
 
-        private readonly ITokenAcquisition _tokenAcquisition;
         private readonly GraphServiceClient _graphServiceClient;
-        private readonly IOptions<MicrosoftGraphOptions> _graphOptions;
 
         public UserInfo GetUserProfile()
         {
@@ -32,22 +32,61 @@ namespace AMSQC.Application.Services
 
             UserInfo userInfo = new UserInfo();
             userInfo.UserName = user.UserPrincipalName;
-            userInfo.UserGuid = user.EmployeeId;
+            userInfo.UserGuid =Guid.Parse(user.Id);
             userInfo.Region = user.OfficeLocation;
+            userInfo.FullName = user.DisplayName;
+
+            if (!string.IsNullOrEmpty(user.OfficeLocation)) {
+                var regionTemp = _regionService.GetRegion(user.OfficeLocation);
+                if(regionTemp != null)
+                {
+                    userInfo.RegionId = regionTemp.RegionId;
+                }
+             }
+
+
+            _userService.AddUser(userInfo);
+
             return userInfo;
         }
 
         public List<UserInfo> GetUsers(int regionId)
         {
-            User currentUser = _graphServiceClient.Me.Request().GetAsync().GetAwaiter().GetResult();
-            var usersList = _graphServiceClient.Users.Request().Top(999).GetAsync().GetAwaiter().GetResult();
+            User currentUser = null;
+            try
+            {
+                currentUser = _graphServiceClient.Me.Request().GetAsync().GetAwaiter().GetResult();
+            }
+            catch(Exception ex)
+            {
+                ;
+            }
 
-            var usersList1 = usersList.Where(t => t.OfficeLocation == currentUser.OfficeLocation)
-                    .Select(usr => new UserInfo {
-                        UserGuid = usr.Id,
-                        UserName = usr.DisplayName
-                    }).ToList();
 
+            List<UserInfo> usersList1 = null;
+            IGraphServiceUsersCollectionPage usersList = null;
+            try
+            {
+                usersList = _graphServiceClient.Users.Request().Top(999).GetAsync().GetAwaiter().GetResult();
+                usersList1 = usersList.Where(t => t.OfficeLocation == currentUser.OfficeLocation)
+                   .Select(usr => new UserInfo
+                   {
+                       UserGuid = Guid.Parse(usr.Id),
+                       UserName = usr.DisplayName,
+                       FullName = usr.DisplayName,
+                       Region = usr.OfficeLocation,
+                       RegionId = regionId
+                   }).ToList();
+
+                _userService.AddUsers(usersList1);
+            }
+            catch (Exception ex)
+            {
+                ;
+            }
+
+
+            usersList1 = _userService.GetUsers(regionId);
             return usersList1;
         }
 

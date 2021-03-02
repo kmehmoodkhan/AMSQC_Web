@@ -16,7 +16,7 @@ namespace AMSQC.Domain.Models
         public int UserId { get; set; }
 
         [NotMapped]
-        public string UserGuid { get; set; }
+        public Guid UserGuid { get; set; }
         public int QuoteId { get; set; }
         public int QuestionId { get; set; }
 

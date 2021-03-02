@@ -124,6 +124,9 @@ namespace AMSQC.Domain.Models
 
         string _registration = string.Empty;
 
+        [NotMapped]
+        public string FullName { get; set; }
+
 
         public bool IsSubmit { get; set; }
     }

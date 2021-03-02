@@ -12,7 +12,7 @@ namespace AMSQC.Infra.Data.Context
         public DbSet<QuestionOption> QuestionOption { get; set; }
         public DbSet<UserQuestionResponse> UserQuestionResponse { get; set; }
 
-
+        public DbSet<Region> Region { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,6 +21,7 @@ namespace AMSQC.Infra.Data.Context
             modelBuilder.Entity<Question>().ToTable("Question");
             modelBuilder.Entity<QuestionOption>().ToTable("QuestionOption");
             modelBuilder.Entity<UserQuestionResponse>().ToTable("UserQuestionResponse");
+            modelBuilder.Entity<Region>().ToTable("Region");
         }
     }
 }

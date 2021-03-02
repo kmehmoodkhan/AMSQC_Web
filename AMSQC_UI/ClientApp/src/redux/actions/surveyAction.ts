@@ -114,7 +114,7 @@ export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, reg
                                 answerText: '',
                                 questionOptions: response.data.result.survey.adUsers.map((item1: any) => {
                                     return {
-                                        questionOptionId: item1.userGuid,
+                                        questionOptionId: item1.userId,
                                         title: item1.userName,
                                         questionId: item.questionId,
                                     };

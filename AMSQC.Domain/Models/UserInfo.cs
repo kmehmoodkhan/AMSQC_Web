@@ -9,16 +9,18 @@ namespace AMSQC.Domain.Models
 {
     public class UserInfo
     {
-		[Key]
-		public int UserId
+        [Key]
+        public int UserId
         {
 			get;
 			set;
         }
-
-        public string UserGuid { get; set; }
+        
+        public Guid UserGuid { get; set; }
 
         public string UserName { get; set; }
+
+        public string FullName { get; set; }
 
         public string Region { get; set; }
 

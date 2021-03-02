@@ -8,34 +8,37 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web.Resource;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace AMSQC_UI.Controllers
 {
     [Route("api/[controller]")]
-    [RequiredScope("web-access")]
+    //[RequiredScope("web-access")]
     [ApiController]
     [Authorize]
     public class QuoteController : ControllerBase
     {
-        const int CONST_REGION_ID = 2102;
         IQuoteService _quouteService = null;
         IStorageService _storageService = null;
         IQuoteDetailService _quoteDetailService = null;
         IUserService _userService = null;
         IUserADService _userAdService = null;
+        IRegionService _regionService = null;
 
         public QuoteController(
             IQuoteService quouteService, 
             IStorageService storageService, 
             IQuoteDetailService quoteDetailService,
             IUserService userService,
-            IUserADService userADService)
+            IUserADService userADService,
+            IRegionService regionService)
         {
             _quouteService = quouteService;
             _storageService = storageService;
             _quoteDetailService = quoteDetailService;
             _userService = userService;
             _userAdService = userADService;
+            _regionService = regionService;
         }
         [HttpGet]
         public Response Get(int quoteNo)
@@ -43,8 +46,12 @@ namespace AMSQC_UI.Controllers
             var quote = new Quote();
             quote.QuoteId = quoteNo;
 
+            var currentUser = _userAdService.GetUserProfile();
+            string region = currentUser.Region;
 
-            quote = _quouteService.GetQuote(quoteNo);
+            var regionTemp = _regionService.GetRegion(region);
+
+            quote = _quouteService.GetQuote(quoteNo, regionTemp.RegionId);
             if (quote != null)
             {
                 return new Response
@@ -72,10 +79,13 @@ namespace AMSQC_UI.Controllers
         [Route("IsAvailable")]
         public Response Get(int quoteId, string region)
         {
-            int regionId = CONST_REGION_ID;
-            var detail = _quoteDetailService.GetQuoteDetail(quoteId, regionId);
-
             UserInfo loggedinUser = _userAdService.GetUserProfile();
+           
+            var regionObj = _regionService.GetRegion(loggedinUser.Region);
+            var detail = _quoteDetailService.GetQuoteDetail(quoteId, regionObj.RegionId);
+
+            loggedinUser.Region = regionObj.Title;
+            loggedinUser.RegionId= regionObj.RegionId;
 
             if (detail != null)
             {
@@ -89,7 +99,7 @@ namespace AMSQC_UI.Controllers
             }
             else
             {
-                var deletedRecords =_quoteDetailService.DeleteQuote(quoteId, regionId);
+                var deletedRecords =_quoteDetailService.DeleteQuote(quoteId, regionObj.RegionId);
                 return new Response
                 {
                     Result = new { alreadySubmitted = false, currentUser = loggedinUser },
@@ -113,10 +123,12 @@ namespace AMSQC_UI.Controllers
             try
             {
                 var result = await _storageService.SaveBlobAsync(blob);
+
                 
                 quoteFile.QuoteDetail.MappingSheetPath = result;
                 quoteFile.QuoteDetail.CreatedOn = DateTime.Now;
-                quoteFile.QuoteDetail.RegionId = CONST_REGION_ID;
+                quoteFile.QuoteDetail.RegionId = quoteFile.QuoteDetail.RegionId;
+                quoteFile.QuoteDetail.Region = quoteFile.QuoteDetail.Region;
                 quoteFile.QuoteDetail.VehicleModel = quoteFile.QuoteDetail.Model;
                 quoteFile.QuoteDetail.VehicleColor = quoteFile.QuoteDetail.Color;
                 quoteFile.QuoteDetail.VehicleRegistration = quoteFile.QuoteDetail.Registration;
@@ -124,10 +136,11 @@ namespace AMSQC_UI.Controllers
 
                 var userInfo = _userService.AddUser(new UserInfo()
                 {
-                    UserGuid = quoteFile.QuoteDetail.UserGuid,
+                    UserGuid = Guid.Parse(quoteFile.QuoteDetail.UserGuid),
                     UserName = quoteFile.QuoteDetail.UserName,
-                    RegionId = CONST_REGION_ID,
+                    RegionId = quoteFile.QuoteDetail.RegionId,
                     Region = quoteFile.QuoteDetail.Region,
+                    FullName = quoteFile.QuoteDetail.FullName,
                     CreatedOn = DateTime.Now
                 });
 

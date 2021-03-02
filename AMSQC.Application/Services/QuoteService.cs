@@ -14,9 +14,10 @@ namespace AMSQC.Application.Services
         {
             _quoteRepository = quoteRepository;
         }
-        public Quote GetQuote(int id)
+        public Quote GetQuote(int id,int regionId)
         {
-            return _quoteRepository.GetQuote(id);
+            return _quoteRepository.GetQuote(id,regionId);
         }
+
     }
 }

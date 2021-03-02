@@ -11,6 +11,10 @@ namespace AMSQC.Application.Interfaces
     {
         UserInfo AddUser(UserInfo user);
 
-        UserInfo GetUser(string userGuid);
+        UserInfo GetUser(Guid userGuid);
+
+        List<UserInfo> GetUsers(int regionId);
+
+        int AddUsers(List<UserInfo> users);
     }
 }

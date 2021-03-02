@@ -19,15 +19,42 @@ namespace AMSQC.Infra.Data.Repository
         }
         public int AddUser(UserInfo user)
         {
+            user.CreatedOn = DateTime.Now;
             _context.UserInfo.Add(user);
             int result = _context.SaveChanges();
             return result;
         }
 
-        public UserInfo GetUser(string userGuid)
+        public int AddUsers(List<UserInfo> users)
+        {
+            List<UserInfo> missingUsers = new List<UserInfo>();
+
+            foreach(var u in users)
+            {
+                var temp = _context.UserInfo.Where(t => t.UserGuid == u.UserGuid).FirstOrDefault();
+                if (temp == null)
+                {
+                    missingUsers.Add(u);
+                }
+            }
+
+
+            missingUsers.ForEach(t => t.CreatedOn = DateTime.Now);
+            _context.AddRange(missingUsers);
+            int result = _context.SaveChanges();
+            return result;
+        }
+
+        public UserInfo GetUser(Guid userGuid)
         {
             var user=  _context.UserInfo.Where(u => u.UserGuid == userGuid).FirstOrDefault();
             return user;
+        }
+
+        public List<UserInfo> GetUsers(int regionId)
+        {
+            var users = _context.UserInfo.Where(u => u.RegionId == regionId);
+            return users.ToList();
         }
     }
 }
