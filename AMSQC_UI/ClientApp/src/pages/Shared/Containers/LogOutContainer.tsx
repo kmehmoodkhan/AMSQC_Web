@@ -15,9 +15,11 @@ export default function LogOutContainer() {
 
     useLayoutEffect(() => {
         if (user) {
-            dispatch({ type: RESET_LOG_OUT });
-            dispatch(logUserOut());
-            history.push('/');
+            setTimeout(() => {
+                dispatch({ type: RESET_LOG_OUT });
+                dispatch(logUserOut());
+                history.push('/');
+            }, 100);
         }
     }, [user]);
     return <div></div>;

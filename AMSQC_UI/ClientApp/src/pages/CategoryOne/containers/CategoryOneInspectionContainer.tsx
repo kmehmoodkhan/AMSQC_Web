@@ -79,12 +79,14 @@ export default function CategoryOneInspectionContainer() {
                     },
                 });
             } else {
+                let correctives = originalCorrectiveQuestions
+                    ? JSON.parse(JSON.stringify(originalCorrectiveQuestions))
+                    : [];
+
                 if (questionsArray.filter((item: any) => item.answerText.toLowerCase() != 'no').length > 0) {
                     const noAnswers = questionsArray
                         .filter((item: any) => item.answerText.toLowerCase() == 'no')
                         .map((item: any) => item.questionId.toString());
-
-                    let correctives = [...originalCorrectiveQuestions];
 
                     originalCorrectiveQuestions.every((item: any, index: number) => {
                         if (index >= 3) {
@@ -103,12 +105,14 @@ export default function CategoryOneInspectionContainer() {
                             return true;
                         }
                     });
-                    dispatch({
-                        type: SET_CORRECTIVE_QUESTIONS,
-                        correctiveQuestions: correctives,
-                        showSublet: subletCompleted,
-                    });
                 }
+
+                dispatch({
+                    type: SET_CORRECTIVE_QUESTIONS,
+                    correctiveQuestions: correctives,
+                    showSublet: subletCompleted,
+                });
+
                 dispatch({
                     type: SET_SURVEY_QUESTIONS,
                     surveyType: location.state.category,
