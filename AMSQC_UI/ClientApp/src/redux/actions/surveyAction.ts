@@ -133,7 +133,7 @@ export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, reg
                 dispatch({
                     type: actionType.SET_CORRECTIVE_QUESTIONS_FROM_API,
                     correctiveQuestions: questions,
-                    originalCorrectiveQuestions: [...questions],
+                    originalCorrectiveQuestions: questions ? JSON.parse(JSON.stringify(questions)) : [],
                     showSublet: showSublet,
                 });
                 dispatch({ type: SET_GO_NEXT, goToNext: true });

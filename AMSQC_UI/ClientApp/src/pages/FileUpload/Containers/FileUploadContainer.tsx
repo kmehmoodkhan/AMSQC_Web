@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RequestStatus } from '../../../common/enum';
@@ -23,7 +23,7 @@ export default function FileUploadContainer() {
     const region = useSelector((state: RootState) => state.user.region);
     const regionId = useSelector((state: RootState) => state.user.regionId);
     const loading = useSelector((state: RootState) => state.shared.loading);
-    const mappingSheetAlreadyUploaded = useSelector((state: RootState) => state.quote.mappingSheetUploaded);
+    //const mappingSheetAlreadyUploaded = useSelector((state: RootState) => state.quote.mappingSheetUploaded);
 
     //use states
     const [fileUploadStep, setFileUploadStep] = useState(1);
@@ -104,11 +104,11 @@ export default function FileUploadContainer() {
     };
 
     //use effect
-    useLayoutEffect(() => {
-        if (mappingSheetAlreadyUploaded && fileUploadStep === 1) {
-            history.push('/damage-type');
-        }
-    }, [mappingSheetAlreadyUploaded]);
+    // useLayoutEffect(() => {
+    //     if (mappingSheetAlreadyUploaded && fileUploadStep === 1) {
+    //         history.push('/damage-type');
+    //     }
+    // }, [mappingSheetAlreadyUploaded]);
 
     useEffect(() => {
         setExtensions('.png,.jpeg,.jpg,.bmp,.gif');
