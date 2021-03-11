@@ -5,4 +5,8 @@ export const Endpoints = {
         QuoteAvailable: 'api/quote/isAvailable',
     },
     SurveyAPI: 'api/Survey',
+    ReportAPI: {
+        FiltersData: 'api/report/parameters',
+        ReportAPI: 'api/report',
+    },
 };

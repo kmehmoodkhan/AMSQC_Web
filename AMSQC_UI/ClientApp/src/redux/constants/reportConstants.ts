@@ -1,0 +1,2 @@
+export const SET_FILTERS_DATA = 'SET_FILTERS_DATA';
+export const SET_DATA_ROWS = 'SET_DATA_ROWS';

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../../assets/images/logo.png';
 
-export default function Header() {
+export default function Header({ onReportLogin }: any) {
     return (
         <nav className="navbar fixed-top  navbar-expand-lg login-header header  ">
             <div className="container-fluid">
@@ -12,9 +12,9 @@ export default function Header() {
                 <div>
                     <ul className="navbar-nav ml-auto ">
                         <li className="nav-item">
-                            <Link className="nav-link btn btn-secondary btn-reporting" to="/">
+                            <a className="nav-link btn btn-secondary btn-reporting" onClick={onReportLogin}>
                                 Reporting Login
-                            </Link>
+                            </a>
                         </li>
                     </ul>
                 </div>

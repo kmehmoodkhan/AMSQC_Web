@@ -879,7 +879,7 @@ select.form-control {
     padding: 20px;
     position: relative;
     overflow: hidden;
-    border-radius: 0;
+    border-radius: 5px;
 }
 
 .dashboard-menu3 .item-link i {
@@ -1228,4 +1228,12 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type='number'] {
     -moz-appearance: textfield;
+}
+
+.dashboard-menu3 .item-link:hover {
+    text-decoration: underline;
+}
+
+.col.cola span.ant-picker-suffix {
+    color: black;
 }

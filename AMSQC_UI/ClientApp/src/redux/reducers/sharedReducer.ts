@@ -3,8 +3,10 @@ import {
     FORCE_LOG_OUT,
     HIDE_LOADER,
     RESET_LOG_OUT,
+    RESET_SHARED_STATE,
     SET_ERROR_MESSAGE,
     SET_GO_NEXT,
+    SET_REPORT,
     SHOW_LOADER,
     SHOW_NOTIFICATION,
 } from '../constants/sharedConstants';
@@ -15,6 +17,7 @@ type sharedReducerType = {
     errorMessage: string;
     goToNext: boolean;
     forceLogout: boolean;
+    isReport: boolean;
 };
 
 const defaultState: sharedReducerType = {
@@ -23,6 +26,7 @@ const defaultState: sharedReducerType = {
     errorMessage: '',
     goToNext: false,
     forceLogout: false,
+    isReport: true,
 };
 
 const sharedReducer = (state = defaultState, action: any): sharedReducerType => {
@@ -63,6 +67,13 @@ const sharedReducer = (state = defaultState, action: any): sharedReducerType => 
                 ...state,
                 forceLogout: false,
             };
+        case SET_REPORT:
+            return {
+                ...state,
+                isReport: action.isReport,
+            };
+        case RESET_SHARED_STATE:
+            return defaultState;
         default:
             return state;
     }

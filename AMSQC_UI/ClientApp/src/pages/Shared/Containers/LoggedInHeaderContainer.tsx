@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { logOut } from '../../../azure/azure-authentication-service';
 import { RootState } from '../../../redux/store';
 import LoggedInHeader from '../Components/LoggedInHeader';
+import ReportHeader from '../Components/ReportHeader';
 
 export default function LoggedInHeaderContainer(props: any) {
     // General hooks
@@ -17,7 +18,14 @@ export default function LoggedInHeaderContainer(props: any) {
     const expiresOn = useSelector((state: RootState) => state.user.tokenExpiresOn);
     const quoteNo = useSelector((state: RootState) => state.quote.quoteNo);
     const forceLogout = useSelector((state: RootState) => state.shared.forceLogout);
+    const isReports = useSelector((state: RootState) => state.shared.isReport);
 
+    // events
+    const onLogout = () => {
+        logOut(user);
+    };
+
+    //use effects
     useEffect(() => {
         if (expiresOn) {
             var expiry;
@@ -32,10 +40,10 @@ export default function LoggedInHeaderContainer(props: any) {
                 history.push('/');
             }
         }
-        if (!loggedIn || !quoteNo) {
+        if (!loggedIn || (!quoteNo && !isReports)) {
             history.push('/');
         }
-    }, [loggedIn, expiresOn, quoteNo]);
+    }, [loggedIn, expiresOn, quoteNo, isReports]);
 
     useEffect(() => {
         if (forceLogout) {
@@ -45,15 +53,8 @@ export default function LoggedInHeaderContainer(props: any) {
 
     return (
         <>
-            <LoggedInHeader
-                fullName={user?.name}
-                region={region}
-                onLogOut={() => {
-                    // debugger;
-                    // persistor.purge();
-                    logOut(user);
-                }}
-            />
+            {!isReports && <LoggedInHeader fullName={user?.name} region={region} onLogOut={onLogout} />}
+            {isReports && <ReportHeader fullName={user?.name} onLogOut={onLogout} />}
             {props.children}
         </>
     );
