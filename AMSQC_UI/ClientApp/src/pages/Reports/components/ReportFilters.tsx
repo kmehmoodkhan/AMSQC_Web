@@ -65,10 +65,10 @@ export default function ReportFilters({
                                     onChange={onRegionChange}
                                     value={regionId}
                                 >
-                                    {regions &&
-                                        regions.map((item: any) => {
+                                    {centers &&
+                                        centers.map((item: any) => {
                                             return (
-                                                <option value={item.regionId} key={item.regionId}>
+                                                <option value={item.stateId} key={item.stateId}>
                                                     {item.title}
                                                 </option>
                                             );
@@ -84,10 +84,10 @@ export default function ReportFilters({
                                     onChange={onCenterChange}
                                     value={centerId}
                                 >
-                                    {centers &&
-                                        centers.map((item: any) => {
+                                    {regions &&
+                                        regions.map((item: any) => {
                                             return (
-                                                <option value={item.stateId} key={item.stateId}>
+                                                <option value={item.regionId} key={item.regionId}>
                                                     {item.title}
                                                 </option>
                                             );
@@ -118,7 +118,7 @@ export default function ReportFilters({
                                     inputReadOnly={true}
                                     className={'form-control form-control-sm'}
                                     format={'MM/DD/YYYY'}
-                                    defaultValue={defaultDate}
+                                    defaultValue={defaultDate.clone().startOf('month')}
                                 />
                             </div>
                         </div>
@@ -130,7 +130,7 @@ export default function ReportFilters({
                                     inputReadOnly={true}
                                     className={'form-control form-control-sm'}
                                     format={'MM/DD/YYYY'}
-                                    defaultValue={defaultDate}
+                                    defaultValue={defaultDate.clone().endOf('month')}
                                 />
                             </div>
                         </div>

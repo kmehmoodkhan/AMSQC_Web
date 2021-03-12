@@ -91,10 +91,17 @@ export default function AuditReport({
                                                         <tr>
                                                             <td> {item.quoteNo} </td>
                                                             <td> {item.fullName} </td>
-                                                            <td> {moment(item.dateCompleted).format('DD/MM/YYYY hh:mm:ss a')} </td>
+                                                            <td>
+                                                                {' '}
+                                                                {moment(item.dateCompleted).format(
+                                                                    'DD/MM/YYYY hh:mm:ss a',
+                                                                )}{' '}
+                                                            </td>
                                                             <td className="text-center">
                                                                 {' '}
-                                                                <a href={item.mappingSheetUrl}>View</a>{' '}
+                                                                <a href={item.mappingSheetUrl} target="_blank">
+                                                                    View
+                                                                </a>{' '}
                                                             </td>
                                                             <td className="text-center">
                                                                 <span
@@ -115,7 +122,7 @@ export default function AuditReport({
                                                             </td>
                                                             <td className="text-center">
                                                                 {' '}
-                                                                <a href="#">View</a>{' '}
+                                                                <a>View</a>{' '}
                                                             </td>
                                                         </tr>
                                                     );
