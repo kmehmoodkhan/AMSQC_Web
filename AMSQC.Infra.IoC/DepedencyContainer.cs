@@ -73,6 +73,9 @@ namespace AMSQC.Infra.IoC
             services.AddScoped<IRegionService, RegionService>();
             services.AddScoped<IRegionRepository, RegionRepository>();
 
+            services.AddScoped<IStateService, StateService>();
+            services.AddScoped<IStateRepository, StateRepository>();
+
             //services.AddScoped<GraphClientAuthProvider>();
             //services.AddScoped<GraphClient>();
             //services.AddScoped<GraphServiceClient>();

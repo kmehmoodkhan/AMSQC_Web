@@ -14,6 +14,8 @@ namespace AMSQC.Infra.Data.Context
 
         public DbSet<Region> Region { get; set; }
 
+        public DbSet<State> States { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<QuoteDetail>().ToTable("QuoteDetail");
@@ -22,6 +24,7 @@ namespace AMSQC.Infra.Data.Context
             modelBuilder.Entity<QuestionOption>().ToTable("QuestionOption");
             modelBuilder.Entity<UserQuestionResponse>().ToTable("UserQuestionResponse");
             modelBuilder.Entity<Region>().ToTable("Region");
+            modelBuilder.Entity<State>().ToTable("States");
         }
     }
 }

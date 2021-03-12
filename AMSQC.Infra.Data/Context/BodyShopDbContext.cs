@@ -14,6 +14,8 @@ namespace AMSQC.Infra.Data.Context
 
         public DbSet<Region> Region { get; set; }
 
+        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
@@ -35,6 +37,8 @@ namespace AMSQC.Infra.Data.Context
                 eb.Property(v => v.RegionId).HasColumnName("Site_Id");
                 eb.Property(v => v.Title).HasColumnName("name");
             });
+
+            
         }
     }
 }

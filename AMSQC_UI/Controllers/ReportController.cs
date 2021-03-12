@@ -1,4 +1,5 @@
-﻿using AMSQC.Application.ViewModels;
+﻿using AMSQC.Application.Interfaces;
+using AMSQC.Application.ViewModels;
 using AMSQC.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,25 +14,40 @@ namespace AMSQC_UI.Controllers
     [ApiController]
     public class ReportController : ControllerBase
     {
+        IRegionService _regionService = null;
+        IStateService _stateService = null;
+        IUserADService _userAdService = null;
+        IQuoteDetailService _quoteService = null;
+        public ReportController
+            (
+            IRegionService regionService,
+            IStateService stateService,
+            IUserADService userAdService,
+            IQuoteDetailService quoteService)
+        {
+            _regionService = regionService;
+            _stateService = stateService;
+            _userAdService = userAdService;
+            _quoteService = quoteService;
+        }
         [HttpGet]
         [Route("Parameters")]
         public Response Get(int quoteNo)
         {
-            List<Region> regions = new List<Region>();
-            regions.Add(new Region() { RegionId = 0, Title = "All" });
-            regions.Add(new Region() { RegionId = 1,Title= "RMA Mornington" });
-            regions.Add(new Region() { RegionId = 2, Title = "RMA Knoxfield" });
+            List<Region> regions = _regionService.GetRegions();
 
-            List<State> states = new List<State>();
-            states.Add(new State() { StateId = 0, Title = "All" });
-            states.Add(new State() { StateId = 1, Title = "Victoria" });
-            states.Add(new State() { StateId = 2, Title = "New Southwhales" });
+            regions.Insert(0, new Region() { RegionId = -1, Title="[All]" });
 
-            List<UserInfo> users = new List<UserInfo>();
-            users.Add(new UserInfo() { UserId = 0, FullName = "All" });
-            users.Add(new UserInfo() { UserId = 1, FullName = "Alex Hales" });
-            users.Add(new UserInfo() { UserId = 2, FullName = "Tom Benton" });
+            List<State> states = _stateService.GetStates();
+            states.Insert(0, new State() { StateId = -1, Title = "[All]" });
 
+            var currentUser = _userAdService.GetUserProfile();
+            string region = currentUser.Region;
+
+            var regionTemp = _regionService.GetRegion(region);
+
+            var users = _userAdService.GetUsers(regionTemp.RegionId);
+            users.Insert(0, new UserInfo() { UserId = -1, FullName = "[All]" });
 
 
             return new Response
@@ -44,27 +60,30 @@ namespace AMSQC_UI.Controllers
 
         }
 
-        public Response Post(ReportParameterViewModel parameters)
+        public Response Post(ReportParameterModel parameters)
         {
-            AuditSummaryViewModel result = new AuditSummaryViewModel()
+            if (parameters.ReportType == ReportType.AuditSummary)
             {
-                QuoteNo = 1,
-                CategoryId = 1,
-                AnswersKey = 1,
-                DateCompleted = DateTime.Now,
-                FullName = "Henry One",
-                IsCARAnswered = true,
-                IsSublet = false,
-                MappingSheetUrl = "xyz"
-
-            };
-            return new Response
+                var result = _quoteService.GetAuditSummaryList(parameters);
+                return new Response
+                {
+                    Result = new { result, alreadySubmitted = false },
+                    Status = Status.Success,
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = ""
+                };
+            }
+            else
             {
-                Result = new { result, alreadySubmitted = false },
-                Status = Status.Success,
-                HttpStatusCode = System.Net.HttpStatusCode.OK,
-                Message = ""
-            };
+                var result = _quoteService.GetAuditSummaryList(parameters);
+                return new Response
+                {
+                    Result = new { result, alreadySubmitted = false },
+                    Status = Status.Success,
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = ""
+                };
+            }
         }
     }
 }
