@@ -1,6 +1,8 @@
 import { DatePicker } from 'antd';
 import React from 'react';
 import { DownloadOutlined, PrinterOutlined, SearchOutlined } from '@ant-design/icons';
+import { ReportType } from '../../../common/enum';
+import Skeleton from 'react-loading-skeleton';
 
 type Props = {
     onDateFromChange: any;
@@ -20,6 +22,10 @@ type Props = {
     centers: any[];
     submitFilters: any;
     defaultDate: any;
+    reportType: ReportType;
+    userClassName: string;
+    quoteClassName: string;
+    loading: boolean;
 };
 
 export default function ReportFilters({
@@ -40,13 +46,16 @@ export default function ReportFilters({
     centers,
     submitFilters,
     defaultDate,
+    userClassName,
+    quoteClassName,
+    loading,
 }: Props) {
     return (
         <>
-            <div className="filters card-form d-flex flex-column flex-sm-row">
+            <div className={`filters card-form d-flex flex-column flex-sm-row no-print ${loading ? 'hidden' : ''}`}>
                 <div className="card-body flex">
                     <div className="row">
-                        <div className=" col cola">
+                        <div className={quoteClassName}>
                             <div className="form-group">
                                 <label>Quote Number</label>
                                 <input
@@ -95,7 +104,7 @@ export default function ReportFilters({
                                 </select>
                             </div>
                         </div>
-                        <div className=" col cola">
+                        <div className={userClassName}>
                             <div className="form-group">
                                 <label>User </label>
                                 <select className="form-control form-control-sm" onChange={onUserChange} value={userId}>
@@ -153,7 +162,69 @@ export default function ReportFilters({
                     <SearchOutlined style={{ fontSize: '15px' }} />{' '}
                 </button>
             </div>
-            <div className="export-buttons">
+            <div className={`filters card-form d-flex flex-column flex-sm-row no-print ${loading ? '' : 'hidden'}`}>
+                <div className="card-body flex">
+                    <div className="row">
+                        <div className={quoteClassName}>
+                            <div className="form-group">
+                                <div className="d-flex-column">
+                                    <Skeleton width={50} height={10} />
+                                    <Skeleton width={150} height={40} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className=" col cola">
+                            <div className="form-group">
+                                <div className="d-flex-column">
+                                    <Skeleton width={50} height={10} />
+                                    <Skeleton width={150} height={40} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className=" col cola">
+                            <div className="form-group">
+                                <div className="d-flex-column">
+                                    <Skeleton width={50} height={10} />
+                                    <Skeleton width={150} height={40} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className={userClassName}>
+                            <div className="form-group">
+                                <div className="d-flex-column">
+                                    <Skeleton width={50} height={10} />
+                                    <Skeleton width={150} height={40} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className=" col cola">
+                            <div className="form-group">
+                                <div className="d-flex-column">
+                                    <Skeleton width={50} height={10} />
+                                    <Skeleton width={150} height={40} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className=" col cola">
+                            <div className="form-group">
+                                <div className="d-flex-column">
+                                    <Skeleton width={50} height={10} />
+                                    <Skeleton width={150} height={40} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className=" col cola">
+                            <div className="form-group">
+                                <div className="d-flex-column">
+                                    <Skeleton width={50} height={10} />
+                                    <Skeleton width={150} height={40} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="export-buttons no-print">
                 <button
                     type="button"
                     className="btn btn-secondary-outline btn-sm"
@@ -161,7 +232,12 @@ export default function ReportFilters({
                 >
                     <DownloadOutlined style={{ fontSize: '15px' }} /> Export
                 </button>
-                <button type="button" className="btn btn-secondary-outline  btn-sm" style={{ padding: '6px' }}>
+                <button
+                    type="button"
+                    className="btn btn-secondary-outline  btn-sm"
+                    style={{ padding: '6px' }}
+                    onClick={() => window.print()}
+                >
                     <PrinterOutlined style={{ fontSize: '15px' }} /> Print
                 </button>
             </div>

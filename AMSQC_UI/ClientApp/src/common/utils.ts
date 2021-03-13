@@ -190,3 +190,7 @@ export const htmlDecode = (content: any): any => {
     e.innerHTML = content;
     return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
 };
+
+export const getComplianceTDClassName = (compliance: number) => {
+    return compliance > 95 ? 'green-td' : 'red-td';
+};

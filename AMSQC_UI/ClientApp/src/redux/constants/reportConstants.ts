@@ -1,2 +1,4 @@
 export const SET_FILTERS_DATA = 'SET_FILTERS_DATA';
 export const SET_DATA_ROWS = 'SET_DATA_ROWS';
+export const SET_REPORT = 'SET_REPORT';
+export const RESET_REPORT_DATA = 'RESET_REPORT_DATA';

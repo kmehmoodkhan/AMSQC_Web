@@ -45,6 +45,7 @@ export default function SubmissionsPageContainer() {
                 Answers: '',
                 AnswerIds: '',
                 IsSubletQuestion: item.isSubletQuestion,
+                category: surveyType,
             };
             response.Answers = item.subQuestions
                 .filter((item1: any) => item1.questionType != QuestionType.Label && item1.answerText)

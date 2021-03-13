@@ -2,6 +2,7 @@ import { Endpoints } from '../../api/endpoints';
 import { HIDE_LOADER, SHOW_LOADER, SHOW_NOTIFICATION } from '../constants/sharedConstants';
 import * as actionType from '../constants/reportConstants';
 import { axiosGet, axiosPost } from '../../api/apiutils';
+import { ReportType } from '../../common/enum';
 
 export const GetReportFiltersData = () => (dispatch: any) => {
     const url = Endpoints.ReportAPI.FiltersData;
@@ -40,11 +41,30 @@ export const GetReportData = (
         ReportType: parseInt(reportType),
     })
         .then((response: any) => {
-            const { result } = response.data.result;
+            let { result, regionsData } = response.data.result;
+            if (reportType == ReportType.Compliance) {
+                if (regionsData) {
+                    result = transFormComplianceReportData(regionsData);
+                } else {
+                    result = {};
+                }
+            }
             dispatch({ type: actionType.SET_DATA_ROWS, dataRows: result });
         })
         .catch((err: any) =>
             dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: err.message, title: 'Error' } }),
         )
         .finally(() => dispatch({ type: HIDE_LOADER }));
+};
+
+const transFormComplianceReportData = (result: any) => {
+    let data: any = {};
+
+    data.summaryRow = result.filter((item: any) => item.isSummary);
+
+    data.stateSummary = result.filter((item: any) => !item.childList && !item.isSummary);
+
+    data.stateData = result.filter((item: any) => item.childList);
+
+    return data;
 };

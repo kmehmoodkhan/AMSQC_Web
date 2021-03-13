@@ -18,8 +18,12 @@ declare global {
 const persistConfig = {
     key: 'user',
     storage,
-    whitelist: ['user', 'quote', 'survey', 'shared'],
+    whitelist: ['user', 'quote', 'survey', 'report'],
     stateReconciler: autoMergeLevel2,
+};
+
+const lastAction = (state = null, action: any) => {
+    return action;
 };
 
 const appReducer: any = combineReducers({
@@ -28,6 +32,7 @@ const appReducer: any = combineReducers({
     quote: quoteReducer,
     survey: surveyReducer,
     report: reportReducer,
+    lastAction
 });
 
 const rootReducer = (state: any, action: any) => {

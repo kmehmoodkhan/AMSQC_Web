@@ -5,5 +5,3 @@ export const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE';
 export const SET_GO_NEXT = 'SET_GO_NEXT';
 export const FORCE_LOG_OUT = 'FORCE_LOG_OUT';
 export const RESET_LOG_OUT = 'RESET_LOG_OUT';
-export const SET_REPORT = 'SET_REPORT';
-export const RESET_SHARED_STATE = 'RESET_SHARED_STATE';

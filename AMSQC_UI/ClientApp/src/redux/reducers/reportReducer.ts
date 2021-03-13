@@ -1,10 +1,11 @@
-import { SET_DATA_ROWS, SET_FILTERS_DATA } from '../constants/reportConstants';
+import { SET_DATA_ROWS, SET_FILTERS_DATA, SET_REPORT, RESET_REPORT_DATA } from '../constants/reportConstants';
 
 type reportReducerType = {
     regions: any[];
     centers: any[];
     users: any[];
     dataRows: any[];
+    isReport: boolean;
 };
 
 const defaultState: reportReducerType = {
@@ -12,6 +13,7 @@ const defaultState: reportReducerType = {
     centers: [],
     users: [],
     dataRows: [],
+    isReport: false,
 };
 
 const reportReducer = (state = defaultState, action: any): reportReducerType => {
@@ -27,6 +29,16 @@ const reportReducer = (state = defaultState, action: any): reportReducerType => 
                 regions: action.regions,
                 centers: action.centers,
                 users: action.users,
+            };
+        case SET_REPORT:
+            return {
+                ...state,
+                isReport: action.isReport,
+            };
+        case RESET_REPORT_DATA:
+            return {
+                ...state,
+                dataRows: [],
             };
         default:
             return state;

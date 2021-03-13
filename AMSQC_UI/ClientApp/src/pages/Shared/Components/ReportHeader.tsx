@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../../assets/images/logo.png';
+import { ReportType } from '../../../common/enum';
 
 type Props = {
     fullName: string;
     onLogOut: any;
+    reportId: any;
 };
-export default function ReportHeader({ fullName, onLogOut }: Props) {
+export default function ReportHeader({ fullName, onLogOut, reportId }: Props) {
     return (
         <nav className="navbar fixed-top  navbar-expand-lg header shadow ">
             <div className="container-fluid">
@@ -20,46 +22,46 @@ export default function ReportHeader({ fullName, onLogOut }: Props) {
                 </button>
                 <div className="collapse navbar-collapse" id="topmenu">
                     <ul className="navbar-nav mr-auto left-menu">
-                        <li className="nav-item active">
-                            <Link className={'nav-link'} to={'/reports/audit-summary'}>
+                        <li className={`nav-item ${reportId == ReportType.Audit ? 'active' : ''}`}>
+                            <Link className={'nav-link'} to={'/reports/1'}>
                                 {' '}
                                 Audit Summary{' '}
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
+                        <li className={`nav-item ${reportId == ReportType.Compliance ? 'active' : ''}`}>
+                            <Link className={'nav-link'} to={'/reports/2'}>
                                 Compliance
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
+                            <Link className={'nav-link'} to={'#'}>
                                 CM Audit
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
+                            <Link className={'nav-link'} to={'#'}>
                                 CM Compliance
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
+                            <Link className={'nav-link'} to={'#'}>
                                 CSV Export
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
+                            <Link className={'nav-link'} to={'#'}>
                                 Cost of CAR
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
+                            <Link className={'nav-link'} to={'#'}>
                                 Jobs not Audited
-                            </a>
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
+                            <Link className={'nav-link'} to={'#'}>
                                 Initial Inspection{' '}
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                     <ul className="navbar-nav ml-auto right-menu">

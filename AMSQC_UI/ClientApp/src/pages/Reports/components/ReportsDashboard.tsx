@@ -22,7 +22,7 @@ export default function ReportsDashboard() {
                                     <Link
                                         className="item-link"
                                         style={{ backgroundColor: '#117180' }}
-                                        to={'/reports/audit-summary'}
+                                        to={'/reports/1'}
                                     >
                                         <i className="">
                                             {' '}
@@ -32,67 +32,67 @@ export default function ReportsDashboard() {
                                     </Link>
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-4  col-xs-6 menu-item">
-                                    <a className="item-link" href="#" style={{ backgroundColor: '#1b7f7d' }}>
+                                    <Link className="item-link" to={'/reports/2'} style={{ backgroundColor: '#1b7f7d' }}>
                                         <i className="">
                                             {' '}
                                             <img src={icon2a} />{' '}
                                         </i>{' '}
                                         <span className="name">Compliance</span>
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-4  col-xs-6 menu-item">
-                                    <a className="item-link" href="#" style={{ backgroundColor: '#299479' }}>
+                                    <Link className="item-link" to={'#'} style={{ backgroundColor: '#299479' }}>
                                         <i className="">
                                             {' '}
                                             <img src={icon3a} />{' '}
                                         </i>{' '}
                                         <span className="name">CM Audit</span>
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-4  col-xs-6 menu-item">
-                                    <a className="item-link" href="#" style={{ backgroundColor: '#35a576' }}>
+                                    <Link className="item-link" to={'#'} style={{ backgroundColor: '#35a576' }}>
                                         <i className="">
                                             {' '}
                                             <img src={icon4a} />{' '}
                                         </i>{' '}
                                         <span className="name">CM Compliance</span>
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-4  col-xs-6 menu-item">
-                                    <a className="item-link" href="#" style={{ backgroundColor: '#9eca83' }}>
+                                    <Link className="item-link" to={'#'} style={{ backgroundColor: '#9eca83' }}>
                                         <i className="">
                                             {' '}
                                             <img src={icon5a} />{' '}
                                         </i>{' '}
                                         <span className="name">CSV Export</span>
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-4  col-xs-6 menu-item">
-                                    <a className="item-link" href="#" style={{ backgroundColor: '#0f7d63' }}>
+                                    <Link className="item-link" to={'#'} style={{ backgroundColor: '#0f7d63' }}>
                                         <i className="">
                                             {' '}
                                             <img src={icon6a} />{' '}
                                         </i>{' '}
                                         <span className="name">Cost of CAR</span>
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-4  col-xs-6 menu-item">
-                                    <a className="item-link" href="#" style={{ backgroundColor: '#49d3cc' }}>
+                                    <Link className="item-link" to={'#'} style={{ backgroundColor: '#49d3cc' }}>
                                         <i className="">
                                             {' '}
                                             <img src={icon7a} />{' '}
                                         </i>{' '}
                                         <span className="name">Jobs not Audited</span>
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-4  col-xs-6 menu-item">
-                                    <a className="item-link" href="#" style={{ backgroundColor: '#6d835c' }}>
+                                    <Link className="item-link" to={'#'} style={{ backgroundColor: '#6d835c' }}>
                                         <i className="">
                                             {' '}
                                             <img src={icon8a} />{' '}
                                         </i>{' '}
                                         <span className="name">Inspection Results</span>
-                                    </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

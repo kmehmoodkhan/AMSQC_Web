@@ -37,3 +37,14 @@ export enum DefaultAnswerIds {
     TextAreaAnswerId = -2,
     OtherAnswerId = -3,
 }
+
+export enum ReportType {
+    Audit = 1,
+    Compliance = 2,
+    CMAudit = 3,
+    CMCompliance = 4,
+    CSVExport = 5,
+    CostOfCar = 6,
+    JobsNotAudited = 7,
+    InitialInspection = 8,
+}

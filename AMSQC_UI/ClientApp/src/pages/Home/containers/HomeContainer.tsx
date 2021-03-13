@@ -9,8 +9,9 @@ import { RootState } from '../../../redux/store';
 import Header from '../components/Header';
 import Home from '../components/Home';
 import { CLEAR_QUOTE_DATA } from '../../../redux/constants/quoteConstants';
-import { RESET_SHARED_STATE, SET_ERROR_MESSAGE, SET_REPORT } from '../../../redux/constants/sharedConstants';
+import { SET_ERROR_MESSAGE } from '../../../redux/constants/sharedConstants';
 import { CLEAR_SURVEY_DATA } from '../../../redux/constants/surveyConstants';
+import { SET_REPORT } from '../../../redux/constants/reportConstants';
 
 export default function HomeContainer() {
     // General hooks
@@ -99,7 +100,6 @@ export default function HomeContainer() {
         setTimeout(() => {
             dispatch({ type: CLEAR_QUOTE_DATA });
             dispatch({ type: CLEAR_SURVEY_DATA });
-            dispatch({ type: RESET_SHARED_STATE });
             setQuoteId('');
         }, 100);
         quoteRef.current.focus();

@@ -12,7 +12,7 @@ export default function LoggedInRouterConfig() {
             <Route exact path={ROUTES.SUBMIT_DATA} component={COMPONENTS.SubmitData} />
             <Route exact path={ROUTES.SUBLET_REPAIR} component={COMPONENTS.SubletRepair} />
             <Route exact path={ROUTES.REPORTS_DASHBOARD} component={COMPONENTS.ReportDashboard} />
-            <Route exact path={ROUTES.AUDIT_SUMMARY} component={COMPONENTS.AuditSummary} />
+            <Route exact path={ROUTES.REPORTS_PAGE} component={COMPONENTS.ReportsMain} />
         </>
     );
 }
