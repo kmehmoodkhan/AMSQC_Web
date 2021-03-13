@@ -100,6 +100,7 @@ export default function HomeContainer() {
         setTimeout(() => {
             dispatch({ type: CLEAR_QUOTE_DATA });
             dispatch({ type: CLEAR_SURVEY_DATA });
+            dispatch({ type: SET_REPORT, isReport: false });
             setQuoteId('');
         }, 100);
         quoteRef.current.focus();
