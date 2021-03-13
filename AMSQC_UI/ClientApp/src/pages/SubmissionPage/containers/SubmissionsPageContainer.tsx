@@ -33,6 +33,7 @@ export default function SubmissionsPageContainer() {
                 Answers: item.answerText,
                 AnswerIds: item.answer.toString(),
                 IsSubletQuestion: false,
+                category: surveyType,
             };
             responses.push(response);
             return true;
