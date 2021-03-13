@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { logOut } from '../../../azure/azure-authentication-service';
 import { RootState } from '../../../redux/store';
 import LoggedInHeader from '../Components/LoggedInHeader';

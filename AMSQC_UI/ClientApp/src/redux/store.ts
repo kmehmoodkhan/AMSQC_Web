@@ -22,9 +22,9 @@ const persistConfig = {
     stateReconciler: autoMergeLevel2,
 };
 
-const lastAction = (state = null, action: any) => {
-    return action;
-};
+// const lastAction = (state = null, action: any) => {
+//     return action;
+// };
 
 const appReducer: any = combineReducers({
     user: userReducer,
@@ -32,7 +32,7 @@ const appReducer: any = combineReducers({
     quote: quoteReducer,
     survey: surveyReducer,
     report: reportReducer,
-    lastAction
+    // lastAction
 });
 
 const rootReducer = (state: any, action: any) => {

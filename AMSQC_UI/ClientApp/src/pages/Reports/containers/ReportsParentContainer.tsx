@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { GetReportData, GetReportFiltersData } from '../../../redux/actions/reportAction';
-import store, { RootState } from '../../../redux/store';
+import { RootState } from '../../../redux/store';
 import ReportsParent from '../components/ReportsParent';
 import { useHistory } from 'react-router-dom';
 import { ReportType } from '../../../common/enum';
