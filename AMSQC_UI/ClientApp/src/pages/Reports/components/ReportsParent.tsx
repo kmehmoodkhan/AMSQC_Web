@@ -28,7 +28,9 @@ type Props = {
     quoteClassName: string;
     reportTitle: string;
     loading: boolean;
+    exportExcel: any;
 };
+
 export default function ReportsParent({
     onDateFromChange,
     onDateToChange,
@@ -53,6 +55,7 @@ export default function ReportsParent({
     quoteClassName,
     reportTitle,
     loading,
+    exportExcel,
 }: Props) {
     return (
         <div className="page ">
@@ -85,6 +88,7 @@ export default function ReportsParent({
                                     userClassName={userClassName}
                                     quoteClassName={quoteClassName}
                                     loading={loading}
+                                    exportExcel={exportExcel}
                                 />
                                 <div className="table-responsive">
                                     <Skeleton loading={loading}>

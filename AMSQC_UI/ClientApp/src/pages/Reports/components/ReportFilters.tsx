@@ -26,6 +26,7 @@ type Props = {
     userClassName: string;
     quoteClassName: string;
     loading: boolean;
+    exportExcel: any;
 };
 
 export default function ReportFilters({
@@ -49,6 +50,7 @@ export default function ReportFilters({
     userClassName,
     quoteClassName,
     loading,
+    exportExcel
 }: Props) {
     return (
         <>
@@ -229,6 +231,7 @@ export default function ReportFilters({
                     type="button"
                     className="btn btn-secondary-outline btn-sm"
                     style={{ padding: '6px', marginRight: '6px' }}
+                    onClick={exportExcel}
                 >
                     <DownloadOutlined style={{ fontSize: '15px' }} /> Export
                 </button>

@@ -8,6 +8,10 @@ import ReportsParent from '../components/ReportsParent';
 import { useHistory } from 'react-router-dom';
 import { ReportType } from '../../../common/enum';
 import { RESET_REPORT_DATA } from '../../../redux/constants/reportConstants';
+import * as Excel from 'exceljs';
+import * as FileSaver from 'file-saver';
+
+const blobType: string = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 
 export default function ReportsParentContainer() {
     // General Hooks
@@ -63,6 +67,61 @@ export default function ReportsParentContainer() {
                 Number(reportId),
             ),
         );
+    };
+
+    const exportExcel = async () => {
+        debugger;
+        if (Number(reportId) == ReportType.Audit && dataRows && dataRows.length > 0) {
+            const workbook = new Excel.Workbook();
+            const worksheet = workbook.addWorksheet('Audit Summary');
+
+            worksheet.columns = [
+                { header: 'Quote Number', key: 'quoteNo', width: 20 },
+                { header: 'User', key: 'fullName', width: 15 },
+                { header: 'Date Completed', key: 'dateCompleted', width: 30 },
+                { header: 'Category', key: 'categoryId', width: 15 },
+                { header: 'CAR Required', key: 'isCARAnswered', width: 15 },
+                { header: 'Sublet', key: 'isSublet', width: 15 },
+            ];
+            dataRows.forEach((item: any) => {
+                let row = {
+                    quoteNo: item.quoteNo,
+                    fullName: item.fullName,
+                    dateCompleted: moment(item.dateCompleted).format('DD/MM/YYYY hh:mm:ss a'),
+                    categoryId: item.categoryId,
+                    isCARAnswered: item.isCARAnswered ? 'Yes' : 'No',
+                    isSublet: item.isSublet ? 'Yes' : 'No',
+                };
+                worksheet.addRow(row);
+            });
+            worksheet.duplicateRow(1, 1, true);
+            worksheet.getRow(1).values = ['Audit Summary'];
+            worksheet.eachRow({ includeEmpty: true }, function (row, rowNumber) {
+                row.eachCell(function (cell) {
+                    cell.font = {
+                        name: 'Arial',
+                        family: 2,
+                        bold: false,
+                        size: 10,
+                    };
+                    cell.alignment = {
+                        vertical: 'middle',
+                        horizontal: 'left',
+                    };
+                    if (rowNumber <= 2) {
+                        row.height = 20;
+                        cell.font = {
+                            bold: true,
+                            size: 13,
+                        };
+                    }
+                });
+            });
+            workbook.xlsx.writeBuffer().then((data) => {
+                const blob = new Blob([data], { type: blobType });
+                FileSaver.saveAs(blob, 'Audit-Report-' + moment().format('YYYY-MM-DD-hhmmss') + '.xlsx');
+            });
+        }
     };
 
     // useEffect
@@ -141,6 +200,7 @@ export default function ReportsParentContainer() {
                     quoteClassName={quoteClassName}
                     reportTitle={reportTitle}
                     loading={loading}
+                    exportExcel={exportExcel}
                 />
             )}
         </>
