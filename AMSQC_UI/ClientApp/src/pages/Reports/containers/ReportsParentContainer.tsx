@@ -71,6 +71,14 @@ export default function ReportsParentContainer() {
         setTimeout(() => {
             dispatch({ type: RESET_REPORT_DATA });
 
+            setUserId(0);
+            setRegionId(0);
+            setCenterId(0);
+            setQuoteId('');
+            setIgnoreDates(1);
+            setFromDate(moment().clone().startOf('month').toDate());
+            setToDate(moment().clone().endOf('month').toDate());
+
             if (!regions || regions.length == 0 || !centers || centers.length == 0 || !users || users.length == 0) {
                 dispatch(GetReportFiltersData());
             }
