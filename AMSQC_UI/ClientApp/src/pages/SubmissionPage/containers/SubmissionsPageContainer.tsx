@@ -33,7 +33,7 @@ export default function SubmissionsPageContainer() {
                 Answers: item.answerText,
                 AnswerIds: item.answer.toString(),
                 IsSubletQuestion: false,
-                category: surveyType,
+                category: item.category,
             };
             responses.push(response);
             return true;
@@ -46,7 +46,7 @@ export default function SubmissionsPageContainer() {
                 Answers: '',
                 AnswerIds: '',
                 IsSubletQuestion: item.isSubletQuestion,
-                category: 4,
+                category: item.category,
             };
             response.Answers = item.subQuestions
                 .filter((item1: any) => item1.questionType != QuestionType.Label && item1.answerText)
