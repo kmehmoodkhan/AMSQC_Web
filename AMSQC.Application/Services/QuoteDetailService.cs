@@ -44,5 +44,15 @@ namespace AMSQC.Application.Services
 
             return _quoteDetailRepository.GetQuotesList(parameters);
         }
+
+        public ComplianceSummaryViewModel GetComplianceSummary(ReportParameterModel parameters)
+        {
+            if (parameters.IgnoreDates)
+            {
+                parameters.FromDate = DateTime.MinValue;
+                parameters.EndDate = DateTime.MaxValue;
+            }
+            return _quoteDetailRepository.GetComplianceSummary(parameters);
+        }
     }
 }

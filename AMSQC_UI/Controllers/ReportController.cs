@@ -60,6 +60,7 @@ namespace AMSQC_UI.Controllers
 
         }
 
+        [HttpPost]
         public Response Post(ReportParameterModel parameters)
         {
             if (parameters.ReportType == ReportType.AuditSummary)
@@ -75,10 +76,10 @@ namespace AMSQC_UI.Controllers
             }
             else
             {
-                var result = _quoteService.GetAuditSummaryList(parameters);
+                var result = _quoteService.GetComplianceSummary(parameters);
                 return new Response
                 {
-                    Result = new { result, alreadySubmitted = false },
+                    Result = new { result.RegionsData, alreadySubmitted = false },
                     Status = Status.Success,
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = ""

@@ -79,5 +79,71 @@ namespace AMSQC.Infra.Data.Repository
             return result.ToList();
 
         }
+
+        public ComplianceSummaryViewModel GetComplianceSummary(ReportParameterModel parameterModel)
+        {
+            ComplianceSummaryViewModel summary = new ComplianceSummaryViewModel();
+
+            List<RegionData> regionsData = new List<RegionData>();
+
+            regionsData.Add(new RegionData()
+            {
+                Title = "Australia",
+                JobsCompleted = 687,
+                JobsAudited = 7295,
+                Compliance = 1062,
+                IsSummary = true
+            });
+
+            regionsData.Add(new RegionData()
+            {
+                Title = "Queensland",
+                JobsCompleted = 423,
+                JobsAudited = 5098,
+                Compliance = 1205
+            });
+            regionsData.Add(new RegionData()
+            {
+                Title = "Victoria",
+                JobsCompleted = 260,
+                JobsAudited = 3955,
+                Compliance = 100
+            });
+
+            var r1 = new RegionData()
+            {
+                Title = "Autoco Hume",
+                JobsAudited = 0,
+                Compliance = 0
+            };
+
+            var r2 = new RegionData()
+            {
+                Title = "Gemini Kingston",
+                JobsCompleted = 6,
+                JobsAudited = 5,
+                Compliance = 10
+            };
+
+            var list = new List<RegionData>();
+            list.Add(r1);
+            list.Add(r2);
+
+            regionsData.Add(new RegionData()
+            {
+                Title = "Australian Capital Terrotiry",
+                ChildList = list
+            });
+
+
+            regionsData.Add(new RegionData()
+            {
+                Title = "New Southwales",
+                ChildList = list
+            });
+
+            summary.RegionsData = regionsData;
+            return summary;
+        }
     }
 }

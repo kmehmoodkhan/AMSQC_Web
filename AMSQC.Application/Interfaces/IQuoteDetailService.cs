@@ -15,6 +15,6 @@ namespace AMSQC.Application.Interfaces
 
         int DeleteQuote(int quoteId, int regionId);
         List<AuditSummaryViewModel> GetAuditSummaryList(ReportParameterModel parameters);
-        //List<AuditSummaryViewModel> GetComplianceSummary(ReportParameterModel parameters);
+        ComplianceSummaryViewModel GetComplianceSummary(ReportParameterModel parameters);
     }
 }

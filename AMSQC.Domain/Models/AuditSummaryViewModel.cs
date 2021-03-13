@@ -25,28 +25,5 @@ namespace AMSQC.Domain.Models
         public int AnswersKey { get; set; }
     }
 
-    public class ComplianceViewModel
-    {
-        public List<RegionData> RegionsData = null;
-
-        public ComplianceViewModel()
-        {
-            RegionsData = new List<RegionData>();
-
-            RegionsData[0].ChildList = new List<RegionData>();
-        }
-    }
-
-    public class RegionData
-    {
-        public string Title { get; set; }
-        public int? JobsCompleted { get; set; }
-        public int? JobsAudited { get; set; }
-        public int? Compliance { get; set; }
-
-        public bool IsSummary { get; set; }
-
-        public dynamic ChildList { get; set; }
-    }
 
 }
