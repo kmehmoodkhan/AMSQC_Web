@@ -129,5 +129,10 @@ namespace AMSQC.Domain.Models
 
 
         public bool IsSubmit { get; set; }
+
+        public bool IsSublet { get; set; }
+
+        public bool IsCar { get; set; }
+        public int SurveyCategory { get; set; }
     }
 }

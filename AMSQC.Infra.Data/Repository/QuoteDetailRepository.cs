@@ -42,13 +42,16 @@ namespace AMSQC.Infra.Data.Repository
             return rows;
         }
 
-        public int UpdateQuote(int quoteId, int regionId, int userId)
+        public int UpdateQuote(int quoteId, int regionId, int userId,bool isSublet,bool isCAR,int category)
         {
             int result = 0;
             var quoteDetail = _context.QuoteDetail.Where(t => t.QuoteDetailId==quoteId).FirstOrDefault();
             if (quoteDetail != null)
             {
                 quoteDetail.IsSubmit = true;
+                quoteDetail.IsCar = isCAR;
+                quoteDetail.IsSublet = isSublet;
+                quoteDetail.SurveyCategory = category;
                 _context.QuoteDetail.Update(quoteDetail);
                 result = _context.SaveChanges();
             }
@@ -57,23 +60,23 @@ namespace AMSQC.Infra.Data.Repository
 
         public List<AuditSummaryViewModel> GetQuotesList(ReportParameterModel parameterModel)
         {
-            var result = (from qd in _context.QuoteDetail
-                          join uqr in _context.UserQuestionResponse on qd.QuoteDetailId equals uqr.QuoteId
-                          join q in _context.Question on uqr.QuestionId equals q.QuestionId
-                          where qd.QuoteId == (parameterModel.QuoteNo > 0 ? parameterModel.QuoteNo : qd.QuoteId) &&
+            var result = (from qd in _context.QuoteDetail    
+                          join u in _context.UserInfo on qd.UserId equals u.UserId
+                          join s in _context.Site on qd.RegionId equals s.RegionId
+                          where qd.IsSubmit==true && qd.QuoteId == (parameterModel.QuoteNo > 0 ? parameterModel.QuoteNo : qd.QuoteId) &&
                           qd.RegionId == (parameterModel.CenterId > 0 ? parameterModel.CenterId : qd.RegionId) &&
+                          s.StateId == (parameterModel.RegionId > 0 ? parameterModel.RegionId : s.StateId) &&
                           qd.UserId == (parameterModel.UserId > 0 ? parameterModel.UserId : qd.UserId) &&
                           qd.CreatedOn >= parameterModel.FromDate && qd.CreatedOn <= parameterModel.EndDate
-                          group new {qd,q} by qd.QuoteId into qdg
                           select new AuditSummaryViewModel
                           {
-                              QuoteNo = qdg.Key,
-                              FullName = qdg.FirstOrDefault().qd.FullName,
-                              DateCompleted = qdg.FirstOrDefault().qd.CreatedOn,
-                              MappingSheetUrl = qdg.FirstOrDefault().qd.MappingSheetPath,
-                              CategoryId = (int)_context.Question.OrderBy(t=>t.Category).FirstOrDefault(t => t.QuestionId == qdg.FirstOrDefault().q.QuestionId && t.Category <4).Category,
-                              IsCARAnswered = _context.Question.Any(t => t.QuestionId == qdg.FirstOrDefault().q.QuestionId && t.Category == 4),
-                              IsSublet = _context.Question.Any(t => t.QuestionId == qdg.FirstOrDefault().q.QuestionId && t.IsSubletQuestion == true)
+                              QuoteNo = qd.QuoteId,
+                              FullName = u.FullName,
+                              DateCompleted = qd.CreatedOn,
+                              MappingSheetUrl = qd.MappingSheetPath,
+                              CategoryId = qd.SurveyCategory,
+                              IsCARAnswered = qd.IsCar,
+                              IsSublet = qd.IsSublet
                           });
 
             return result.ToList();
@@ -84,65 +87,82 @@ namespace AMSQC.Infra.Data.Repository
         {
             ComplianceSummaryViewModel summary = new ComplianceSummaryViewModel();
 
-            List<RegionData> regionsData = new List<RegionData>();
+            var reportData = (from qd in _context.QuoteDetail
+                              join site in _context.Site on qd.RegionId equals site.RegionId
+                              join state in _context.States on site.StateId equals state.StateId
+                              where
+                                 qd.QuoteId == (parameterModel.QuoteNo > 0 ? parameterModel.QuoteNo : qd.QuoteId) &&
+                                 qd.RegionId == (parameterModel.CenterId > 0 ? parameterModel.CenterId : qd.RegionId) &&
+                                 site.StateId == (parameterModel.RegionId > 0 ? parameterModel.RegionId : site.StateId) &&
+                                 qd.UserId == (parameterModel.UserId > 0 ? parameterModel.UserId : qd.UserId) &&
+                                 qd.CreatedOn >= parameterModel.FromDate && qd.CreatedOn <= parameterModel.EndDate
+                              select new SiteLevelData 
+                              {
+                                  SiteId = site.RegionId,
+                                  SiteName = site.Title,
+                                  QuoteDetailId = qd.QuoteDetailId,
+                                  State = state.Title,
+                                  StateId = state.StateId
+                              });
 
-            regionsData.Add(new RegionData()
+            var result = reportData.ToList();
+
+
+            if (result != null && result.Count > 0)
             {
-                Title = "Australia",
-                JobsCompleted = 687,
-                JobsAudited = 7295,
-                Compliance = 1062,
-                IsSummary = true
-            });
+                List<RegionData> regionsData = new List<RegionData>();
 
-            regionsData.Add(new RegionData()
-            {
-                Title = "Queensland",
-                JobsCompleted = 423,
-                JobsAudited = 5098,
-                Compliance = 1205
-            });
-            regionsData.Add(new RegionData()
-            {
-                Title = "Victoria",
-                JobsCompleted = 260,
-                JobsAudited = 3955,
-                Compliance = 100
-            });
+                var countryLevel = (from r in result
+                                    group r by 1 into grp
+                                    select new RegionData
+                                    {
+                                        Title = "Australia",
+                                        IsSummary = true,
+                                        JobsAudited = grp.Count(),
+                                        JobsCompleted = null,
+                                        Compliance = 0
+                                    }).ToList();
 
-            var r1 = new RegionData()
-            {
-                Title = "Autoco Hume",
-                JobsAudited = 0,
-                Compliance = 0
-            };
+                regionsData.Add(countryLevel.FirstOrDefault());
 
-            var r2 = new RegionData()
-            {
-                Title = "Gemini Kingston",
-                JobsCompleted = 6,
-                JobsAudited = 5,
-                Compliance = 10
-            };
+                var stateLevel = (from r in result
+                                  group r by new { r.StateId, r.State } into grp
+                                  select new RegionData
+                                  {
+                                      Title = grp.Key.State,
+                                      JobsAudited = grp.Count(),
+                                      JobsCompleted = null,
+                                      Compliance = 0,
+                                      ChildList = null
+                                  }).ToList();
 
-            var list = new List<RegionData>();
-            list.Add(r1);
-            list.Add(r2);
-
-            regionsData.Add(new RegionData()
-            {
-                Title = "Australian Capital Terrotiry",
-                ChildList = list
-            });
+                regionsData.AddRange(stateLevel);
 
 
-            regionsData.Add(new RegionData()
-            {
-                Title = "New Southwales",
-                ChildList = list
-            });
+                var stateLevelSummary = (from r in result
+                                         group r by new { r.StateId, r.State } into grp
+                                         select new RegionData
+                                         {
+                                             Title = grp.Key.State,
+                                             ChildList =
+                                             (
+                                                from r1 in result
+                                                where r1.StateId == grp.Key.StateId
+                                                group r1 by new { r1.SiteId, r1.SiteName } into grp1
+                                                select new RegionData
+                                                {
+                                                    Title = grp1.Key.SiteName,
+                                                    JobsAudited = grp1.Count(),
+                                                    Compliance = 0
+                                                }
+                                             ).ToList()
+                                         });
 
-            summary.RegionsData = regionsData;
+                regionsData.AddRange(stateLevelSummary);
+
+                summary.RegionsData = regionsData;
+            }
+
             return summary;
         }
     }

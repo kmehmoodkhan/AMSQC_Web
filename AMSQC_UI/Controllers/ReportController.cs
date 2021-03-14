@@ -34,7 +34,7 @@ namespace AMSQC_UI.Controllers
         [Route("Parameters")]
         public Response Get(int quoteNo)
         {
-            List<Region> regions = _regionService.GetRegions();
+            List<Region> regions = _regionService.GetRegions().OrderBy(t=>t.Title).ToList();
 
             regions.Insert(0, new Region() { RegionId = -1, Title="[All]" });
 

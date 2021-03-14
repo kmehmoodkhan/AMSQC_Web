@@ -20,7 +20,7 @@ export default function AuditReport({ dataRows }: Props) {
                 </tr>
             </thead>
             <tbody>
-                {dataRows &&
+                {dataRows && dataRows.length>0 &&
                     dataRows.map((item: any) => {
                         return (
                             <tr>

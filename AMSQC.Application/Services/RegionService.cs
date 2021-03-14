@@ -22,7 +22,7 @@ namespace AMSQC.Application.Services
 
             if (region == null)
             {
-                region = new Region() { RegionId = 82014, Title = "RMA Knoxfield" };
+                region = new Region() { RegionId = 82000, Title = "RMA Knoxfield",State="Vic" };
             }
             return region;
         }

@@ -27,4 +27,16 @@ namespace AMSQC.Domain.Models
         public bool IsSummary { get; set; }
         public List<RegionData> ChildList { get; set; }
     }
+
+    public class SiteLevelData
+    {
+        public int SiteId { get; set; }
+
+        public string SiteName { get; set; }        
+
+        public int StateId { get; set; }
+
+        public string State { get; set; }
+        public int QuoteDetailId { get; set; }
+    }
 }

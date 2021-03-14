@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace AMSQC.Domain.Models
 {
-    public class Region
+    public class Site
     {
-        public int RegionId { get; set; }
+        public int SiteId { get; set; }
 
         public string Title { get; set; }
 
-        public string State { get; set; }
+        public int RegionId { get; set; }
+
+        public int StateId { get; set; }
     }
 }

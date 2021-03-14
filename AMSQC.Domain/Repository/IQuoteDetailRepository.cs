@@ -12,7 +12,7 @@ namespace AMSQC.Domain.Repository
         QuoteDetail GetQuoteDetail(int quoteId, int regionId);
         int AddQuoteDetail(QuoteDetail quoteDetail);
         int DeleteQuote(int quoteId,int regionId);
-        int UpdateQuote(int quoteId, int regionId, int userId);
+        int UpdateQuote(int quoteId, int regionId, int userId,bool isSublet,bool isCAR, int category);
         List<AuditSummaryViewModel> GetQuotesList(ReportParameterModel parameterModel);
 
         ComplianceSummaryViewModel GetComplianceSummary(ReportParameterModel parameterModel);

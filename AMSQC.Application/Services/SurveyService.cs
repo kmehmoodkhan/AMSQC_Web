@@ -42,6 +42,14 @@ namespace AMSQC.Application.Services
             var userResponse = surveyResponse.response;
             var userInfo= surveyResponse.response.FirstOrDefault();
 
+            bool isSublet = surveyResponse.isSubletShown;
+            var cat4Questions = userResponse.Where(t => t.Category == 4 && t.IsSubletQuestion == false).FirstOrDefault();
+            bool isCAR = false;
+            
+            if (cat4Questions != null)
+            {
+                isCAR = true;
+            }
            
             int userId = 0;
             int regionId = 0;
@@ -78,11 +86,9 @@ namespace AMSQC.Application.Services
                 userResponse.ToList().ForEach(f => { f.CreatedOn = DateTime.Now; f.UserId = userId; });
                 records = _surveyRepository.SaveSurveyReponse(userResponse.ToList());
             }
-                    
 
-            
-
-            _quoteDetailRepository.UpdateQuote(userResponse.FirstOrDefault().QuoteId, regionId, userId);
+            int surveyType = (int)surveyResponse.SurveyType;
+            _quoteDetailRepository.UpdateQuote(userResponse.FirstOrDefault().QuoteId, regionId, userId,isSublet,isCAR, surveyType);
 
             return records;
         }

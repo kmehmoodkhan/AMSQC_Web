@@ -24,6 +24,8 @@ namespace AMSQC_UI.Controllers
         IUserService _userService = null;
         IUserADService _userAdService = null;
         IRegionService _regionService = null;
+        ISiteService _siteService = null;
+        IStateService _stateService = null;
 
         public QuoteController(
             IQuoteService quouteService, 
@@ -31,7 +33,9 @@ namespace AMSQC_UI.Controllers
             IQuoteDetailService quoteDetailService,
             IUserService userService,
             IUserADService userADService,
-            IRegionService regionService)
+            IRegionService regionService,
+            ISiteService siteService,
+            IStateService stateService)
         {
             _quouteService = quouteService;
             _storageService = storageService;
@@ -39,6 +43,8 @@ namespace AMSQC_UI.Controllers
             _userService = userService;
             _userAdService = userADService;
             _regionService = regionService;
+            _siteService= siteService;
+            _stateService = stateService;
         }
         [HttpGet]
         public Response Get(int quoteNo)
@@ -77,12 +83,23 @@ namespace AMSQC_UI.Controllers
 
         [HttpGet]
         [Route("IsAvailable")]
-        public Response Get(int quoteId, string region)
+        public async Task<Response> Get(int quoteId, string region)
         {
             UserInfo loggedinUser = _userAdService.GetUserProfile();
            
             var regionObj = _regionService.GetRegion(loggedinUser.Region);
             var detail = _quoteDetailService.GetQuoteDetail(quoteId, regionObj.RegionId);
+            var state = _stateService.GetStates().Where(t => t.ShortName.ToLower() == regionObj.State.ToLower()).FirstOrDefault();
+
+
+            Site site = new Site()
+            {
+                RegionId = regionObj.RegionId,
+                StateId = state.StateId,
+                Title = loggedinUser.Region
+            };
+
+           var r=await _siteService.AddSite(site);
 
             loggedinUser.Region = regionObj.Title;
             loggedinUser.RegionId= regionObj.RegionId;
@@ -146,6 +163,7 @@ namespace AMSQC_UI.Controllers
 
                 quoteFile.QuoteDetail.UserId = userInfo.UserId;
                 var recordId = _quoteDetailService.AddQuoteDetail(quoteFile.QuoteDetail);
+
 
                 
 
