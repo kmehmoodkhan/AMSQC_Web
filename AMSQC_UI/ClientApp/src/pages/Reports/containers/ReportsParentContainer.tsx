@@ -70,7 +70,6 @@ export default function ReportsParentContainer() {
     };
 
     const exportExcel = async () => {
-        debugger;
         if (Number(reportId) == ReportType.Audit && dataRows && dataRows.length > 0) {
             const workbook = new Excel.Workbook();
             const worksheet = workbook.addWorksheet('Audit Summary');
@@ -120,6 +119,143 @@ export default function ReportsParentContainer() {
             workbook.xlsx.writeBuffer().then((data) => {
                 const blob = new Blob([data], { type: blobType });
                 FileSaver.saveAs(blob, 'Audit-Report-' + moment().format('YYYY-MM-DD-hhmmss') + '.xlsx');
+            });
+        } else if (Number(reportId) == ReportType.Compliance && dataRows && dataRows.summaryRow) {
+            const workbook = new Excel.Workbook();
+            const worksheet = workbook.addWorksheet('Compliance Summary');
+            let headersIndexes = [{ index: 1, isState: false }];
+            let headerTitles = ['Compliance Summary'];
+            let nextHeaderIndex = 3;
+            worksheet.columns = [
+                { header: '', key: 'title', width: 30 },
+                { header: 'Jobs Completed', key: 'jobsCompleted', width: 20 },
+                { header: 'Date Completed', key: 'jobsAudited', width: 20 },
+                { header: 'Compliance', key: 'compliance', width: 25 },
+            ];
+            dataRows.summaryRow.forEach((item: any) => {
+                let row = {
+                    title: item.title,
+                    jobsCompleted: item.jobsCompleted,
+                    jobsAudited: item.jobsAudited,
+                    compliance: item.compliance,
+                };
+                nextHeaderIndex++;
+                worksheet.addRow(row);
+            });
+
+            headersIndexes.push({ index: nextHeaderIndex, isState: false });
+            headerTitles.push('');
+
+            if (dataRows.stateSummary && dataRows.stateSummary.length > 0) {
+                dataRows.stateSummary.map((item: any) => {
+                    let row = {
+                        title: item.title,
+                        jobsCompleted: item.jobsCompleted,
+                        jobsAudited: item.jobsAudited,
+                        compliance: item.compliance,
+                    };
+                    nextHeaderIndex++;
+                    worksheet.addRow(row);
+                });
+            } else {
+                nextHeaderIndex++;
+            }
+            
+
+            if (dataRows.stateData && dataRows.stateData.length > 0) {
+                dataRows.stateData.map((item: any) => {
+                    if (item.childList && item.childList.length > 0) {
+                        headersIndexes.push({ index: nextHeaderIndex + headersIndexes.length - 1, isState: true });
+                        headerTitles.push(item.title);
+
+                        item.childList.map((child: any) => {
+                            let row = {
+                                title: child.title,
+                                jobsCompleted: child.jobsCompleted ? child.jobsCompleted : 'Could not connect',
+                                jobsAudited: child.jobsAudited,
+                                compliance: child.compliance,
+                            };
+                            nextHeaderIndex++;
+                            worksheet.addRow(row);
+                        });
+                    }
+                });
+            }
+
+            headersIndexes.forEach((element: any, index: number) => {
+                worksheet.insertRow(element.index, '');
+                if (element.isState) {
+                    worksheet.mergeCells('A' + element.index, 'D' + element.index);
+                    worksheet.getCell('A' + element.index).value = headerTitles[index];
+                    // worksheet.getCell('A' + element.index).alignment = {
+                    //     vertical: 'middle',
+                    //     horizontal: 'center',
+                    // };
+                    // worksheet.getCell('A' + element.index).font = {
+                    //     bold: true,
+                    //     size: 13,
+                    // };
+                    // worksheet.getRow(element.index).height = 20;
+                } else {
+                    worksheet.getRow(element.index).values = [headerTitles[index]];
+                }
+            });
+
+            worksheet.eachRow({ includeEmpty: true }, function (row, rowNumber) {
+                row.eachCell(function (cell, cellNumber) {
+                    cell.font = {
+                        name: 'Arial',
+                        family: 2,
+                        bold: false,
+                        size: 10,
+                    };
+                    const rowHeader = headersIndexes.filter((item: any) => item.index == rowNumber);
+
+                    if (rowHeader.length > 0 && rowHeader[0].isState) {
+                        cell.alignment = {
+                            vertical: 'middle',
+                            horizontal: 'center',
+                        };
+                    } else {
+                        cell.alignment = {
+                            vertical: 'middle',
+                            horizontal: 'left',
+                        };
+                    }
+
+                    if (rowNumber <= 2 || rowHeader.length > 0) {
+                        row.height = 20;
+                        cell.font = {
+                            bold: true,
+                            size: 13,
+                        };
+                    } else {
+                        if (cellNumber == 4) {
+                            const value: any = cell.value;
+                            if (value < 95) {
+                                cell.fill = {
+                                    type: 'pattern',
+                                    pattern: 'solid',
+                                    fgColor: {
+                                        argb: 'FF0000',
+                                    },
+                                };
+                            } else {
+                                cell.fill = {
+                                    type: 'pattern',
+                                    pattern: 'solid',
+                                    fgColor: {
+                                        argb: '00FF00',
+                                    },
+                                };
+                            }
+                        }
+                    }
+                });
+            });
+            workbook.xlsx.writeBuffer().then((data) => {
+                const blob = new Blob([data], { type: blobType });
+                FileSaver.saveAs(blob, 'Compliance-Report-' + moment().format('YYYY-MM-DD-hhmmss') + '.xlsx');
             });
         }
     };
