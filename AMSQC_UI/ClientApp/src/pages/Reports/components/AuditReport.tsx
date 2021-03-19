@@ -14,7 +14,7 @@ export default function AuditReport({ dataRows }: Props) {
                     <th>Date Completed</th>
                     <th className="text-center">Mapping Sheet</th>
                     <th className="text-center">Category</th>
-                    <th className="text-center">Car Required</th>
+                    <th className="text-center">CAR Required</th>
                     <th className="text-center">Sublet</th>
                     <th className="text-center">Answer</th>
                 </tr>

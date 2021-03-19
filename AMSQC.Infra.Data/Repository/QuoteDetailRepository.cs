@@ -91,6 +91,7 @@ namespace AMSQC.Infra.Data.Repository
                               join site in _context.Site on qd.RegionId equals site.RegionId
                               join state in _context.States on site.StateId equals state.StateId
                               where
+                                 qd.IsSubmit == true &&
                                  qd.QuoteId == (parameterModel.QuoteNo > 0 ? parameterModel.QuoteNo : qd.QuoteId) &&
                                  qd.RegionId == (parameterModel.CenterId > 0 ? parameterModel.CenterId : qd.RegionId) &&
                                  site.StateId == (parameterModel.RegionId > 0 ? parameterModel.RegionId : site.StateId) &&
