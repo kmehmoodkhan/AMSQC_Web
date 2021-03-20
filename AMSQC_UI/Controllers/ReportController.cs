@@ -187,21 +187,8 @@ namespace AMSQC_UI.Controllers
             }
             else if ( parameters.ReportType == ReportType.InitialInspectionResults)
             {
-                var result = new InspectionResultsStateLevel()
-                {
-                    Title = "Victoria",
-                    StateId = 1,
-                    InspectionDetail = new List<InspetionResultDetail>(){ new InspetionResultDetail()
-                    {
-                        Title = "ABc center",
-                        JobsAudited = 5,
-                        JobsWithCARs = 10,
-                        Performance = 5
-                    } }
-                };
+                var result = _quoteService.GetComplianceSummary(parameters);
 
-
-               
                 return new Response
                 {
                     Result = new { result, alreadySubmitted = false },

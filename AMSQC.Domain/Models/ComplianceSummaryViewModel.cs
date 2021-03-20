@@ -22,8 +22,12 @@ namespace AMSQC.Domain.Models
     {
         public string Title { get; set; }
         public int? JobsCompleted { get; set; }
+
+        public int? JobsWithCARs { get; set; }
+
+        public double? Performance { get; set; }
         public int? JobsAudited { get; set; }
-        public int? Compliance { get; set; }
+        public double? Compliance { get; set; }
         public bool IsSummary { get; set; }
         public List<RegionData> ChildList { get; set; }
     }
