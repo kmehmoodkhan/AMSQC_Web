@@ -398,7 +398,7 @@ export const exportReport = async (reportId: ReportType, dataRows: any, states: 
             { header: 'Cost', key: 'cost', width: 30 },
         ];
 
-        states.forEach((item: any, index: any) => {
+        states.forEach((item: any) => {
             const stateData = dataRows.filter((x: any) => x.stateId == item.stateId);
 
             headersIndexes.push({
