@@ -92,7 +92,7 @@ namespace AMSQC_UI.Controllers
 
                 var item1 = new StateQuoteDetail()
                 {
-                    QouteNo = 1356,
+                    QuoteNo = 1356,
                     AnswerId = 1,
                     CompletionDate = DateTime.Now,
                     Cost = 500,
@@ -131,7 +131,7 @@ namespace AMSQC_UI.Controllers
                 {
                     Title = "Victoria",
                     CmAuditCount = 10,
-                    SiteAuitCount = 15,
+                    SiteAuditCount = 15,
                     IsState = true
                 };
 
@@ -140,7 +140,7 @@ namespace AMSQC_UI.Controllers
                 {
                     Title = "Abc Center",
                     CmAuditCount = 152,
-                    SiteAuitCount = 20,
+                    SiteAuditCount = 20,
                     IsState = false
                 };
 
@@ -148,7 +148,7 @@ namespace AMSQC_UI.Controllers
                 {
                     Title = "xyx Center",
                     CmAuditCount = 200,
-                    SiteAuitCount = 35,
+                    SiteAuditCount = 35,
                     IsState = false
                 };
 

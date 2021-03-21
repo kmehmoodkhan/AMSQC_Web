@@ -16,7 +16,7 @@ namespace AMSQC.Domain.Models.Reports
 
     public class StateQuoteDetail
     {
-        public int QouteNo { get; set; }
+        public int QuoteNo { get; set; }
 
         public string UserResponsible { get; set; }
 

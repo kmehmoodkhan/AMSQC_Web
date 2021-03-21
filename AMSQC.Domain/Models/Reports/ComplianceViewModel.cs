@@ -20,6 +20,6 @@ namespace AMSQC.Domain.Models.Reports
             get;set;
         }
 
-        public int SiteAuitCount { get; set; }
+        public int SiteAuditCount { get; set; }
     }
 }

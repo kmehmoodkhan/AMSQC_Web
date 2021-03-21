@@ -33,33 +33,33 @@ export default function ReportHeader({ fullName, onLogOut, reportId }: Props) {
                                 Compliance
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className={'nav-link'} to={'#'}>
+                        <li className={`nav-item ${reportId == ReportType.CMAudit ? 'active' : ''}`}>
+                            <Link className={'nav-link'} to={'/reports/4'}>
                                 CM Audit
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className={'nav-link'} to={'#'}>
+                        <li className={`nav-item ${reportId == ReportType.CMCompliance ? 'active' : ''}`}>
+                            <Link className={'nav-link'} to={'/reports/3'}>
                                 CM Compliance
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className={'nav-link'} to={'#'}>
+                        <li className={`nav-item ${reportId == ReportType.CSVExport ? 'active' : ''}`}>
+                            <Link className={'nav-link'} to={'/reports/8'}>
                                 CSV Export
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className={'nav-link'} to={'#'}>
+                        <li className={`nav-item ${reportId == ReportType.CostOfCar ? 'active' : ''}`}>
+                            <Link className={'nav-link'} to={'/reports/5'}>
                                 Cost of CAR
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className={'nav-link'} to={'#'}>
+                        <li className={`nav-item ${reportId == ReportType.JobsNotAudited ? 'active' : ''}`}>
+                            <Link className={'nav-link'} to={'/reports/6'}>
                                 Jobs not Audited
                             </Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className={'nav-link'} to={'#'}>
+                        <li className={`nav-item ${reportId == ReportType.InitialInspection ? 'active' : ''}`}>
+                            <Link className={'nav-link'} to={'/reports/7'}>
                                 Initial Inspection{' '}
                             </Link>
                         </li>

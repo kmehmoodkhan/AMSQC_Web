@@ -42,7 +42,7 @@ export const GetReportData = (
     })
         .then((response: any) => {
             let { result, regionsData } = response.data.result;
-            if (reportType == ReportType.Compliance) {
+            if (reportType == ReportType.Compliance || reportType == ReportType.InitialInspection) {
                 if (regionsData) {
                     result = transFormComplianceReportData(regionsData);
                 } else {

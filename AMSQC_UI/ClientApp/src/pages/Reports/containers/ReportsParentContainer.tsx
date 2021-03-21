@@ -8,10 +8,7 @@ import ReportsParent from '../components/ReportsParent';
 import { useHistory } from 'react-router-dom';
 import { ReportType } from '../../../common/enum';
 import { RESET_REPORT_DATA } from '../../../redux/constants/reportConstants';
-import * as Excel from 'exceljs';
-import * as FileSaver from 'file-saver';
-
-const blobType: string = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+import { exportReport } from '../../../common/excelexport';
 
 export default function ReportsParentContainer() {
     // General Hooks
@@ -30,6 +27,9 @@ export default function ReportsParentContainer() {
     const [toDate, setToDate] = useState<any>(moment().clone().endOf('month').toDate());
     const [userClassName, setUserClassName] = useState('col cola');
     const [quoteClassName, setQuoteClassName] = useState('col cola');
+    const [regionClassName, setRegionClassName] = useState('col cola');
+    const [ignoreClassName, setIgnoreClassName] = useState('col cola');
+
     const [reportTitle, setReportTitle] = useState('');
     const [showData, setShowData] = useState(false);
 
@@ -70,194 +70,11 @@ export default function ReportsParentContainer() {
     };
 
     const exportExcel = async () => {
-        if (Number(reportId) == ReportType.Audit && dataRows && dataRows.length > 0) {
-            const workbook = new Excel.Workbook();
-            const worksheet = workbook.addWorksheet('Audit Summary');
-
-            worksheet.columns = [
-                { header: 'Quote Number', key: 'quoteNo', width: 20 },
-                { header: 'User', key: 'fullName', width: 15 },
-                { header: 'Date Completed', key: 'dateCompleted', width: 30 },
-                { header: 'Category', key: 'categoryId', width: 15 },
-                { header: 'CAR Required', key: 'isCARAnswered', width: 15 },
-                { header: 'Sublet', key: 'isSublet', width: 15 },
-            ];
-            dataRows.forEach((item: any) => {
-                let row = {
-                    quoteNo: item.quoteNo,
-                    fullName: item.fullName,
-                    dateCompleted: moment(item.dateCompleted).format('DD/MM/YYYY hh:mm:ss a'),
-                    categoryId: item.categoryId,
-                    isCARAnswered: item.isCARAnswered ? 'Yes' : 'No',
-                    isSublet: item.isSublet ? 'Yes' : 'No',
-                };
-                worksheet.addRow(row);
-            });
-            worksheet.duplicateRow(1, 1, true);
-            worksheet.getRow(1).values = ['Audit Summary'];
-            worksheet.eachRow({ includeEmpty: true }, function (row, rowNumber) {
-                row.eachCell(function (cell) {
-                    cell.font = {
-                        name: 'Arial',
-                        family: 2,
-                        bold: false,
-                        size: 10,
-                    };
-                    cell.alignment = {
-                        vertical: 'middle',
-                        horizontal: 'left',
-                    };
-                    if (rowNumber <= 2) {
-                        row.height = 20;
-                        cell.font = {
-                            bold: true,
-                            size: 13,
-                        };
-                    }
-                });
-            });
-            workbook.xlsx.writeBuffer().then((data) => {
-                const blob = new Blob([data], { type: blobType });
-                FileSaver.saveAs(blob, 'Audit-Report-' + moment().format('YYYY-MM-DD-hhmmss') + '.xlsx');
-            });
-        } else if (Number(reportId) == ReportType.Compliance && dataRows && dataRows.summaryRow) {
-            const workbook = new Excel.Workbook();
-            const worksheet = workbook.addWorksheet('Compliance Summary');
-            let headersIndexes = [{ index: 1, isState: false }];
-            let headerTitles = ['Compliance Summary'];
-            let nextHeaderIndex = 3;
-            worksheet.columns = [
-                { header: '', key: 'title', width: 30 },
-                { header: 'Jobs Completed', key: 'jobsCompleted', width: 20 },
-                { header: 'Date Completed', key: 'jobsAudited', width: 20 },
-                { header: 'Compliance', key: 'compliance', width: 25 },
-            ];
-            dataRows.summaryRow.forEach((item: any) => {
-                let row = {
-                    title: item.title,
-                    jobsCompleted: item.jobsCompleted,
-                    jobsAudited: item.jobsAudited,
-                    compliance: item.compliance,
-                };
-                nextHeaderIndex++;
-                worksheet.addRow(row);
-            });
-
-            headersIndexes.push({ index: nextHeaderIndex, isState: false });
-            headerTitles.push('');
-
-            if (dataRows.stateSummary && dataRows.stateSummary.length > 0) {
-                dataRows.stateSummary.map((item: any) => {
-                    let row = {
-                        title: item.title,
-                        jobsCompleted: item.jobsCompleted,
-                        jobsAudited: item.jobsAudited,
-                        compliance: item.compliance,
-                    };
-                    nextHeaderIndex++;
-                    worksheet.addRow(row);
-                });
-            } else {
-                nextHeaderIndex++;
-            }
-            
-
-            if (dataRows.stateData && dataRows.stateData.length > 0) {
-                dataRows.stateData.map((item: any) => {
-                    if (item.childList && item.childList.length > 0) {
-                        headersIndexes.push({ index: nextHeaderIndex + headersIndexes.length - 1, isState: true });
-                        headerTitles.push(item.title);
-
-                        item.childList.map((child: any) => {
-                            let row = {
-                                title: child.title,
-                                jobsCompleted: child.jobsCompleted ? child.jobsCompleted : 'Could not connect',
-                                jobsAudited: child.jobsAudited,
-                                compliance: child.compliance,
-                            };
-                            nextHeaderIndex++;
-                            worksheet.addRow(row);
-                        });
-                    }
-                });
-            }
-
-            headersIndexes.forEach((element: any, index: number) => {
-                worksheet.insertRow(element.index, '');
-                if (element.isState) {
-                    worksheet.mergeCells('A' + element.index, 'D' + element.index);
-                    worksheet.getCell('A' + element.index).value = headerTitles[index];
-                    // worksheet.getCell('A' + element.index).alignment = {
-                    //     vertical: 'middle',
-                    //     horizontal: 'center',
-                    // };
-                    // worksheet.getCell('A' + element.index).font = {
-                    //     bold: true,
-                    //     size: 13,
-                    // };
-                    // worksheet.getRow(element.index).height = 20;
-                } else {
-                    worksheet.getRow(element.index).values = [headerTitles[index]];
-                }
-            });
-
-            worksheet.eachRow({ includeEmpty: true }, function (row, rowNumber) {
-                row.eachCell(function (cell, cellNumber) {
-                    cell.font = {
-                        name: 'Arial',
-                        family: 2,
-                        bold: false,
-                        size: 10,
-                    };
-                    const rowHeader = headersIndexes.filter((item: any) => item.index == rowNumber);
-
-                    if (rowHeader.length > 0 && rowHeader[0].isState) {
-                        cell.alignment = {
-                            vertical: 'middle',
-                            horizontal: 'center',
-                        };
-                    } else {
-                        cell.alignment = {
-                            vertical: 'middle',
-                            horizontal: 'left',
-                        };
-                    }
-
-                    if (rowNumber <= 2 || rowHeader.length > 0) {
-                        row.height = 20;
-                        cell.font = {
-                            bold: true,
-                            size: 13,
-                        };
-                    } else {
-                        if (cellNumber == 4) {
-                            const value: any = cell.value;
-                            if (value < 95) {
-                                cell.fill = {
-                                    type: 'pattern',
-                                    pattern: 'solid',
-                                    fgColor: {
-                                        argb: 'FF0000',
-                                    },
-                                };
-                            } else {
-                                cell.fill = {
-                                    type: 'pattern',
-                                    pattern: 'solid',
-                                    fgColor: {
-                                        argb: '00FF00',
-                                    },
-                                };
-                            }
-                        }
-                    }
-                });
-            });
-            workbook.xlsx.writeBuffer().then((data) => {
-                const blob = new Blob([data], { type: blobType });
-                FileSaver.saveAs(blob, 'Compliance-Report-' + moment().format('YYYY-MM-DD-hhmmss') + '.xlsx');
-            });
-        }
+        await exportReport(
+            reportId,
+            dataRows,
+            centers.filter((x: any) => x.stateId),
+        );
     };
 
     // useEffect
@@ -287,12 +104,51 @@ export default function ReportsParentContainer() {
                 case ReportType.Audit:
                     setUserClassName('col cola');
                     setQuoteClassName('col cola');
+                    setRegionClassName('col cola');
+                    setIgnoreClassName('col cola');
                     setReportTitle('Audit Summary');
+                    break;
+                case ReportType.CostOfCar:
+                    setUserClassName('col cola');
+                    setQuoteClassName('col cola');
+                    setRegionClassName('col cola');
+                    setIgnoreClassName('col cola');
+                    setReportTitle('Cost of CAR');
+                    break;
+                case ReportType.InitialInspection:
+                    setUserClassName('col cola');
+                    setQuoteClassName('col cola');
+                    setRegionClassName('col cola');
+                    setIgnoreClassName('col cola');
+                    setReportTitle('Initial Inspection Results');
+                    break;
+                case ReportType.CMCompliance:
+                    setUserClassName('col cola hidden');
+                    setQuoteClassName('col cola hidden');
+                    setRegionClassName('col cola');
+                    setIgnoreClassName('col cola');
+                    setReportTitle('CM Compliance');
+                    break;
+                case ReportType.CMAudit:
+                    setUserClassName('col cola hidden');
+                    setQuoteClassName('col cola hidden');
+                    setRegionClassName('col cola');
+                    setIgnoreClassName('col cola');
+                    setReportTitle('CM Audit Summary');
                     break;
                 case ReportType.Compliance:
                     setUserClassName('col cola hidden');
                     setQuoteClassName('col cola hidden');
+                    setRegionClassName('col cola');
+                    setIgnoreClassName('col cola');
                     setReportTitle('Compliance');
+                    break;
+                case ReportType.JobsNotAudited:
+                    setUserClassName('col cola hidden');
+                    setQuoteClassName('col cola');
+                    setRegionClassName('col cola hidden');
+                    setIgnoreClassName('col cola hidden');
+                    setReportTitle('Jobs Not Audited Report');
                     break;
             }
         } else {
@@ -334,9 +190,11 @@ export default function ReportsParentContainer() {
                     reportType={Number(reportId)}
                     userClassName={userClassName}
                     quoteClassName={quoteClassName}
+                    regionClassName={regionClassName}
                     reportTitle={reportTitle}
                     loading={loading}
                     exportExcel={exportExcel}
+                    ignoreClassName={ignoreClassName}
                 />
             )}
         </>

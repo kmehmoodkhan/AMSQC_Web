@@ -29,6 +29,8 @@ type Props = {
     reportTitle: string;
     loading: boolean;
     exportExcel: any;
+    regionClassName: string;
+    ignoreClassName: string;
 };
 
 export default function ReportsParent({
@@ -56,6 +58,8 @@ export default function ReportsParent({
     reportTitle,
     loading,
     exportExcel,
+    regionClassName,
+    ignoreClassName,
 }: Props) {
     return (
         <div className="page ">
@@ -89,10 +93,16 @@ export default function ReportsParent({
                                     quoteClassName={quoteClassName}
                                     loading={loading}
                                     exportExcel={exportExcel}
+                                    regionClassName={regionClassName}
+                                    ignoreClassName={ignoreClassName}
                                 />
                                 <div className="table-responsive">
                                     <Skeleton loading={loading}>
-                                        <ReportChildContainer dataRows={dataRows} reportType={reportType} />
+                                        <ReportChildContainer
+                                            dataRows={dataRows}
+                                            reportType={reportType}
+                                            states={centers}
+                                        />
                                     </Skeleton>
                                 </div>
                             </div>

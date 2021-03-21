@@ -32,7 +32,11 @@ export default function ReportsDashboard() {
                                     </Link>
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-4  col-xs-6 menu-item">
-                                    <Link className="item-link" to={'/reports/2'} style={{ backgroundColor: '#1b7f7d' }}>
+                                    <Link
+                                        className="item-link"
+                                        to={'/reports/2'}
+                                        style={{ backgroundColor: '#1b7f7d' }}
+                                    >
                                         <i className="">
                                             {' '}
                                             <img src={icon2a} />{' '}
@@ -41,7 +45,11 @@ export default function ReportsDashboard() {
                                     </Link>
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-4  col-xs-6 menu-item">
-                                    <Link className="item-link" to={'#'} style={{ backgroundColor: '#299479' }}>
+                                    <Link
+                                        className="item-link"
+                                        to={'/reports/3'}
+                                        style={{ backgroundColor: '#299479' }}
+                                    >
                                         <i className="">
                                             {' '}
                                             <img src={icon3a} />{' '}
@@ -50,7 +58,11 @@ export default function ReportsDashboard() {
                                     </Link>
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-4  col-xs-6 menu-item">
-                                    <Link className="item-link" to={'#'} style={{ backgroundColor: '#35a576' }}>
+                                    <Link
+                                        className="item-link"
+                                        to={'/reports/3'}
+                                        style={{ backgroundColor: '#35a576' }}
+                                    >
                                         <i className="">
                                             {' '}
                                             <img src={icon4a} />{' '}
@@ -59,7 +71,7 @@ export default function ReportsDashboard() {
                                     </Link>
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-4  col-xs-6 menu-item">
-                                    <Link className="item-link" to={'#'} style={{ backgroundColor: '#9eca83' }}>
+                                    <Link className="item-link" to={'/reports/8'} style={{ backgroundColor: '#9eca83' }}>
                                         <i className="">
                                             {' '}
                                             <img src={icon5a} />{' '}
@@ -68,7 +80,7 @@ export default function ReportsDashboard() {
                                     </Link>
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-4  col-xs-6 menu-item">
-                                    <Link className="item-link" to={'#'} style={{ backgroundColor: '#0f7d63' }}>
+                                    <Link className="item-link" to={'/reports/5'} style={{ backgroundColor: '#0f7d63' }}>
                                         <i className="">
                                             {' '}
                                             <img src={icon6a} />{' '}
@@ -77,7 +89,7 @@ export default function ReportsDashboard() {
                                     </Link>
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-4  col-xs-6 menu-item">
-                                    <Link className="item-link" to={'#'} style={{ backgroundColor: '#49d3cc' }}>
+                                    <Link className="item-link" to={'/reports/6'} style={{ backgroundColor: '#49d3cc' }}>
                                         <i className="">
                                             {' '}
                                             <img src={icon7a} />{' '}
@@ -86,7 +98,7 @@ export default function ReportsDashboard() {
                                     </Link>
                                 </div>
                                 <div className="col-lg-3 col-md-3 col-sm-4  col-xs-6 menu-item">
-                                    <Link className="item-link" to={'#'} style={{ backgroundColor: '#6d835c' }}>
+                                    <Link className="item-link" to={'/reports/7'} style={{ backgroundColor: '#6d835c' }}>
                                         <i className="">
                                             {' '}
                                             <img src={icon8a} />{' '}

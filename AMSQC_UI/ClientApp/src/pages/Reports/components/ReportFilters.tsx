@@ -27,6 +27,8 @@ type Props = {
     quoteClassName: string;
     loading: boolean;
     exportExcel: any;
+    regionClassName: string;
+    ignoreClassName: string;
 };
 
 export default function ReportFilters({
@@ -50,7 +52,9 @@ export default function ReportFilters({
     userClassName,
     quoteClassName,
     loading,
-    exportExcel
+    exportExcel,
+    regionClassName,
+    ignoreClassName,
 }: Props) {
     return (
         <>
@@ -68,7 +72,7 @@ export default function ReportFilters({
                                 />
                             </div>
                         </div>
-                        <div className=" col cola">
+                        <div className={regionClassName}>
                             <div className="form-group">
                                 <label>Region </label>
                                 <select
@@ -145,7 +149,7 @@ export default function ReportFilters({
                                 />
                             </div>
                         </div>
-                        <div className=" col cola">
+                        <div className={ignoreClassName}>
                             <div className="form-group">
                                 <label>Ignore Dates</label>
                                 <select
@@ -175,7 +179,7 @@ export default function ReportFilters({
                                 </div>
                             </div>
                         </div>
-                        <div className=" col cola">
+                        <div className={regionClassName}>
                             <div className="form-group">
                                 <div className="d-flex-column">
                                     <Skeleton width={50} height={10} />
@@ -215,7 +219,7 @@ export default function ReportFilters({
                                 </div>
                             </div>
                         </div>
-                        <div className=" col cola">
+                        <div className={ignoreClassName}>
                             <div className="form-group">
                                 <div className="d-flex-column">
                                     <Skeleton width={50} height={10} />

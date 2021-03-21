@@ -41,10 +41,10 @@ export enum DefaultAnswerIds {
 export enum ReportType {
     Audit = 1,
     Compliance = 2,
-    CMAudit = 3,
-    CMCompliance = 4,
-    CSVExport = 5,
-    CostOfCar = 6,
-    JobsNotAudited = 7,
-    InitialInspection = 8,
+    CMCompliance = 3,
+    CMAudit = 4,
+    CostOfCar = 5,
+    JobsNotAudited = 6,
+    InitialInspection = 7,
+    CSVExport = 8,
 }
