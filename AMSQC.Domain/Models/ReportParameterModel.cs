@@ -23,5 +23,7 @@ namespace AMSQC.Domain.Models
         public bool IgnoreDates { get; set; }
 
         public ReportType ReportType { get; set; }
+
+        public bool IsAudit { get; set; }
     }
 }

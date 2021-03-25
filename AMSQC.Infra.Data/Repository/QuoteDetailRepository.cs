@@ -1,4 +1,5 @@
 ﻿using AMSQC.Domain.Models;
+using AMSQC.Domain.Models.Reports;
 using AMSQC.Domain.Repository;
 using AMSQC.Infra.Data.Context;
 using System;
@@ -67,7 +68,8 @@ namespace AMSQC.Infra.Data.Repository
                           qd.RegionId == (parameterModel.CenterId > 0 ? parameterModel.CenterId : qd.RegionId) &&
                           s.StateId == (parameterModel.RegionId > 0 ? parameterModel.RegionId : s.StateId) &&
                           qd.UserId == (parameterModel.UserId > 0 ? parameterModel.UserId : qd.UserId) &&
-                          qd.CreatedOn >= parameterModel.FromDate && qd.CreatedOn <= parameterModel.EndDate
+                          qd.CreatedOn >= parameterModel.FromDate && qd.CreatedOn <= parameterModel.EndDate &&
+                          qd.IsAudit == parameterModel.IsAudit 
                           select new AuditSummaryViewModel
                           {
                               QuoteNo = qd.QuoteId,
@@ -92,6 +94,7 @@ namespace AMSQC.Infra.Data.Repository
                               join state in _context.States on site.StateId equals state.StateId
                               where
                                  qd.IsSubmit == true &&
+                                 qd.IsAudit == false &&
                                  qd.QuoteId == (parameterModel.QuoteNo > 0 ? parameterModel.QuoteNo : qd.QuoteId) &&
                                  qd.RegionId == (parameterModel.CenterId > 0 ? parameterModel.CenterId : qd.RegionId) &&
                                  site.StateId == (parameterModel.RegionId > 0 ? parameterModel.RegionId : site.StateId) &&
@@ -165,6 +168,61 @@ namespace AMSQC.Infra.Data.Repository
             }
 
             return summary;
+        }
+
+        public CmComplianceViewModel GetCmComplianceSummary(ReportParameterModel parameterModel)
+        {
+            var reportData = (from qd in _context.QuoteDetail
+                              join site in _context.Site on qd.RegionId equals site.RegionId
+                              join state in _context.States on site.StateId equals state.StateId
+                              where
+                                 qd.IsSubmit == true &&
+                                 qd.QuoteId == (parameterModel.QuoteNo > 0 ? parameterModel.QuoteNo : qd.QuoteId) &&
+                                 qd.RegionId == (parameterModel.CenterId > 0 ? parameterModel.CenterId : qd.RegionId) &&
+                                 site.StateId == (parameterModel.RegionId > 0 ? parameterModel.RegionId : site.StateId) &&
+                                 qd.UserId == (parameterModel.UserId > 0 ? parameterModel.UserId : qd.UserId) &&
+                                 qd.CreatedOn >= parameterModel.FromDate && qd.CreatedOn <= parameterModel.EndDate
+                              select new CmQuoteData
+                              {
+                                  StateId = state.StateId,
+                                  State = state.Title,
+                                  SiteId = site.SiteId,
+                                  Site = site.Title,
+                                  IsAudit = qd.IsAudit,
+                                  QuoteId = qd.QuoteId
+                              });
+
+
+            var sitesData = from rd in reportData
+                            group rd by new { rd.SiteId, rd.Site, rd.StateId, rd.State } into grpData
+                            select new CmComplianceModel
+                            {
+                                Title = grpData.Key.Site,
+                                IsState = false,
+                                StateId = grpData.Key.StateId,
+                                State = grpData.Key.State,
+                                CmAuditCount = grpData.ToList().Where(t => t.IsAudit == true).Count(),
+                                SiteAuditCount = grpData.ToList().Where(t => t.IsAudit == false).Count()
+                            };
+
+
+            var reportResult = sitesData.ToList();
+
+            var r1 = from r in reportResult
+                     group r by new { r.StateId, r.State } into grpData1
+                     select new CmComplianceModel
+                     {
+                         Title = grpData1.Key.State,
+                         IsState = true,
+                         StateId = grpData1.Key.StateId,
+                         State = grpData1.Key.State,
+                         CmAuditCount = grpData1.Sum(t => t.CmAuditCount),
+                         SiteAuditCount = grpData1.Sum(t => t.SiteAuditCount)
+                     };
+
+            reportResult.AddRange(r1);
+
+            return new CmComplianceViewModel() { ComplianceData = reportResult.OrderByDescending(t=>t.IsState).ToList()};
         }
     }
 }

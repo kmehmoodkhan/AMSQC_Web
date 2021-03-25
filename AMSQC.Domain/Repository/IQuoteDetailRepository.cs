@@ -1,4 +1,5 @@
 ﻿using AMSQC.Domain.Models;
+using AMSQC.Domain.Models.Reports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace AMSQC.Domain.Repository
         int DeleteQuote(int quoteId,int regionId);
         int UpdateQuote(int quoteId, int regionId, int userId,bool isSublet,bool isCAR, int category);
         List<AuditSummaryViewModel> GetQuotesList(ReportParameterModel parameterModel);
-
         ComplianceSummaryViewModel GetComplianceSummary(ReportParameterModel parameterModel);
+        CmComplianceViewModel GetCmComplianceSummary(ReportParameterModel parameters);
     }
 }

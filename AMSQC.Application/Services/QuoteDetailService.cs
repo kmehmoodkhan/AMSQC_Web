@@ -1,6 +1,7 @@
 ﻿using AMSQC.Application.Interfaces;
 using AMSQC.Application.ViewModels;
 using AMSQC.Domain.Models;
+using AMSQC.Domain.Models.Reports;
 using AMSQC.Domain.Repository;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,16 @@ namespace AMSQC.Application.Services
                 parameters.EndDate = DateTime.MaxValue;
             }
             return _quoteDetailRepository.GetComplianceSummary(parameters);
+        }
+
+        public CmComplianceViewModel GetCmComplianceSummary(ReportParameterModel parameters)
+        {
+            if (parameters.IgnoreDates)
+            {
+                parameters.FromDate = DateTime.MinValue;
+                parameters.EndDate = DateTime.MaxValue;
+            }
+            return _quoteDetailRepository.GetCmComplianceSummary(parameters);
         }
     }
 }
