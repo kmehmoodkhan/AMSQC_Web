@@ -17,7 +17,7 @@ RUN dotnet restore "AMSQC_UI/AMSQC_UI.csproj"
 COPY . .
 WORKDIR /src
 
-RUN apt-get update -y && apt-get install -y gnupg2 && curl -sL https://deb.nodesource.com/setup_14.x | bash - && apt-get update -y && apt-get install -y nodejs
+RUN apt-get update -y && apt-get install -y gnupg2 && curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt-get update -y && apt-get install -y nodejs
 COPY ["AMSQC_UI/ClientApp/package.json", "AMSQC_UI/ClientApp/"]
 
 RUN npm install -g npm

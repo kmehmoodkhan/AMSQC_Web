@@ -66,6 +66,7 @@ namespace AMSQC_UI.Controllers
         {
             if (parameters.ReportType == ReportType.AuditSummary)
             {
+                parameters.IsAudit = false;
                 var result = _quoteService.GetAuditSummaryList(parameters);
                 return new Response
                 {
@@ -77,6 +78,7 @@ namespace AMSQC_UI.Controllers
             }
             else if (parameters.ReportType == ReportType.CmAudit)
             {
+                parameters.IsAudit = true;
                 var result = _quoteService.GetAuditSummaryList(parameters);
                 return new Response
                 {
@@ -125,36 +127,8 @@ namespace AMSQC_UI.Controllers
             }
             else if (parameters.ReportType == ReportType.CmCompliance)
             {
-                var result = new List<ComplianceViewModel>();
-
-                var StateLevel = new ComplianceViewModel()
-                {
-                    Title = "Victoria",
-                    CmAuditCount = 10,
-                    SiteAuditCount = 15,
-                    IsState = true
-                };
-
-
-                var center = new ComplianceViewModel()
-                {
-                    Title = "Abc Center",
-                    CmAuditCount = 152,
-                    SiteAuditCount = 20,
-                    IsState = false
-                };
-
-                var center1 = new ComplianceViewModel()
-                {
-                    Title = "xyx Center",
-                    CmAuditCount = 200,
-                    SiteAuditCount = 35,
-                    IsState = false
-                };
-
-                result.Add(StateLevel);
-                result.Add(center);
-                result.Add(center1);
+                var reportData = _quoteService.GetCmComplianceSummary(parameters);
+                var result = reportData.ComplianceData;
 
                 return new Response
                 {
