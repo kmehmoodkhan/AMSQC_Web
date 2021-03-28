@@ -270,7 +270,7 @@ export const exportReport = async (reportId: ReportType, dataRows: any, states: 
         ];
         dataRows.forEach((item: any) => {
             let row = {
-                center: item.center,
+                center: item.title,
                 cmAuditCount: item.cmAuditCount,
                 siteAuditCount: item.siteAuditCount,
             };
@@ -297,11 +297,11 @@ export const exportReport = async (reportId: ReportType, dataRows: any, states: 
                         size: 13,
                     };
                 }
-                if (rowNumber > 2 && cellNumber == 1 && dataRows[rowNumber - 1].isState) {
+                if (rowNumber > 2 && cellNumber == 1 && dataRows.length > 0 && dataRows[rowNumber - 3].isState) {
                     row.height = 20;
                     cell.font = {
                         bold: true,
-                        size: 13,
+                        size: 12,
                     };
                 }
                 const value: any = cell.value;
