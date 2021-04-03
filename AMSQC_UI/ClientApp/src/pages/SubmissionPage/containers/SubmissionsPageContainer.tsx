@@ -47,11 +47,22 @@ export default function SubmissionsPageContainer() {
                 AnswerIds: '',
                 IsSubletQuestion: item.isSubletQuestion,
                 category: item.category,
+                subQuestionResponse: [],
             };
             response.Answers = item.subQuestions
                 .filter((item1: any) => item1.questionType != QuestionType.Label && item1.answerText)
                 .map((item1: any) => item1.answerText)
                 .join('@@');
+
+            response.subQuestionResponse = item.subQuestions
+                .filter((item1: any) => item1.questionType != QuestionType.Label && item1.answerText)
+                .map((item1: any) => {
+                    return {
+                        answerOptionId: item1.isOtherSelected ? DefaultAnswerIds.OtherAnswerId : item1.answer,
+                        subQuestionId: item1.questionId,
+                    };
+                });
+
             response.AnswerIds = item.subQuestions
                 .filter((item1: any) => item1.questionType != QuestionType.Label && item1.answer)
                 .map((item1: any) => {
