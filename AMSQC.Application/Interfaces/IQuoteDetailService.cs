@@ -18,5 +18,7 @@ namespace AMSQC.Application.Interfaces
         List<AuditSummaryViewModel> GetAuditSummaryList(ReportParameterModel parameters);
         ComplianceSummaryViewModel GetComplianceSummary(ReportParameterModel parameters);
         CmComplianceViewModel GetCmComplianceSummary(ReportParameterModel parameters);
+        CostOfCarViewModel GetCostOfCARSummary(ReportParameterModel parameters);
+        ComplianceSummaryViewModel GetInitialInspectionResults(ReportParameterModel parameters);
     }
 }

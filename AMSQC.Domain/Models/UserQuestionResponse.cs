@@ -31,5 +31,16 @@ namespace AMSQC.Domain.Models
         [JsonIgnore]
         public DateTime CreatedOn { get; set; }
 
+        public List<SubQuestionResponse> SubQuestionResponse { get; set; }
+
+
+
 	}
+
+    public class SubQuestionResponse
+    {
+        public int SubQuestionId { get; set; }
+
+        public int AnswerOptionId { get; set; }
+    }
 }

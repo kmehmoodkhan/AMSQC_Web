@@ -17,5 +17,7 @@ namespace AMSQC.Domain.Repository
         List<AuditSummaryViewModel> GetQuotesList(ReportParameterModel parameterModel);
         ComplianceSummaryViewModel GetComplianceSummary(ReportParameterModel parameterModel);
         CmComplianceViewModel GetCmComplianceSummary(ReportParameterModel parameters);
+        CostOfCarViewModel GetCostOfCARSummary(ReportParameterModel parameters);
+        ComplianceSummaryViewModel GetInitialInspectionResults(ReportParameterModel parameters);
     }
 }

@@ -90,36 +90,11 @@ namespace AMSQC_UI.Controllers
             }
             else if (parameters.ReportType == ReportType.CostOfCar)
             {
-                var state1 = new StateData();
-
-                var item1 = new StateQuoteDetail()
-                {
-                    QuoteNo = 1356,
-                    AnswerId = 1,
-                    CompletionDate = DateTime.Now,
-                    Cost = 500,
-                    Site = "ABc Center",
-                    UserResponsible = "Jaise Rider"
-                };
-
-                state1.StateId = 1;
-                state1.Title = "Victoria";
-                state1.QuotesList = new List<StateQuoteDetail>() { item1 };
-
-
-                var state2 = new StateData();
-
-
-                state2.StateId = 1;
-                state2.Title = "Queensland";
-                state2.QuotesList = new List<StateQuoteDetail>() { item1 };
-
-                List<StateData> result = new List<StateData>() { state1, state2 };
-
+                var result = _quoteService.GetCostOfCARSummary(parameters);
 
                 return new Response
                 {
-                    Result = new { result, alreadySubmitted = false },
+                    Result = new { result = result.StatesData, alreadySubmitted = false },
                     Status = Status.Success,
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = ""
@@ -161,11 +136,13 @@ namespace AMSQC_UI.Controllers
             }
             else if ( parameters.ReportType == ReportType.InitialInspectionResults)
             {
-                var result = _quoteService.GetComplianceSummary(parameters);
+                var result = _quoteService.GetInitialInspectionResults(parameters);
+
+                //var result1 = _quoteService.GetComplianceSummary(parameters);
 
                 return new Response
                 {
-                    Result = new { result, alreadySubmitted = false },
+                    Result = new { result.RegionsData, alreadySubmitted = false },
                     Status = Status.Success,
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = ""
@@ -195,6 +172,22 @@ namespace AMSQC_UI.Controllers
                     Message = ""
                 };
             }
+        }
+
+
+        [Route("SurveyAnswers")]
+        public Response Get(int quoteDetailId,string userGuid)
+        {
+            var result = new UserSurveyResponse();
+            return new Response
+            {
+                
+                Result = new { result },
+                Status = Status.Success,
+                HttpStatusCode = System.Net.HttpStatusCode.OK,
+                Message = ""
+            };
+
         }
     }
 }

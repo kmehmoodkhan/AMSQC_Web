@@ -65,5 +65,25 @@ namespace AMSQC.Application.Services
             }
             return _quoteDetailRepository.GetCmComplianceSummary(parameters);
         }
+
+        public CostOfCarViewModel GetCostOfCARSummary(ReportParameterModel parameters)
+        {
+            if (parameters.IgnoreDates)
+            {
+                parameters.FromDate = DateTime.MinValue;
+                parameters.EndDate = DateTime.MaxValue;
+            }
+            return _quoteDetailRepository.GetCostOfCARSummary(parameters);
+        }
+
+        public ComplianceSummaryViewModel GetInitialInspectionResults(ReportParameterModel parameters)
+        {
+            if (parameters.IgnoreDates)
+            {
+                parameters.FromDate = DateTime.MinValue;
+                parameters.EndDate = DateTime.MaxValue;
+            }
+            return _quoteDetailRepository.GetInitialInspectionResults(parameters);
+        }
     }
 }
