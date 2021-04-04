@@ -1,4 +1,12 @@
-import { SET_DATA_ROWS, SET_FILTERS_DATA, SET_REPORT, RESET_REPORT_DATA } from '../constants/reportConstants';
+import { ReportType } from '../../common/enum';
+import { RESET_ANSWERS_REDIRECTION } from '../constants/reportConstants';
+import {
+    SET_DATA_ROWS,
+    SET_FILTERS_DATA,
+    SET_REPORT,
+    RESET_REPORT_DATA,
+    SET_REPORT_ANSWERS,
+} from '../constants/reportConstants';
 
 type reportReducerType = {
     regions: any[];
@@ -6,6 +14,9 @@ type reportReducerType = {
     users: any[];
     dataRows: any[];
     isReport: boolean;
+    answers: any;
+    currentReportType: ReportType;
+    redirectToAnswers: boolean;
 };
 
 const defaultState: reportReducerType = {
@@ -14,6 +25,9 @@ const defaultState: reportReducerType = {
     users: [],
     dataRows: [],
     isReport: false,
+    answers: null,
+    currentReportType: ReportType.None,
+    redirectToAnswers: false,
 };
 
 const reportReducer = (state = defaultState, action: any): reportReducerType => {
@@ -39,6 +53,18 @@ const reportReducer = (state = defaultState, action: any): reportReducerType => 
             return {
                 ...state,
                 dataRows: [],
+            };
+        case SET_REPORT_ANSWERS:
+            return {
+                ...state,
+                answers: action.answers,
+                currentReportType: action.currentReportType,
+                redirectToAnswers: true,
+            };
+        case RESET_ANSWERS_REDIRECTION:
+            return {
+                ...state,
+                redirectToAnswers: false,
             };
         default:
             return state;

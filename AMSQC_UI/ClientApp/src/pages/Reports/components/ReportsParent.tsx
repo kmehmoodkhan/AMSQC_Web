@@ -31,6 +31,8 @@ type Props = {
     exportExcel: any;
     regionClassName: string;
     ignoreClassName: string;
+    getReportAnswers: any;
+    isLoadingAnswers: boolean;
 };
 
 export default function ReportsParent({
@@ -60,6 +62,8 @@ export default function ReportsParent({
     exportExcel,
     regionClassName,
     ignoreClassName,
+    getReportAnswers,
+    isLoadingAnswers,
 }: Props) {
     return (
         <div className="page ">
@@ -102,6 +106,8 @@ export default function ReportsParent({
                                             dataRows={dataRows}
                                             reportType={reportType}
                                             states={centers}
+                                            getReportAnswers={getReportAnswers}
+                                            isLoadingAnswers={isLoadingAnswers}
                                         />
                                     </Skeleton>
                                 </div>

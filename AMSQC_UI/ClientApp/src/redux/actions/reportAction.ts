@@ -3,6 +3,7 @@ import { HIDE_LOADER, SHOW_LOADER, SHOW_NOTIFICATION } from '../constants/shared
 import * as actionType from '../constants/reportConstants';
 import { axiosGet, axiosPost } from '../../api/apiutils';
 import { ReportType } from '../../common/enum';
+import { dynamicSort } from '../../common/utils';
 
 export const GetReportFiltersData = () => (dispatch: any) => {
     const url = Endpoints.ReportAPI.FiltersData;
@@ -50,6 +51,44 @@ export const GetReportData = (
                 }
             }
             dispatch({ type: actionType.SET_DATA_ROWS, dataRows: result });
+        })
+        .catch((err: any) =>
+            dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: err.message, title: 'Error' } }),
+        )
+        .finally(() => dispatch({ type: HIDE_LOADER }));
+};
+
+export const GetReportAnswersData = (quoteDetailId: any, userGuid: string, currentReportType: ReportType) => (
+    dispatch: any,
+) => {
+    const url = Endpoints.ReportAPI.ReportAnswersAPI;
+    dispatch({ type: SHOW_LOADER });
+    axiosPost(url, {
+        quoteDetailId: parseInt(quoteDetailId),
+        userGuid: userGuid,
+    })
+        .then((response: any) => {
+            let { result } = response.data;
+            let answers: any = {
+                quoteDetailId: result.quoteDetailId,
+                mappingSheet: result.mappingSheet,
+                category: result.category,
+                categoryQuestions: result.questionResponses
+                    .filter((x: any) => !x.isCAR)
+                    .sort(dynamicSort('displayOrder')),
+                CARQuestions: result.questionResponses
+                    .filter((x: any) => x.isCAR && x.parentQuestionId <= 0)
+                    .map((x: any) => {
+                        return {
+                            ...x,
+                            subQuestions: result.questionResponses
+                                .filter((y: any) => y.parentQuestionId == x.questionId)
+                                .sort(dynamicSort('displayOrder')),
+                        };
+                    })
+                    .sort(dynamicSort('displayOrder')),
+            };
+            dispatch({ type: actionType.SET_REPORT_ANSWERS, answers: answers, currentReportType: currentReportType });
         })
         .catch((err: any) =>
             dispatch({ type: SHOW_NOTIFICATION, error: { type: 'error', description: err.message, title: 'Error' } }),

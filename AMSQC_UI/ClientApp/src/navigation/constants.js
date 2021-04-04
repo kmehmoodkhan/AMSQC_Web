@@ -4,6 +4,7 @@ import CorrectiveRequestContainer from '../pages/CorrectiveRequest/containers/Co
 import DamageCategoriesContainer from '../pages/DamageCategories/containers/DamageCategoriesContainer';
 import FileUploadContainer from '../pages/FileUpload/Containers/FileUploadContainer';
 import HomeContainer from '../pages/Home/containers/HomeContainer';
+import ReportAnswersContainer from '../pages/ReportAnswers/containers/ReportAnswersContainer';
 import ReportDashboardContainer from '../pages/Reports/containers/ReportDashboardContainer';
 import ReportsParentContainer from '../pages/Reports/containers/ReportsParentContainer';
 import ScreenLoader from '../pages/Shared/Components/ScreenLoader';
@@ -21,6 +22,7 @@ export const ROUTES = {
     SUBLET_REPAIR: '/sublet-repair',
     REPORTS_DASHBOARD: '/reports-dashboard',
     REPORTS_PAGE: '/reports/:reportId',
+    REPORT_ANSWER_PAGE: '/report-answers',
 };
 
 export const COMPONENTS = {
@@ -35,4 +37,5 @@ export const COMPONENTS = {
     SubletRepair: SubletRepairsContainer,
     ReportDashboard: ReportDashboardContainer,
     ReportsMain: ReportsParentContainer,
+    ReportAnswers: ReportAnswersContainer,
 };

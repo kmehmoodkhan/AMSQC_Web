@@ -8,5 +8,6 @@ export const Endpoints = {
     ReportAPI: {
         FiltersData: 'api/report/parameters',
         ReportAPI: 'api/report',
+        ReportAnswersAPI: 'api/SurveyAnswers',
     },
 };

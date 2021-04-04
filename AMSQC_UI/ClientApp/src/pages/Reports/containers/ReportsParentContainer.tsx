@@ -2,12 +2,12 @@ import moment from 'moment';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
-import { GetReportData, GetReportFiltersData } from '../../../redux/actions/reportAction';
+import { GetReportAnswersData, GetReportData, GetReportFiltersData } from '../../../redux/actions/reportAction';
 import { RootState } from '../../../redux/store';
 import ReportsParent from '../components/ReportsParent';
 import { useHistory } from 'react-router-dom';
 import { ReportType } from '../../../common/enum';
-import { RESET_REPORT_DATA } from '../../../redux/constants/reportConstants';
+import { RESET_REPORT_DATA, RESET_ANSWERS_REDIRECTION } from '../../../redux/constants/reportConstants';
 import { exportReport } from '../../../common/excelexport';
 
 export default function ReportsParentContainer() {
@@ -32,14 +32,17 @@ export default function ReportsParentContainer() {
 
     const [reportTitle, setReportTitle] = useState('');
     const [showData, setShowData] = useState(false);
+    const [isLoadingAnswers, setIsLoadingAnswers] = useState(false);
 
     // useSelector
 
     const centers = useSelector((state: RootState) => state.report.centers);
     const regions = useSelector((state: RootState) => state.report.regions);
     const users = useSelector((state: RootState) => state.report.users);
+    const user = useSelector((state: RootState) => state.user.user);
     const dataRows = useSelector((state: RootState) => state.report.dataRows);
     const loading = useSelector((state: RootState) => state.shared.loading);
+    const redirectToAnswers = useSelector((state: RootState) => state.report.redirectToAnswers);
 
     //useMemo
 
@@ -75,6 +78,11 @@ export default function ReportsParentContainer() {
             dataRows,
             centers.filter((x: any) => x.stateId),
         );
+    };
+
+    const getReportAnswers = (quoteDetailId: any) => {
+        setIsLoadingAnswers(true);
+        dispatch(GetReportAnswersData(quoteDetailId, user.localAccountId, reportId));
     };
 
     // useEffect
@@ -156,6 +164,13 @@ export default function ReportsParentContainer() {
         }
     }, [reportId]);
 
+    useEffect(() => {
+        if (redirectToAnswers) {
+            history.push('/report-answers');
+            dispatch({ type: RESET_ANSWERS_REDIRECTION });
+        }
+    }, [redirectToAnswers]);
+
     return (
         <>
             {showData && (
@@ -195,6 +210,8 @@ export default function ReportsParentContainer() {
                     loading={loading}
                     exportExcel={exportExcel}
                     ignoreClassName={ignoreClassName}
+                    getReportAnswers={getReportAnswers}
+                    isLoadingAnswers={isLoadingAnswers}
                 />
             )}
         </>

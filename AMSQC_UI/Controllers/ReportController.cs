@@ -35,9 +35,9 @@ namespace AMSQC_UI.Controllers
         [Route("Parameters")]
         public Response Get(int quoteNo)
         {
-            List<Region> regions = _regionService.GetRegions().OrderBy(t=>t.Title).ToList();
+            List<Region> regions = _regionService.GetRegions().OrderBy(t => t.Title).ToList();
 
-            regions.Insert(0, new Region() { RegionId = -1, Title="[All]" });
+            regions.Insert(0, new Region() { RegionId = -1, Title = "[All]" });
 
             List<State> states = _stateService.GetStates();
             states.Insert(0, new State() { StateId = -1, Title = "[All]" });
@@ -53,7 +53,7 @@ namespace AMSQC_UI.Controllers
 
             return new Response
             {
-                Result = new { regions,states,users, alreadySubmitted = false },
+                Result = new { regions, states, users, alreadySubmitted = false },
                 Status = Status.Success,
                 HttpStatusCode = System.Net.HttpStatusCode.OK,
                 Message = ""
@@ -134,7 +134,7 @@ namespace AMSQC_UI.Controllers
                     Message = ""
                 };
             }
-            else if ( parameters.ReportType == ReportType.InitialInspectionResults)
+            else if (parameters.ReportType == ReportType.InitialInspectionResults)
             {
                 var result = _quoteService.GetInitialInspectionResults(parameters);
 
@@ -160,7 +160,7 @@ namespace AMSQC_UI.Controllers
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = ""
                 };
-            } 
+            }
             else
             {
                 var result = _quoteService.GetComplianceSummary(parameters);
@@ -176,12 +176,80 @@ namespace AMSQC_UI.Controllers
 
 
         [Route("SurveyAnswers")]
-        public Response Get(int quoteDetailId,string userGuid)
+        public Response Get(int quoteDetailId, string userGuid)
         {
-            var result = new UserSurveyResponse();
+            var result = new UserSurveyResponseViewModel()
+            {
+                Category = 1,
+                MappingSheet = "https://www.google.com",
+                QuoteDetailId = 34535,
+                UserId = 123,
+                QuestionResponses = new List<UserSurveyResponse>()
+                {
+                    new UserSurveyResponse
+                    {
+                        Answer = "No",
+                        DisplayOrder = 1,
+                        Question = "Remove & Replace",
+                        IsCAR = false
+                    },
+                    new UserSurveyResponse
+                    {
+                        Answer = "No",
+                        DisplayOrder = 2,
+                        Question = "Paint",
+                        IsCAR = false
+                    },
+                    new UserSurveyResponse
+                    {
+                        QuestionId = 2,
+                        Answer = "ALignment Issues",
+                        DisplayOrder = 2,
+                        Question = "Remove & Replace defect",
+                        IsCAR = true,
+                        ParentQuestionId = 1,
+                    },
+                    new UserSurveyResponse
+                    {
+                        QuestionId = 3,
+                        Answer = "Blemish",
+                        DisplayOrder = 1,
+                        Question = "Paint defect",
+                        IsCAR = true,
+                        ParentQuestionId = 1
+                    },
+                    new UserSurveyResponse
+                    {
+                        QuestionId = 1,
+                        Answer = "No",
+                        DisplayOrder = 1,
+                        Question = "Remove & Replace defect",
+                        IsCAR = true,
+                    },
+                    new UserSurveyResponse
+                    {
+                        Answer = "ABC Autobody Services",
+                        DisplayOrder = 3,
+                        Question = "Who was responsible for the problem?",
+                        IsCAR = true
+                    },
+                    new UserSurveyResponse
+                    {
+                        Answer = "No",
+                        DisplayOrder = 2,
+                        Question = "Has the defect been rectified?",
+                        IsCAR = true
+                    },
+                }
+            };
+
+
+
+
+
             return new Response
             {
-                
+
                 Result = new { result },
                 Status = Status.Success,
                 HttpStatusCode = System.Net.HttpStatusCode.OK,

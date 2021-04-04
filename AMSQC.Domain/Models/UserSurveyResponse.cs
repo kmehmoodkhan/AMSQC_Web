@@ -19,14 +19,20 @@ namespace AMSQC.Domain.Models
             set;
         }
 
+        public int ParentQuestionId
+        {
+            get;
+            set;
+        }
+
         public int DisplayOrder
         {
-            get;set;
+            get; set;
         }
 
         public bool IsCAR
         {
-            get;set;
+            get; set;
         }
         public string AnswerId
         {

@@ -13,6 +13,7 @@ export default function LoggedInRouterConfig() {
             <Route exact path={ROUTES.SUBLET_REPAIR} component={COMPONENTS.SubletRepair} />
             <Route exact path={ROUTES.REPORTS_DASHBOARD} component={COMPONENTS.ReportDashboard} />
             <Route exact path={ROUTES.REPORTS_PAGE} component={COMPONENTS.ReportsMain} />
+            <Route exact path={ROUTES.REPORT_ANSWER_PAGE} component={COMPONENTS.ReportAnswers} />
         </>
     );
 }

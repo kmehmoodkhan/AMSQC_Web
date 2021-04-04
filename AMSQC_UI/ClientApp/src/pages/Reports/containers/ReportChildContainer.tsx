@@ -12,12 +12,32 @@ type Props = {
     dataRows: any;
     reportType: ReportType;
     states: any[];
+    getReportAnswers: any;
+    isLoadingAnswers: boolean;
 };
-export default function ReportChildContainer({ reportType, dataRows, states }: Props) {
+export default function ReportChildContainer({
+    reportType,
+    dataRows,
+    states,
+    getReportAnswers,
+    isLoadingAnswers,
+}: Props) {
     return (
         <>
-            {reportType === ReportType.Audit && <AuditReport dataRows={dataRows} />}
-            {reportType === ReportType.CMAudit && <AuditReport dataRows={dataRows} />}
+            {reportType === ReportType.Audit && (
+                <AuditReport
+                    dataRows={dataRows}
+                    getReportAnswers={getReportAnswers}
+                    isLoadingAnswers={isLoadingAnswers}
+                />
+            )}
+            {reportType === ReportType.CMAudit && (
+                <AuditReport
+                    dataRows={dataRows}
+                    getReportAnswers={getReportAnswers}
+                    isLoadingAnswers={isLoadingAnswers}
+                />
+            )}
             {reportType === ReportType.CostOfCar && <CostOfCARReport dataRows={dataRows} states={states} />}
             {reportType === ReportType.Compliance && <ComplianceReport dataRows={dataRows} />}
             {reportType === ReportType.InitialInspection && <InitialInspectionReport dataRows={dataRows} />}

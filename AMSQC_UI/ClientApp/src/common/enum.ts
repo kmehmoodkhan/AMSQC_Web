@@ -39,6 +39,7 @@ export enum DefaultAnswerIds {
 }
 
 export enum ReportType {
+    None = 0,
     Audit = 1,
     Compliance = 2,
     CMCompliance = 3,

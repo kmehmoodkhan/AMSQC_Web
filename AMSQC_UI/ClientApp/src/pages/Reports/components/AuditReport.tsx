@@ -1,10 +1,14 @@
 import moment from 'moment';
 import React from 'react';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 type Props = {
     dataRows: any[];
+    getReportAnswers: any;
+    isLoadingAnswers: boolean;
 };
-export default function AuditReport({ dataRows }: Props) {
+export default function AuditReport({ dataRows, getReportAnswers, isLoadingAnswers }: Props) {
     return (
         <table className="table table-sm table-style1 table-striped">
             <thead>
@@ -20,7 +24,8 @@ export default function AuditReport({ dataRows }: Props) {
                 </tr>
             </thead>
             <tbody>
-                {dataRows && dataRows.length>0 &&
+                {dataRows &&
+                    dataRows.length > 0 &&
                     dataRows.map((item: any) => {
                         return (
                             <tr>
@@ -50,7 +55,13 @@ export default function AuditReport({ dataRows }: Props) {
                                 </td>
                                 <td className="text-center">
                                     {' '}
-                                    <a>View</a>{' '}
+                                    <a className="link-text" onClick={() => getReportAnswers(item.quoteNo)}>
+                                        View
+                                    </a>{' '}
+                                    <Spin
+                                        className={`${isLoadingAnswers ? '' : 'hidden'}`}
+                                        indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
+                                    />
                                 </td>
                             </tr>
                         );
