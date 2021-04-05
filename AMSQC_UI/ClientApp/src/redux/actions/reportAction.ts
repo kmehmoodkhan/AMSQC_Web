@@ -61,12 +61,9 @@ export const GetReportData = (
 export const GetReportAnswersData = (quoteDetailId: any, userGuid: string, currentReportType: ReportType) => (
     dispatch: any,
 ) => {
-    const url = Endpoints.ReportAPI.ReportAnswersAPI;
+    const url = Endpoints.ReportAPI.ReportAnswersAPI + `?quoteDetailId=${parseInt(quoteDetailId)}&userGuid=${userGuid}`;
     dispatch({ type: SHOW_LOADER });
-    axiosPost(url, {
-        quoteDetailId: parseInt(quoteDetailId),
-        userGuid: userGuid,
-    })
+    axiosGet(url)
         .then((response: any) => {
             let { result } = response.data;
             let answers: any = {
@@ -82,7 +79,7 @@ export const GetReportAnswersData = (quoteDetailId: any, userGuid: string, curre
                         return {
                             ...x,
                             subQuestions: result.questionResponses
-                                .filter((y: any) => y.parentQuestionId == x.questionId)
+                                .filter((y: any) => y.parentQuestionId > 0 && y.parentQuestionId == x.questionId)
                                 .sort(dynamicSort('displayOrder')),
                         };
                     })

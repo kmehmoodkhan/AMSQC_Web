@@ -20,7 +20,7 @@ export default function ReportAnswers({ answers, onBack }: Props) {
                                 </div>
                                 <div className="sub-title2">
                                     {' '}
-                                    <a href={answers.mappingSheet} target="_blank">
+                                    <a href={answers.mappingSheet} className="link-text" target="_blank">
                                         Mapping Sheet{' '}
                                     </a>{' '}
                                 </div>
@@ -52,7 +52,7 @@ export default function ReportAnswers({ answers, onBack }: Props) {
                                 </div>
                             </div>
                             <br /> <br />
-                            {answers.CARQuestions.length > 0 && (
+                            {answers.CARQuestions && answers.CARQuestions.length > 0 && (
                                 <div className="action-details ">
                                     <div className="sub-title3"> Corrective Action Request </div>
 
@@ -61,7 +61,7 @@ export default function ReportAnswers({ answers, onBack }: Props) {
                                             <div className="table-responsive">
                                                 <table className="table ">
                                                     <tbody>
-                                                        {answers.categoryQuestions.map((x: any) => {
+                                                        {answers.CARQuestions.map((x: any) => {
                                                             return (
                                                                 <tr>
                                                                     <td>
@@ -79,7 +79,8 @@ export default function ReportAnswers({ answers, onBack }: Props) {
                                                                                 })}
                                                                             </ul>
                                                                         )}
-                                                                        {x.subQuestions.length == 1 && <>{x.answer}</>}
+                                                                        {(x.subQuestions.length == 0 ||
+                                                                            !x.subQuestions) && <>{x.answer}</>}
                                                                     </td>
                                                                 </tr>
                                                             );
@@ -95,7 +96,7 @@ export default function ReportAnswers({ answers, onBack }: Props) {
                                 <button
                                     type="button"
                                     data-toggle="dropdown"
-                                    className="btn btn-lg btn-danger-outline btn-wide"
+                                    className="btn btn-lg btn-danger-outline btn-wide no-print"
                                     onClick={onBack}
                                 >
                                     Back
@@ -103,7 +104,8 @@ export default function ReportAnswers({ answers, onBack }: Props) {
                                 <button
                                     type="button"
                                     data-toggle="dropdown"
-                                    className="btn btn-primary btn-lg btn-wide "
+                                    className="btn btn-primary btn-lg btn-wide no-print"
+                                    onClick={() => window.print()}
                                 >
                                     Print
                                 </button>

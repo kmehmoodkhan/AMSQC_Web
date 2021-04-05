@@ -12,10 +12,10 @@ export default function ReportHeader({ fullName, onLogOut, reportId }: Props) {
     return (
         <nav className="navbar fixed-top  navbar-expand-lg header shadow ">
             <div className="container-fluid">
-                <a className="navbar-brand" href="index.html">
+                <Link className="navbar-brand" to={'/'}>
                     {' '}
                     <img src={Logo} height="60" />{' '}
-                </a>
+                </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#topmenu">
                     {' '}
                     &#9776;{' '}
