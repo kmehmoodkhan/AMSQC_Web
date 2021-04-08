@@ -95,7 +95,6 @@ export default function ReportAnswers({ answers, onBack }: Props) {
                             <div className="buttons">
                                 <button
                                     type="button"
-                                    data-toggle="dropdown"
                                     className="btn btn-lg btn-danger-outline btn-wide no-print"
                                     onClick={onBack}
                                 >
@@ -103,7 +102,6 @@ export default function ReportAnswers({ answers, onBack }: Props) {
                                 </button>
                                 <button
                                     type="button"
-                                    data-toggle="dropdown"
                                     className="btn btn-primary btn-lg btn-wide no-print"
                                     onClick={() => window.print()}
                                 >
