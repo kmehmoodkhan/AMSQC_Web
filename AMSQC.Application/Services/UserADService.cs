@@ -59,6 +59,7 @@ namespace AMSQC.Application.Services
             }
             catch(Exception ex)
             {
+                string exception = ex.Message;
                 ;
             }
 
@@ -82,7 +83,7 @@ namespace AMSQC.Application.Services
             }
             catch (Exception ex)
             {
-                ;
+                string exception = ex.Message;
             }
 
 

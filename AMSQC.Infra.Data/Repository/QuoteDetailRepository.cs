@@ -72,6 +72,7 @@ namespace AMSQC.Infra.Data.Repository
                           qd.IsAudit == parameterModel.IsAudit 
                           select new AuditSummaryViewModel
                           {
+                              QuoteDetailId = qd.QuoteDetailId,
                               QuoteNo = qd.QuoteId,
                               FullName = u.FullName,
                               DateCompleted = qd.CreatedOn,

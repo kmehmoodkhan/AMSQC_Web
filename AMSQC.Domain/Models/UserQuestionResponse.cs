@@ -39,6 +39,8 @@ namespace AMSQC.Domain.Models
 
     public class SubQuestionResponse
     {
+        [Key]
+        public int SubQuestionResponseId { get; set; }
         public int SubQuestionId { get; set; }
 
         public int AnswerOptionId { get; set; }

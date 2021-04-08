@@ -8,6 +8,7 @@ namespace AMSQC.Domain.Models
 {
     public class AuditSummaryViewModel
     {
+        public int QuoteDetailId { get; set; }
         public int QuoteNo { get; set; }
 
         public string FullName { get; set; }
