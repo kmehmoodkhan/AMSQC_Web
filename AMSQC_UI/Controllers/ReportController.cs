@@ -250,7 +250,7 @@ namespace AMSQC_UI.Controllers
             return new Response
             {
 
-                Result = new { result },
+                Result = result,
                 Status = Status.Success,
                 HttpStatusCode = System.Net.HttpStatusCode.OK,
                 Message = ""
