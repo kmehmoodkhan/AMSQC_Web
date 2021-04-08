@@ -53,6 +53,8 @@ const reportReducer = (state = defaultState, action: any): reportReducerType => 
             return {
                 ...state,
                 dataRows: [],
+                answers: null,
+                redirectToAnswers: false,
             };
         case SET_REPORT_ANSWERS:
             return {

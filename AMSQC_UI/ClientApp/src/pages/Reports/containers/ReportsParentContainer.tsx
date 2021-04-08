@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { ReportType } from '../../../common/enum';
 import { RESET_REPORT_DATA, RESET_ANSWERS_REDIRECTION } from '../../../redux/constants/reportConstants';
 import { exportReport } from '../../../common/excelexport';
+import ReportAnswers from '../../ReportAnswers/components/ReportAnswers';
 
 export default function ReportsParentContainer() {
     // General Hooks
@@ -23,8 +24,8 @@ export default function ReportsParentContainer() {
     const [regionId, setRegionId] = useState(0);
     const [userId, setUserId] = useState(0);
     const [ignoreDates, setIgnoreDates] = useState(1);
-    const [fromDate, setFromDate] = useState<any>(moment().clone().startOf('month').toDate());
-    const [toDate, setToDate] = useState<any>(moment().clone().endOf('month').toDate());
+    const [fromDate, setFromDate] = useState<moment.Moment>(moment().clone().startOf('month').hour(12));
+    const [toDate, setToDate] = useState<moment.Moment>(moment().clone().endOf('month'));
     const [userClassName, setUserClassName] = useState('col cola');
     const [quoteClassName, setQuoteClassName] = useState('col cola');
     const [regionClassName, setRegionClassName] = useState('col cola');
@@ -33,6 +34,7 @@ export default function ReportsParentContainer() {
     const [reportTitle, setReportTitle] = useState('');
     const [showData, setShowData] = useState(false);
     const [isLoadingAnswers, setIsLoadingAnswers] = useState(false);
+    const [showAnswers, setShowAnswers] = useState(false);
 
     // useSelector
 
@@ -43,18 +45,25 @@ export default function ReportsParentContainer() {
     const dataRows = useSelector((state: RootState) => state.report.dataRows);
     const loading = useSelector((state: RootState) => state.shared.loading);
     const redirectToAnswers = useSelector((state: RootState) => state.report.redirectToAnswers);
+    const reportAnswers = useSelector((state: RootState) => state.report.answers);
 
     //useMemo
 
     const now = useMemo(() => moment(), []);
 
     //events
+
+    const onBack = () => {
+        setShowAnswers(false);
+        dispatch({ type: RESET_ANSWERS_REDIRECTION });
+    };
+
     const onDateFromChange = (date: any) => {
-        setFromDate(date);
+        setFromDate(date.hour(12));
     };
 
     const onDateToChange = (date: any) => {
-        setToDate(date);
+        setToDate(date.hour(23));
     };
 
     const submitFilters = () => {
@@ -65,8 +74,8 @@ export default function ReportsParentContainer() {
                 userId,
                 quoteId ? quoteId : '0',
                 ignoreDates == 0 ? true : false,
-                fromDate,
-                toDate,
+                fromDate.toDate(),
+                toDate.toDate(),
                 Number(reportId),
             ),
         );
@@ -96,8 +105,8 @@ export default function ReportsParentContainer() {
             setCenterId(0);
             setQuoteId('');
             setIgnoreDates(1);
-            setFromDate(moment().clone().startOf('month').toDate());
-            setToDate(moment().clone().endOf('month').toDate());
+            setFromDate(moment().clone().startOf('month').hour(12));
+            setToDate(moment().clone().endOf('month'));
 
             if (!regions || regions.length == 0 || !centers || centers.length == 0 || !users || users.length == 0) {
                 dispatch(GetReportFiltersData());
@@ -166,14 +175,14 @@ export default function ReportsParentContainer() {
 
     useEffect(() => {
         if (redirectToAnswers) {
-            history.push('/report-answers');
-            dispatch({ type: RESET_ANSWERS_REDIRECTION });
+            setShowAnswers(true);
+            setIsLoadingAnswers(false);
         }
     }, [redirectToAnswers]);
 
     return (
         <>
-            {showData && (
+            {showData && !showAnswers && (
                 <ReportsParent
                     onDateFromChange={onDateFromChange}
                     onDateToChange={onDateToChange}
@@ -214,6 +223,7 @@ export default function ReportsParentContainer() {
                     isLoadingAnswers={isLoadingAnswers}
                 />
             )}
+            {showAnswers && <ReportAnswers answers={reportAnswers} onBack={onBack} />}
         </>
     );
 }

@@ -134,6 +134,7 @@ export default function ReportFilters({
                                     className={'form-control form-control-sm'}
                                     format={'MM/DD/YYYY'}
                                     defaultValue={defaultDate.clone().startOf('month')}
+                                    allowClear={false}
                                 />
                             </div>
                         </div>
@@ -146,6 +147,7 @@ export default function ReportFilters({
                                     className={'form-control form-control-sm'}
                                     format={'MM/DD/YYYY'}
                                     defaultValue={defaultDate.clone().endOf('month')}
+                                    allowClear={false}
                                 />
                             </div>
                         </div>

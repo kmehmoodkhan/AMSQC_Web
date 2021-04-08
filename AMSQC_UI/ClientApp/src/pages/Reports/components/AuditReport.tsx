@@ -55,7 +55,7 @@ export default function AuditReport({ dataRows, getReportAnswers, isLoadingAnswe
                                 </td>
                                 <td className="text-center">
                                     {' '}
-                                    <a className="link-text" onClick={() => getReportAnswers(item.quoteNo)}>
+                                    <a className="link-text" onClick={() => getReportAnswers(item.quoteDetailId)}>
                                         View
                                     </a>{' '}
                                     <Spin
