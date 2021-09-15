@@ -31,6 +31,7 @@ namespace AMSQC.Domain.Models
         [JsonIgnore]
         public DateTime CreatedOn { get; set; }
 
+        [NotMapped]
         public List<SubQuestionResponse> SubQuestionResponse { get; set; }
 
 
