@@ -12,6 +12,7 @@ COPY ["AMSQC.Infra.IoC/AMSQC.Infra.IoC.csproj", "AMSQC.Infra.IoC/"]
 COPY ["AMSQC.Infra.Data/AMSQC.Infra.Data.csproj", "AMSQC.Infra.Data/"]
 COPY ["AMSQC.Domain/AMSQC.Domain.csproj", "AMSQC.Domain/"]
 COPY ["AMSQC.Application/AMSQC.Application.csproj", "AMSQC.Application/"]
+RUN apt-get update -y && apt-get install -y gnupg2 && curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt-get update -y && apt-get install -y nodejs
 RUN dotnet restore "AMSQC_UI/AMSQC_UI.csproj"
 COPY . .
 WORKDIR "/src/AMSQC_UI"
