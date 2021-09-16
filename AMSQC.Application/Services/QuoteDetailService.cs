@@ -85,5 +85,10 @@ namespace AMSQC.Application.Services
             }
             return _quoteDetailRepository.GetInitialInspectionResults(parameters);
         }
+
+        public UserSurveyResponseViewModel GetSurveyAnswers(int quoteDetailId, string userGuid)
+        {
+            return _quoteDetailRepository.GetSurveyAnswers(quoteDetailId, userGuid);
+        }
     }
 }

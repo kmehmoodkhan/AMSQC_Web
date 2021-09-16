@@ -178,6 +178,9 @@ namespace AMSQC_UI.Controllers
         [Route("SurveyAnswers")]
         public Response Get(int quoteDetailId, string userGuid)
         {
+            var result = _quoteService.GetSurveyAnswers(quoteDetailId, userGuid);
+
+            /*
             var result = new UserSurveyResponseViewModel()
             {
                 Category = 1,
@@ -242,7 +245,7 @@ namespace AMSQC_UI.Controllers
                     },
                 }
             };
-
+            */
 
 
 

@@ -321,7 +321,7 @@ namespace AMSQC.Infra.Data.Repository
                                         IsSummary = true,
                                         JobsAudited = (result.Count()),
                                         JobsWithCARs = (result.Where(t=>t.IsCar).Count()),
-                                        Compliance = ((result.Where(t => t.IsCar).Count())/ (result.Count()))*100
+                                        Performance = ((result.Where(t => t.IsCar).Count())/ (result.Count()))*100
                                     }).ToList();
 
                 regionsData.Add(countryLevel.FirstOrDefault());
@@ -333,7 +333,7 @@ namespace AMSQC.Infra.Data.Repository
                                       Title = grp.Key.State,
                                       JobsAudited = result.Where(t=>t.StateId == grp.Key.StateId).Count(),
                                       JobsWithCARs = result.Where(t=>t.StateId == grp.Key.StateId && t.IsCar).Count(),
-                                      Compliance = ((result.Where(t => t.StateId == grp.Key.StateId && t.IsCar).Count())/(result.Where(t => t.StateId == grp.Key.StateId).Count()))*100,
+                                      Performance = ((result.Where(t => t.StateId == grp.Key.StateId && t.IsCar).Count())/(result.Where(t => t.StateId == grp.Key.StateId).Count()))*100,
                                       ChildList = null
                                   }).ToList();
 
@@ -357,7 +357,7 @@ namespace AMSQC.Infra.Data.Repository
                                                     Title = grp1.Key.SiteName,
                                                     JobsAudited = grp1.Count(),
                                                     JobsWithCARs = (result.Where(t=>t.SiteId==grp1.Key.SiteId && t.IsCar).Count()),
-                                                    Compliance = (Convert.ToDouble(result.Where(t => t.SiteId == grp1.Key.SiteId && t.IsCar).Count())/ Convert.ToDouble(grp1.Count())) *100
+                                                    Performance = (Convert.ToDouble(result.Where(t => t.SiteId == grp1.Key.SiteId && t.IsCar).Count())/ Convert.ToDouble(grp1.Count())) *100
                                                 }
                                              ).ToList()
                                          });
@@ -369,5 +369,34 @@ namespace AMSQC.Infra.Data.Repository
 
             return summary;
         }
+
+        public UserSurveyResponseViewModel GetSurveyAnswers(int quoteDetailId, string userGuid)
+        {
+            var reportData = (from qd in _context.QuoteDetail
+                              where qd.QuoteDetailId == quoteDetailId
+                              select new UserSurveyResponseViewModel
+                              {
+                                  Category = qd.SurveyCategory,
+                                  MappingSheet = qd.MappingSheetPath,
+                                  QuoteDetailId = qd.QuoteId,
+                                  UserId = qd.UserId,
+                                  QuestionResponses = (
+                                        from qr in _context.UserQuestionResponse
+                                        join q in _context.Question on qr.QuestionId equals q.QuestionId
+                                        where qr.QuoteId == quoteDetailId
+                                        select new UserSurveyResponse
+                                        {
+                                            Question = q.Title,
+                                            IsCAR = (q.Category == 4),
+                                            DisplayOrder = q.DisplayOrder??0,
+                                            Answer = qr.Answers
+                                        }
+                                    ).ToList()
+                              });
+
+            var result = reportData.FirstOrDefault();
+            return result;
+        }
+
     }
 }

@@ -132,7 +132,7 @@ export default function ReportFilters({
                                     onChange={onDateFromChange}
                                     inputReadOnly={true}
                                     className={'form-control form-control-sm'}
-                                    format={'MM/DD/YYYY'}
+                                    format={'DD/MM/YYYY'}
                                     defaultValue={defaultDate.clone().startOf('month')}
                                     allowClear={false}
                                 />
@@ -145,7 +145,7 @@ export default function ReportFilters({
                                     onChange={onDateToChange}
                                     inputReadOnly={true}
                                     className={'form-control form-control-sm'}
-                                    format={'MM/DD/YYYY'}
+                                    format={'DD/MM/YYYY'}
                                     defaultValue={defaultDate.clone().endOf('month')}
                                     allowClear={false}
                                 />

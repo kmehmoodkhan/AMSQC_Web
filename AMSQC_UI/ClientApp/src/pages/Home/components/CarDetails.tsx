@@ -28,7 +28,7 @@ export default function QuoteDetails({ car }: Props) {
                             </tr>
                             <tr>
                                 <td>
-                                    <div className="name"> Color</div>
+                                    <div className="name"> Colour</div>
                                 </td>
                                 <td>{car.color}</td>
                             </tr>

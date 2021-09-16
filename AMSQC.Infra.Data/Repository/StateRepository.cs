@@ -20,7 +20,7 @@ namespace AMSQC.Infra.Data.Repository
         public List<State> GetStates()
         {
             var states= _context.States;
-            return states.ToList();
+            return states.OrderBy(t=>t.Title).ToList();
         }
     }
 }
