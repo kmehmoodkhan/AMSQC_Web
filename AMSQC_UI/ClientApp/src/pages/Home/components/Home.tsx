@@ -2,7 +2,6 @@ import { Button } from 'antd';
 import React from 'react';
 import MainBanner from '../../../assets/images/main-bg.png';
 import QuoteDetails from './CarDetails';
-import Logo from '../../../assets/images/logo-login.png';
 
 type Props = {
     onQuoteChange: any;
@@ -36,7 +35,7 @@ export default function Home({
                             <div className="wrapper">
                                 <div className="content">
                                     <h2>
-                                        Welcome to <img src={Logo} className="logo" />
+                                        Welcome to
                                     </h2>
                                     <h3> Quality Charter</h3>
                                     <p>Please provide your Active directory user name and password to get access.</p>
