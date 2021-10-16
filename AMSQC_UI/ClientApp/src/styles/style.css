@@ -299,12 +299,17 @@ a {
     font-size: 18px;
 }
 
-/**=========================================================================**/
-
-.login-page {
-    display: flex;
-    flex-direction: row-reverse;
+.info-text a {
+    color: #be1e2d;
 }
+.info-text a:hover {
+    color: #9d1925;
+}
+    /**=========================================================================**/
+    .login-page {
+        display: flex;
+        flex-direction: row-reverse;
+    }
 
 .login-section {
     display: -webkit-box;
@@ -1266,25 +1271,25 @@ select.form-control {
     border-color: #dc3545;
 }
 
-.ant-btn.btn-outline-danger:hover,
-.ant-btn.btn-outline-danger:focus {
-    color: #fff;
-    background-color: #dc3545;
-    border-color: #dc3545;
-}
+    .ant-btn.btn-outline-danger:hover,
+    .ant-btn.btn-outline-danger:focus {
+        color: #fff;
+        background-color: #921723;
+        border-color: #921723;
+    }
 
 .ant-btn.btn-secondary-outline {
-    color: #656565;
-    border: 1px solid #ccc;
-    background: #fff;
+    color: #fff;
+    border: 1px solid #be1e2d;
+    background: #be1e2d;
 }
 
-.ant-btn.btn-secondary-outline:hover,
-.ant-btn.btn-secondary-outline:focus {
-    color: #656565;
-    border: 1px solid #656565;
-    background-color: #fff;
-}
+    .ant-btn.btn-secondary-outline:hover,
+    .ant-btn.btn-secondary-outline:focus {
+        color: #fff;
+        border: 1px solid #656565;
+        background-color: #921723;
+    }
 
 .ant-btn.btn-lg {
     padding: 0.5rem 1rem;
