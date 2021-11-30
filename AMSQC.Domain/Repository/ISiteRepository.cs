@@ -10,6 +10,8 @@ namespace AMSQC.Domain.Repository
     public interface ISiteRepository
     {
         Task<int> AddSite(Site site);
+
+        int AddSite(Site site, bool isAsync=false);
         List<Site> GetSites();
     }
 }

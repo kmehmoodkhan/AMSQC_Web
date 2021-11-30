@@ -8,6 +8,7 @@ import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import quoteReducer from './reducers/quoteReducer';
 import surveyReducer from './reducers/surveyReducer';
 import reportReducer from './reducers/reportReducer';
+import auditQuoteReducer from './reducers/auditQuoteReducer';
 
 declare global {
     interface Window {
@@ -18,7 +19,7 @@ declare global {
 const persistConfig = {
     key: 'user',
     storage,
-    whitelist: ['user', 'quote', 'survey', 'report'],
+    whitelist: ['user', 'quote', 'survey', 'report','auditQuote'],
     stateReconciler: autoMergeLevel2,
 };
 
@@ -32,6 +33,7 @@ const appReducer: any = combineReducers({
     quote: quoteReducer,
     survey: surveyReducer,
     report: reportReducer,
+    auditQuote: auditQuoteReducer
     // lastAction
 });
 

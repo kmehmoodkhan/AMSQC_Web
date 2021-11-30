@@ -7,6 +7,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import reportWebVitals from './reportWebVitals';
 
+
 const rootElement = document.getElementById('root');
 
 ReactDOM.render(

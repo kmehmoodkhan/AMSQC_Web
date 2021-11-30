@@ -21,5 +21,8 @@ namespace AMSQC.Application.Interfaces
         CostOfCarViewModel GetCostOfCARSummary(ReportParameterModel parameters);
         ComplianceSummaryViewModel GetInitialInspectionResults(ReportParameterModel parameters);
         UserSurveyResponseViewModel GetSurveyAnswers(int quoteDetailId, string userGuid);
+
+        QuoteDetail GetAuditQuote(int quoteId,int regionId);
+        int UpdateAuditQuote(int quoteDetailId, string userGuid);
     }
 }

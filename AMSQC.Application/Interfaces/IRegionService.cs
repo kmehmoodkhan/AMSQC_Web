@@ -9,7 +9,7 @@ namespace AMSQC.Application.Interfaces
 {
     public interface IRegionService
     {
-        public Region GetRegion(string title);
+        public Region GetRegion(string title,bool isExternal=false);
         public Region GetRegion(int Id);
 
         public List<Region> GetRegions();

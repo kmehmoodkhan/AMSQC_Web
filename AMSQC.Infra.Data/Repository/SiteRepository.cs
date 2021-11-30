@@ -30,6 +30,18 @@ namespace AMSQC.Infra.Data.Repository
             return result;
         }
 
+        public int AddSite(Site site, bool isAsync=false)
+        {
+            int result = 0;
+            var tempSite = _context.Site.Where(t => t.Title.ToLower() == site.Title.ToLower()).FirstOrDefault();
+            if (tempSite == null)
+            {
+                _context.Site.Add(site);
+                result =  _context.SaveChanges();
+            }
+            return result;
+        }
+
         public List<Site> GetSites()
         {
             var result = _context.Site.OrderBy(t => t.Title);

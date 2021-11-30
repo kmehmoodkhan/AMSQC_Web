@@ -12,19 +12,54 @@ namespace AMSQC.Application.Services
     public class RegionService : IRegionService
     {
         IRegionRepository _regionRepository = null;
-        public RegionService(IRegionRepository regionRepository)
+        ISiteMappingRepoistory _siteMappingRepository = null;
+        ISiteRepository _siteRepository = null;
+        IStateRepository _stateRepository = null;
+        public RegionService(IRegionRepository regionRepository,ISiteMappingRepoistory siteMappingRepository, ISiteRepository siteRepository,IStateRepository stateRepository)
         {
             _regionRepository = regionRepository;
+            _siteMappingRepository = siteMappingRepository;
+            _siteRepository = siteRepository;
+            _stateRepository = stateRepository;
         }
-        public Region GetRegion(string title)
+        public Region GetRegion(string title,bool isExternal=false)
         {
-            var region= _regionRepository.GetRegion(title);
+            //if(isExternal)
+            //{
+            //    var siteMapping = _siteMappingRepository.GetSiteName(title);
+            //    var region = !string.IsNullOrEmpty(siteMapping?.SiteName) ? _regionRepository.GetRegion(siteMapping.SiteName) : null;
 
-            if (region == null)
+            //    return region;
+            //}
+            //else
             {
-                region = new Region() { RegionId = 82000, Title = "RMA Knoxfield",State="Vic" };
+                var region = _regionRepository.GetRegion(title);
+                if (region == null)
+                {
+                    var siteMapping = _siteMappingRepository.GetSiteName(title);
+
+                    region = !string.IsNullOrEmpty(siteMapping?.SiteName) ? _regionRepository.GetRegion(siteMapping.OfficeLocation) : null;
+
+                    if( siteMapping!=null && region == null)
+                    {
+                        var state = _stateRepository.GetStates().Where(t => t.ShortName.ToLower().Equals(siteMapping.State.ToLower())).FirstOrDefault();
+                        var tempSite = _siteRepository.AddSite(new Site()
+                        {
+                            RegionId = Convert.ToInt32(siteMapping.SiteId),
+                            Title = siteMapping.OfficeLocation,
+                            StateId = state.StateId
+                        },true);
+                    }
+
+                    region = _regionRepository.GetRegion(title);
+                }
+
+                if (region == null)
+                {
+                    region = new Region() { RegionId = 82000, Title = "RMA Knoxfield", State = "Vic" };
+                }
+                return region;
             }
-            return region;
         }
 
         public Region GetRegion(int Id)

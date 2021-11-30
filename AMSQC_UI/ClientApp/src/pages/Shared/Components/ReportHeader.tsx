@@ -68,7 +68,7 @@ export default function ReportHeader({ fullName, onLogOut, reportId }: Props) {
                         <li className="nav-item">
                             <div className="nav-link  site-user">
                                 {' '}
-                                Welcome <b> {fullName}</b>{' '}
+                                Hi <b> {fullName}</b>{' '}
                             </div>
                         </li>
                         <li className="nav-item">

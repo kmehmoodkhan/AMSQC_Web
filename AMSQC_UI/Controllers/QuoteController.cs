@@ -47,15 +47,15 @@ namespace AMSQC_UI.Controllers
             _stateService = stateService;
         }
         [HttpGet]
-        public Response Get(int quoteNo)
+        public async Task<Response> Get(int quoteNo)
         {
             var quote = new Quote();
             quote.QuoteId = quoteNo;
 
-            var currentUser = _userAdService.GetUserProfile();
+            var currentUser = await _userAdService.GetUserProfile();
             string region = currentUser.Region;
 
-            var regionTemp = _regionService.GetRegion(region);
+            var regionTemp = _regionService.GetRegion(region,true);
 
             quote = _quouteService.GetQuote(quoteNo, regionTemp.RegionId);
             if (quote != null)
@@ -85,7 +85,7 @@ namespace AMSQC_UI.Controllers
         [Route("IsAvailable")]
         public async Task<Response> Get(int quoteId, string region)
         {
-            UserInfo loggedinUser = _userAdService.GetUserProfile();
+            UserInfo loggedinUser =await _userAdService.GetUserProfile();
            
             var regionObj = _regionService.GetRegion(loggedinUser.Region);
             var detail = _quoteDetailService.GetQuoteDetail(quoteId, regionObj.RegionId);
@@ -183,6 +183,36 @@ namespace AMSQC_UI.Controllers
                     HttpStatusCode = System.Net.HttpStatusCode.InternalServerError,
                     Message = ex.Message,
                     Result = ""
+                };
+            }
+        }
+
+        [Route("AuditQuote")]
+        [HttpGet]
+        public async Task<Response> AuditQuote(int quoteNo)
+        {
+            var currentUser = await _userAdService.GetUserProfile();
+            string region = currentUser.Region;
+            var regionTemp = _regionService.GetRegion(region);
+            var quoteDetail = _quoteDetailService.GetAuditQuote(quoteNo, regionTemp.RegionId);
+            if (quoteDetail != null)
+            {
+                return new Response
+                {
+                    Result = new { quoteDetail, alreadySubmitted = false },
+                    Status = Status.Success,
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = ""
+                };
+            }
+            else
+            {
+                return new Response
+                {
+                    Result = new { quoteDetail, alreadySubmitted = false },
+                    Status = Status.Failed,
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = "Sorry, there was no matching vehicle with this Quote Number."
                 };
             }
         }

@@ -33,6 +33,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\redux\actions\auditQuoteAction.ts" />
+    <None Remove="ClientApp\src\redux\constants\auditQuoteConstant.ts" />
+    <None Remove="ClientApp\src\redux\reducers\auditQuoteReducer.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AMSQC.Application\AMSQC.Application.csproj" />
     <ProjectReference Include="..\AMSQC.Domain\AMSQC.Domain.csproj" />
     <ProjectReference Include="..\AMSQC.Infra.Data\AMSQC.Infra.Data.csproj" />
@@ -41,6 +47,12 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\assets\docs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\redux\actions\auditQuoteAction.ts" />
+    <TypeScriptCompile Include="ClientApp\src\redux\constants\auditQuoteConstant.ts" />
+    <TypeScriptCompile Include="ClientApp\src\redux\reducers\auditQuoteReducer.ts" />
   </ItemGroup>
 
 

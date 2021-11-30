@@ -1,4 +1,5 @@
 import { DatePicker } from 'antd';
+//import { Button } from 'antd';
 import React from 'react';
 import { DownloadOutlined, PrinterOutlined, SearchOutlined } from '@ant-design/icons';
 import { ReportType } from '../../../common/enum';
@@ -29,6 +30,8 @@ type Props = {
     exportExcel: any;
     regionClassName: string;
     ignoreClassName: string;
+    //auditQuoteId: any;
+    //onAuditSubmit: any;
 };
 
 export default function ReportFilters({
@@ -55,6 +58,8 @@ export default function ReportFilters({
     exportExcel,
     regionClassName,
     ignoreClassName,
+    //auditQuoteId,
+    //onAuditSubmit
 }: Props) {
     return (
         <>
@@ -170,6 +175,9 @@ export default function ReportFilters({
                     <SearchOutlined style={{ fontSize: '15px' }} />{' '}
                 </button>
             </div>
+
+            
+            
             <div className={`filters card-form d-flex flex-column flex-sm-row no-print ${loading ? '' : 'hidden'}`}>
                 <div className="card-body flex">
                     <div className="row">

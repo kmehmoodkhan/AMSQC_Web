@@ -37,6 +37,7 @@ namespace AMSQC.Infra.IoC
 
             var ibodyShopConnectionString = $"{configuration["ConnectionStrings:IBodyShopDb"]}";
             var defaultConnectionString = $"{configuration["ConnectionStrings:Default"]}";
+            var SiteMappingDBConnectionString = $"{configuration["ConnectionStrings:SiteMappingDB"]}";
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -52,7 +53,10 @@ namespace AMSQC.Infra.IoC
 
             services.AddDbContext<AmsqcDbContext>(o =>
                 o.UseSqlServer(defaultConnectionString));//.AddInterceptors(managedIdentityInterceptor));
-            //services.Configure<StorageSetting>(Configuration.GetSection("StorageSettings"));
+                                                         //services.Configure<StorageSetting>(Configuration.GetSection("StorageSettings"));
+
+            services.AddDbContext<SiteMappingDbContext>(o =>
+               o.UseSqlServer(SiteMappingDBConnectionString));
 
             services.AddScoped<IStorageService, StorageService>();
 
@@ -78,6 +82,8 @@ namespace AMSQC.Infra.IoC
 
             services.AddScoped<ISiteRepository, SiteRepository>();
             services.AddScoped<ISiteService, SiteService>();
+
+            services.AddScoped<ISiteMappingRepoistory, SiteMappingRepoistory>();
 
             //services.AddScoped<GraphClientAuthProvider>();
             //services.AddScoped<GraphClient>();

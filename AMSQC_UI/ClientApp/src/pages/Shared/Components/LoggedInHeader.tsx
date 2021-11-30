@@ -23,7 +23,7 @@ export default function LoggedInHeader({ fullName, region, onLogOut }: Props) {
                         <li className="nav-item">
                             <div className="nav-link  site-user">
                                 {' '}
-                                Welcome <b> {fullName}</b>, your site is<b> {region} </b>{' '}
+                                Hi <b> {fullName}</b>, your site is<b> {region} </b>{' '}
                             </div>
                         </li>
                         <li className="nav-item">

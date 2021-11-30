@@ -9,7 +9,7 @@ namespace AMSQC.Application.Interfaces
 {
     public interface IUserADService
     {
-        List<UserInfo> GetUsers(int regionId);
-        UserInfo GetUserProfile();
+        Task<List<UserInfo>> GetUsers(int regionId);
+        Task<UserInfo> GetUserProfile();
     }
 }

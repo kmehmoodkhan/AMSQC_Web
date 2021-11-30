@@ -40,10 +40,17 @@ namespace AMSQC.Application.Services
             return result;
         }
 
-        public int AddUsers(List<UserInfo> users)
+        public async Task<int> AddUsers(List<UserInfo> users)
         {
-            var result = _userRepository.AddUsers(users);
+            var result =await _userRepository.AddUsers(users);
             return result;
         }
+
+        public async Task<int> DeleteUsers(int regionId)
+        {
+            var result = await _userRepository.DeleteUsers(regionId);
+            return result;
+        }
+
     }
 }

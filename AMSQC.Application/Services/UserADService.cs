@@ -26,9 +26,9 @@ namespace AMSQC.Application.Services
 
         private readonly GraphServiceClient _graphServiceClient;
 
-        public UserInfo GetUserProfile()
+        public async Task<UserInfo> GetUserProfile()
         {
-            User user = _graphServiceClient.Me.Request().GetAsync().GetAwaiter().GetResult();
+            User user = await _graphServiceClient.Me.Request().GetAsync();
 
             UserInfo userInfo = new UserInfo();
             userInfo.UserName = user.UserPrincipalName;
@@ -44,18 +44,26 @@ namespace AMSQC.Application.Services
                 }
              }
 
+            var groups = await _graphServiceClient.Me.TransitiveMemberOf
+                .Request()
+                .GetAsync();
+
+            ////((Microsoft.Graph.Group)groups.CurrentPage[6]).DisplayName
+            var groupNames = groups.CurrentPage.Select(t => (t as Microsoft.Graph.Group).DisplayName).ToArray();
+
+            userInfo.ReportAccessLevel = GetReportAccessLevel(groupNames);
 
             _userService.AddUser(userInfo);
 
             return userInfo;
         }
 
-        public List<UserInfo> GetUsers(int regionId)
+        public async Task<List<UserInfo>> GetUsers(int regionId)
         {
             User currentUser = null;
             try
             {
-                currentUser = _graphServiceClient.Me.Request().GetAsync().GetAwaiter().GetResult();
+                currentUser =await _graphServiceClient.Me.Request().GetAsync();
             }
             catch(Exception ex)
             {
@@ -65,32 +73,66 @@ namespace AMSQC.Application.Services
 
 
             List<UserInfo> usersList1 = null;
-            IGraphServiceUsersCollectionPage usersList = null;
-            try
-            {
-                usersList = _graphServiceClient.Users.Request().Top(999).GetAsync().GetAwaiter().GetResult();
-                usersList1 = usersList.Where(t => t.OfficeLocation == currentUser.OfficeLocation)
-                   .Select(usr => new UserInfo
-                   {
-                       UserGuid = Guid.Parse(usr.Id),
-                       UserName = usr.DisplayName,
-                       FullName = usr.DisplayName,
-                       Region = usr.OfficeLocation,
-                       RegionId = regionId
-                   }).ToList();
+            //IGraphServiceUsersCollectionPage usersList = null;
+            //try
+            //{
+            //    usersList = _graphServiceClient.Users.Request().Top(999).GetAsync().GetAwaiter().GetResult();
+            //    usersList1 = usersList.Where(t => t.OfficeLocation == currentUser.OfficeLocation)
+            //       .Select(usr => new UserInfo
+            //       {
+            //           UserGuid = Guid.Parse(usr.Id),
+            //           UserName = usr.DisplayName,
+            //           FullName = usr.DisplayName,
+            //           Region = usr.OfficeLocation,
+            //           RegionId = regionId
+            //       }).ToList();
 
-                _userService.AddUsers(usersList1);
-            }
-            catch (Exception ex)
-            {
-                string exception = ex.Message;
-            }
+            //    //var r1= await _userService.DeleteUsers(regionId);
+            //    await _userService.AddUsers(usersList1);
+            //}
+            //catch (Exception ex)
+            //{
+            //    string exception = ex.Message;
+            //}
 
 
             usersList1 = _userService.GetUsers(regionId);
             return usersList1;
         }
 
-   
+        public ReportAccessLevel[] GetReportAccessLevel(string[] groups)
+        {
+            List<ReportAccessLevel> reportAccessLevel = new List<ReportAccessLevel>();
+
+            var auditorRoleCount = groups.Where(t => t.ToLower() == "SG-QCAPP-AUDITOR".ToLower()).Count();
+
+            if (auditorRoleCount > 0)
+            {
+                reportAccessLevel.Add(ReportAccessLevel.Auditor);
+            }
+
+            var cmRoleCount = groups.Where(t => t.ToLower() == "SG-QCApp-Reporting-CM".ToLower()).Count();
+
+            if (cmRoleCount > 0)
+            {
+                reportAccessLevel.Add(ReportAccessLevel.CM);
+            }
+
+            var centerManagerRole = groups.Where(t => t.ToLower() == "SG-QCAPP-CENTREMANAGERS".ToLower()).Count();
+
+            if (centerManagerRole > 0)
+            {
+                reportAccessLevel.Add(ReportAccessLevel.CenterManager);
+            }
+
+            var operationsRoleCount = groups.Where(t => t.ToLower() == "SG-QCApp-Reporting-OPS".ToLower()).Count();
+
+            if (operationsRoleCount > 0)
+            {
+                reportAccessLevel.Add(ReportAccessLevel.Operations);
+            }
+            return reportAccessLevel.Count()>0?reportAccessLevel.ToArray():null;
+        }
+
     }
 }

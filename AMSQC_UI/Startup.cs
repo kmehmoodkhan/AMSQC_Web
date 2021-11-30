@@ -16,6 +16,10 @@ using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.TokenCacheProviders.InMemory;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
+using System;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace AMSQC_UI
 {
@@ -30,32 +34,38 @@ namespace AMSQC_UI
 
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddMicrosoftIdentityWebApiAuthentication(Configuration)
                     .EnableTokenAcquisitionToCallDownstreamApi()
                         .AddMicrosoftGraph(Configuration.GetSection("GraphSettings"))
                         .AddInMemoryTokenCaches();
 
-
+            services.Configure<OpenIdConnectOptions>(OpenIdConnectDefaults.AuthenticationScheme, options =>
+            {
+                // The claim in the Jwt token where App roles are available.
+                options.TokenValidationParameters.RoleClaimType = "roles";
+            });
 
             services.Configure<AzureAdOptions>(Configuration.GetSection("AzureAd"));
 
-           
+            /**********************************************************/
+            services.Configure<OpenIdConnectOptions>(OpenIdConnectDefaults.AuthenticationScheme, options =>
+            {
+                // The claim in the Jwt token where App roles are available.
+                options.TokenValidationParameters.RoleClaimType = "roles";
+            });
 
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //     .AddJwtBearer(options =>
-            //     {
-            //         options.Authority = authority;
-            //         options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-            //         {
-            //             ValidAudiences = audience,
-            //             ValidIssuers = new List<string>
-            //             {
-            //                $"https://sts.windows.net/{tenantId}",
-            //                $"https://sts.windows.net/{tenantId}/v2.0",
-            //             }
-            //         };
-            //     });
-                 
+            List<string> optionalRoles = new List<string>();
+            optionalRoles.Add(AppRole.Auditor);
+            optionalRoles.Add(AppRole.CM);
+            optionalRoles.Add(AppRole.Operations);
+
+            // Adding authorization policies that enforce authorization using Azure AD roles.
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(AuthorizationPolicies.ReportingRoleRequired, policy => policy.RequireRole(optionalRoles));
+            });
+            /**********************************************************/
 
             services.AddCors(options =>
             {
@@ -66,8 +76,16 @@ namespace AMSQC_UI
                 });
             });
 
+            services.AddControllers(options =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
 
-            services.AddControllersWithViews();
+
+           // services.AddControllersWithViews();
 
             services.AddSpaStaticFiles(configuration =>
             {
@@ -149,5 +167,16 @@ namespace AMSQC_UI
         {
             DepedencyContainer.RegisterServices(services, configuration);
         }
+    }
+
+    public static class AppRole
+    {
+        public const string Auditor = "Auditor";
+        public const string CM = "SingleSite.Access";
+        public const string Operations = "AllSites.Access";
+    }
+    public static class AuthorizationPolicies
+    {
+        public const string ReportingRoleRequired = "ReportingRoleRequired";
     }
 }

@@ -15,6 +15,7 @@ namespace AMSQC.Application.Interfaces
 
         List<UserInfo> GetUsers(int regionId);
 
-        int AddUsers(List<UserInfo> users);
+        Task<int> AddUsers(List<UserInfo> users);
+        Task<int> DeleteUsers(int regionId);
     }
 }

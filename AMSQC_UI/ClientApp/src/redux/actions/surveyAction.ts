@@ -27,7 +27,7 @@ export const GetSurveyQuestions = (surveyType: SurveyType, region: any) => (disp
     axiosGet(url)
         .then((response: any) => {
             if (response.data.status == RequestStatus.Success) {
-                let questions = response.data.result.survey.questions
+                let questions = response.data.result.survey.result.questions
                     .map((item: any) => {
                         return {
                             ...item,
@@ -61,8 +61,9 @@ export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, reg
         `?surveyType=${SurveyType.CorrectiveActionRequest}&regionId=${region}&parentType=${parentType}`;
     axiosGet(url)
         .then((response: any) => {
-            if (response.data.status == RequestStatus.Success && response.data.result.survey.questions) {
-                let questions = response.data.result.survey.questions
+            console.log('Questions Response', response);
+            if (response.data.status == RequestStatus.Success && response.data.result.survey.result.questions) {
+                let questions = response.data.result.survey.result.questions
                     .filter((item: any) => !item.parentQuestionId && (showSublet || !item.isSubletQuestion))
                     .map((item: any) => {
                         return { ...item, answer: '', answerText: '' };
@@ -70,7 +71,7 @@ export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, reg
                 let index = 0;
                 questions = questions.map((item: any) => {
                     if (!item.isAdUsers) {
-                        item.subQuestions = response.data.result.survey.questions
+                        item.subQuestions = response.data.result.survey.result.questions
                             .filter((sub: any) => sub.parentQuestionId == item.questionId)
                             .map((sub: any) => {
                                 if (sub.questionType == QuestionType.Select) {
@@ -104,7 +105,8 @@ export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, reg
                             .sort(dynamicSort('displayOrder'));
                     } else {
                         item.subQuestions = [];
-                        if (response.data.result.survey.adUsers) {
+                        if (response.data.result.survey.result.adUsers) {
+                            
                             let question = {
                                 questionId: item.questionId,
                                 title: null,
@@ -112,10 +114,10 @@ export const GetCorrectiveQuestions = (showSublet: boolean, parentType: any, reg
                                 parentQuestionId: item.questionId,
                                 answer: '',
                                 answerText: '',
-                                questionOptions: response.data.result.survey.adUsers.map((item1: any) => {
+                                questionOptions: response.data.result.survey.result.adUsers.map((item1: any) => {
                                     return {
                                         questionOptionId: item1.userId,
-                                        title: item1.userName,
+                                        title: item1.fullName,
                                         questionId: item.questionId,
                                     };
                                 }),

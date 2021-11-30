@@ -65,8 +65,8 @@ namespace AMSQC.Infra.Data.Repository
                           join u in _context.UserInfo on qd.UserId equals u.UserId
                           join s in _context.Site on qd.RegionId equals s.RegionId
                           where qd.IsSubmit==true && qd.QuoteId == (parameterModel.QuoteNo > 0 ? parameterModel.QuoteNo : qd.QuoteId) &&
-                          qd.RegionId == (parameterModel.CenterId > 0 ? parameterModel.CenterId : qd.RegionId) &&
-                          s.StateId == (parameterModel.RegionId > 0 ? parameterModel.RegionId : s.StateId) &&
+                          qd.RegionId == (parameterModel.RegionId > 0 ? parameterModel.RegionId : qd.RegionId) &&
+                          //s.StateId == (parameterModel.RegionId > 0 ? parameterModel.RegionId : s.StateId) &&
                           qd.UserId == (parameterModel.UserId > 0 ? parameterModel.UserId : qd.UserId) &&
                           qd.CreatedOn >= parameterModel.FromDate && qd.CreatedOn <= parameterModel.EndDate &&
                           qd.IsAudit == parameterModel.IsAudit 
@@ -398,5 +398,26 @@ namespace AMSQC.Infra.Data.Repository
             return result;
         }
 
+        public QuoteDetail GetAuditQuote(int quoteId,int regionId)
+        {
+            var quote = _context.QuoteDetail.Where(t => t.QuoteId == quoteId && t.RegionId == regionId && t.IsAudit==false).FirstOrDefault();
+            if (quote != null)
+            {
+                quote.Company = quote.VehicleMake;
+                quote.Model = quote.VehicleModel;
+                quote.Registration = quote.VehicleRegistration;
+                quote.Color = quote.VehicleColor;
+            }
+            return quote;
+        }
+
+        public int UpdateAuditQuote(int quoteDetailId, string userGuid)
+        {
+            var quote = _context.QuoteDetail.Where(t => t.QuoteDetailId == quoteDetailId).FirstOrDefault();
+            quote.IsAudit = true;
+            _context.Update(quote);
+            var result = _context.SaveChanges();
+            return quote.QuoteDetailId;
+        }
     }
 }

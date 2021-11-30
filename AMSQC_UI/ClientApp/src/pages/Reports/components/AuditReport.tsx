@@ -10,6 +10,7 @@ type Props = {
 };
 export default function AuditReport({ dataRows, getReportAnswers, isLoadingAnswers }: Props) {
     return (
+
         <table className="table table-sm table-style1 table-striped">
             <thead>
                 <tr>

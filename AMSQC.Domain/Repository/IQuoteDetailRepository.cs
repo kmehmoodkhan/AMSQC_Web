@@ -12,6 +12,7 @@ namespace AMSQC.Domain.Repository
     {
         QuoteDetail GetQuoteDetail(int quoteId, int regionId);
         int AddQuoteDetail(QuoteDetail quoteDetail);
+        
         int DeleteQuote(int quoteId,int regionId);
         int UpdateQuote(int quoteId, int regionId, int userId,bool isSublet,bool isCAR, int category);
         List<AuditSummaryViewModel> GetQuotesList(ReportParameterModel parameterModel);
@@ -20,5 +21,8 @@ namespace AMSQC.Domain.Repository
         CostOfCarViewModel GetCostOfCARSummary(ReportParameterModel parameters);
         ComplianceSummaryViewModel GetInitialInspectionResults(ReportParameterModel parameters);
         UserSurveyResponseViewModel GetSurveyAnswers(int quoteDetailId, string userGuid);
+
+        QuoteDetail GetAuditQuote(int quoteId,int regionId);
+        int UpdateAuditQuote(int quoteDetailId, string userGuid);
     }
 }

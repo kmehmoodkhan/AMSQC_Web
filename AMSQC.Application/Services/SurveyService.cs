@@ -16,24 +16,36 @@ namespace AMSQC.Application.Services
         IUserRepository _userRepository = null;
         IUserADService _userService = null;
         IQuoteDetailRepository _quoteDetailRepository = null;
+        ISiteMappingRepoistory _siteMappingRepoistory = null;
+        IUserService _userDbService = null;
         public SurveyService(
             ISurveyRepository surveyRepository,
             IUserRepository userRepository,
             IUserADService userService,
-            IQuoteDetailRepository quoteDetailRepository
+            IQuoteDetailRepository quoteDetailRepository,
+            ISiteMappingRepoistory siteMappingRepoistory,
+            IUserService userDbService
             )
         {
             _surveyRepository = surveyRepository;
             _userRepository = userRepository;
             _userService = userService;
             _quoteDetailRepository = quoteDetailRepository;
+            _siteMappingRepoistory = siteMappingRepoistory;
+            _userDbService = userDbService;
         }
 
-        public SurveyViewModel GetSurveyDetail(int surveyType,int regionId,ParentType parentType)
+        public async Task<SurveyViewModel> GetSurveyDetail(int surveyType,int regionId,ParentType parentType)
         {
             var surveyViewModel = new SurveyViewModel();
             surveyViewModel.Questions= _surveyRepository.GetSurveyQuestions(surveyType,parentType);
-            surveyViewModel.ADUsers = _userService.GetUsers(regionId);
+            //surveyViewModel.ADUsers = await _userService.GetUsers(regionId);
+
+            var currentUserProfile = await _userService.GetUserProfile();
+            var tempUsers = await _siteMappingRepoistory.GetUsers(currentUserProfile.Region);
+            await _userDbService.AddUsers(tempUsers);
+            var adUsers = await _userService.GetUsers(regionId);
+            surveyViewModel.ADUsers = adUsers;
             return surveyViewModel;
         }
 

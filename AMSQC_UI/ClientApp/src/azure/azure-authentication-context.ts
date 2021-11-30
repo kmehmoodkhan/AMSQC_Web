@@ -85,8 +85,14 @@ export class AzureAuthenticationContext {
 
     handleResponse(response: AuthenticationResult, incomingFunction: any, callback: any) {
         if (response !== null) {
-            this.account = { user: response.account, accessToken: response.accessToken };
+            this.account = { user: response.account, accessToken: response.accessToken};
         }
+
+        //let roles = [];
+        //if (response.idToken.claims.roles) {
+        //    roles = response.idToken.claims.roles;
+        //    console.log('Roles=>', roles);
+        //}
 
         if (this.account) {
             incomingFunction(response);

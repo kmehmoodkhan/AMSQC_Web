@@ -11,4 +11,6 @@ namespace AMSQC.Domain.Models
     public enum ParentType { None = 0, SurveyType1 = 1, SurveyType2 = 2, SurveyType3 = 3};
 
     public enum ReportType { AuditSummary=1, Compliance, CmCompliance, CmAudit, CostOfCar, JobsNotAudited, InitialInspectionResults, CsvExport}
+
+    public enum ReportAccessLevel { None = 0, CM = 1, Operations = 2,Auditor=3, CenterManager=4};
 }

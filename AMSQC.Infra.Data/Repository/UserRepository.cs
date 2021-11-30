@@ -25,13 +25,13 @@ namespace AMSQC.Infra.Data.Repository
             return result;
         }
 
-        public int AddUsers(List<UserInfo> users)
+        public async Task<int> AddUsers(List<UserInfo> users)
         {
             List<UserInfo> missingUsers = new List<UserInfo>();
 
             foreach(var u in users)
             {
-                var temp = _context.UserInfo.Where(t => t.UserGuid == u.UserGuid).FirstOrDefault();
+                var temp = _context.UserInfo.Where(t => t.UserName == u.UserName).FirstOrDefault();
                 if (temp == null)
                 {
                     missingUsers.Add(u);
@@ -41,7 +41,7 @@ namespace AMSQC.Infra.Data.Repository
 
             missingUsers.ForEach(t => t.CreatedOn = DateTime.Now);
             _context.AddRange(missingUsers);
-            int result = _context.SaveChanges();
+            int result =await _context.SaveChangesAsync();
             return result;
         }
 
@@ -55,6 +55,14 @@ namespace AMSQC.Infra.Data.Repository
         {
             var users = _context.UserInfo.Where(u => u.RegionId == regionId);
             return users.ToList();
+        }
+
+        public Task<int> DeleteUsers(int regionId)
+        {
+            var users = _context.UserInfo.Where(u => u.RegionId == regionId);
+            _context.UserInfo.RemoveRange(users);
+            var result = _context.SaveChangesAsync();
+            return result;
         }
     }
 }

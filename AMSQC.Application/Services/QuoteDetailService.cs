@@ -24,7 +24,6 @@ namespace AMSQC.Application.Services
             var result = _quoteDetailRepository.AddQuoteDetail(quoteDetail);
             return result;
         }
-
         public int DeleteQuote(int quoteId, int regionId)
         {
             return _quoteDetailRepository.DeleteQuote(quoteId, regionId);
@@ -89,6 +88,18 @@ namespace AMSQC.Application.Services
         public UserSurveyResponseViewModel GetSurveyAnswers(int quoteDetailId, string userGuid)
         {
             return _quoteDetailRepository.GetSurveyAnswers(quoteDetailId, userGuid);
+        }
+
+        public int UpdateAuditQuote(int quoteDetailId,  string userGuid)
+        {
+            var result = _quoteDetailRepository.UpdateAuditQuote(quoteDetailId, userGuid);
+            return result;
+        }
+
+        public QuoteDetail GetAuditQuote(int quoteId, int regionId)
+        {
+            var result = _quoteDetailRepository.GetAuditQuote(quoteId, regionId);
+            return result;
         }
     }
 }

@@ -23,7 +23,12 @@ export default function ErrorComponent() {
                     openNotificationWithInfo(error.description, error.title);
                     break;
                 case 'error':
-                    openNotificationWithError(error.description, error.title);
+                    if (error.description === 'Request failed with status code 403') {
+                        openNotificationWithError('You are not authorized to access desired functionality, please contact IT Support', error.title);
+                    }
+                    else {
+                        openNotificationWithError(error.description, error.title);
+                    }
                     break;
                 case 'success':
                     openNotificationWithSuccess(error.description, error.title);

@@ -2,19 +2,24 @@
 using AMSQC.Application.ViewModels;
 using AMSQC.Domain.Models;
 using AMSQC.Domain.Models.Reports;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MicrosoftGraph = Microsoft.Graph;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace AMSQC_UI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = AuthorizationPolicies.ReportingRoleRequired)]
     public class ReportController : ControllerBase
     {
+        private readonly MicrosoftGraph.GraphServiceClient _graphServiceClient;
         IRegionService _regionService = null;
         IStateService _stateService = null;
         IUserADService _userAdService = null;
@@ -24,36 +29,62 @@ namespace AMSQC_UI.Controllers
             IRegionService regionService,
             IStateService stateService,
             IUserADService userAdService,
-            IQuoteDetailService quoteService)
+            IQuoteDetailService quoteService,
+            MicrosoftGraph.GraphServiceClient graphServiceClient)
         {
             _regionService = regionService;
             _stateService = stateService;
             _userAdService = userAdService;
             _quoteService = quoteService;
+            _graphServiceClient = graphServiceClient;
         }
         [HttpGet]
         [Route("Parameters")]
-        public Response Get(int quoteNo)
+        
+        public async Task<Response> Get(int quoteNo)
         {
-            List<Region> regions = _regionService.GetRegions().OrderBy(t => t.Title).ToList();
-
-            regions.Insert(0, new Region() { RegionId = -1, Title = "[All]" });
+            
 
             List<State> states = _stateService.GetStates();
             states.Insert(0, new State() { StateId = -1, Title = "[All]" });
 
-            var currentUser = _userAdService.GetUserProfile();
+            var currentUser = await _userAdService.GetUserProfile();
             string region = currentUser.Region;
 
             var regionTemp = _regionService.GetRegion(region);
 
-            var users = _userAdService.GetUsers(regionTemp.RegionId);
+            var users =await _userAdService.GetUsers(regionTemp.RegionId);
             users.Insert(0, new UserInfo() { UserId = -1, FullName = "[All]" });
+                       
 
+            var currentUserReportAccessLevel = "";
+            List<Region> regions = null;
+
+            if (currentUser.ReportAccessLevel.Where(t => t == ReportAccessLevel.Operations).Count() > 0)
+            {
+                regions = _regionService.GetRegions().OrderBy(t => t.Title).ToList();
+                regions.Insert(0, new Region() { RegionId = -1, Title = "[All]" });
+            }
+             else if ( currentUser.ReportAccessLevel.Where(t=> (t == ReportAccessLevel.CM || t == ReportAccessLevel.CenterManager)).Count() > 0)
+            {
+                regions = _regionService.GetRegions().OrderBy(t => t.Title).Where(t=>t.Title == currentUser.Region).ToList();
+                regions.Insert(0, new Region() { RegionId = -1, Title = "[All]" });
+            }
+            else if (currentUser.ReportAccessLevel.Where(t => t == ReportAccessLevel.Auditor).Count() > 0)
+            {
+                regions = _regionService.GetRegions().OrderBy(t => t.Title).Where(t => t.Title == currentUser.Region).ToList();
+                regions.Insert(0, new Region() { RegionId = -1, Title = "[All]" });
+            }
+            else
+            {
+                regions = _regionService.GetRegions().OrderBy(t => t.Title).ToList();
+
+                regions.Insert(0, new Region() { RegionId = -1, Title = "[All]" });
+            }
 
             return new Response
             {
-                Result = new { regions, states, users, alreadySubmitted = false },
+                Result = new { regions, states, users, alreadySubmitted = false, currentUserReportAccessLevel },
                 Status = Status.Success,
                 HttpStatusCode = System.Net.HttpStatusCode.OK,
                 Message = ""
@@ -66,7 +97,15 @@ namespace AMSQC_UI.Controllers
         {
             if (parameters.ReportType == ReportType.AuditSummary)
             {
-                parameters.IsAudit = false;
+                parameters.IsAudit = true;
+
+                var currentUser = _userAdService.GetUserProfile();
+                var region = currentUser.Result.Region;
+
+                var regionTemp = _regionService.GetRegion(region);
+
+                parameters.RegionId = regionTemp.RegionId;
+
                 var result = _quoteService.GetAuditSummaryList(parameters);
                 return new Response
                 {
@@ -174,7 +213,7 @@ namespace AMSQC_UI.Controllers
             }
         }
 
-
+        [HttpGet]
         [Route("SurveyAnswers")]
         public Response Get(int quoteDetailId, string userGuid)
         {
@@ -245,9 +284,9 @@ namespace AMSQC_UI.Controllers
                     },
                 }
             };
+            
+
             */
-
-
 
 
             return new Response
@@ -260,5 +299,37 @@ namespace AMSQC_UI.Controllers
             };
 
         }
+
+
+        [HttpPost]
+        [Route("AuditQuote")]
+        public async Task<Response> Post(int quoteDetailId)
+        {
+            var currentUser = await _userAdService.GetUserProfile();
+
+
+            var result = _quoteService.UpdateAuditQuote(quoteDetailId,currentUser.UserGuid.ToString());
+
+            return new Response
+            {
+                Result = new { result, alreadySubmitted = false },
+                Status = Status.Success,
+                HttpStatusCode = System.Net.HttpStatusCode.OK,
+                Message = "Quote has been audited successfully."
+            };
+        }
+
+        //public async Task<string> GetRoles()
+        //{
+        //    var groups = await _graphServiceClient.Me.TransitiveMemberOf
+        //        .Request()
+        //        .GetAsync();
+
+        //    var groupNames = groups.CurrentPage.Select(t => (t as Microsoft.Graph.Group).DisplayName).ToArray();
+
+        //    var ReportAccessLevel = GetReportAccessLevel(groupNames);
+
+        //    return "";
+        //}
     }
 }

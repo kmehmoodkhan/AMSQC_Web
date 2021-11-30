@@ -1399,3 +1399,157 @@ input[type='number'] {
     color: #007bff !important;
 }
 
+/**=========================================================================**/
+
+
+
+.collapse-box {
+}
+
+    .collapse-box .card {
+        padding: 0;
+        border-radius: 0;
+        border: 0px solid #eee;
+        margin-bottom: 5px;
+        background: #fbfbfb;
+    }
+
+    .collapse-box .card-header {
+        padding: 10px 15px;
+        border-radius: 0;
+        border: 0;
+        margin-bottom: 0;
+        position: relative;
+        background: #ebebeb;
+        font-size: 16px;
+    }
+
+        .collapse-box .card-header:hover {
+            background-color: #dfdede;
+            cursor: pointer;
+        }
+
+        .collapse-box .card-header .icon {
+            float: right;
+        }
+
+    .collapse-box [data-toggle="collapsed"] {
+        font-size: 20px;
+    }
+
+    .collapse-box [data-toggle="collapse"] .icon:before, .collapse-box [data-toggle="collapse"] .icon:before {
+        padding: 0;
+        width: 24px;
+        line-height: 24px;
+        font-style: normal;
+        text-align: center;
+        color: #fff;
+        height: 24px;
+        top: 50%;
+        right: 12px;
+        transform: translateY(-50%);
+        display: inline-block;
+        position: absolute;
+    }
+
+    .collapse-box [data-toggle="collapse"] .icon:before {
+        content: "\ea13";
+        font-family: 'remixicon' !important;
+        background: #be1e2d;
+    }
+
+    .collapse-box [data-toggle="collapse"].collapsed .icon:before {
+        content: "\f1af";
+        font-family: 'remixicon' !important;
+        background: #cdcdcd;
+    }
+
+
+
+/**=========================================================================**/
+
+.collapse-box2 {
+    text-align: center;
+}
+
+.collapse-box2 .card {
+    padding: 0;
+    border-radius: 0;
+    border: 0px solid #eee;
+    margin-bottom: 5px;
+    background: #ffffff;
+    display: inline-block;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+}
+
+.collapse-box2 .card-header {
+    padding: 10px 15px;
+    border-radius: 0;
+    border: 0;
+    display: inline-block;
+    margin-bottom: 10px;
+    position: relative;
+    background: #ffffff;
+    padding-right: 50px;
+    display: inline-block;
+    font-size: 16px;
+}
+
+    .collapse-box2 .card-header:hover {
+        background-color: #ffffff;
+        cursor: pointer;
+        color: #be1e2d;
+    }
+
+.collapse-box2 .card-header .icon {
+    float: right;
+}
+
+.collapse-box2 [data-toggle="collapsed"] {
+    font-size: 20px;
+}
+
+.collapse-box2 [data-toggle="collapse"] .icon:before, .collapse-box2 [data-toggle="collapse"] .icon:before {
+    padding: 0;
+    width: 20px;
+    line-height: 17px;
+    font-style: normal;
+    text-align: center; /* color: #fff; */
+    height: 20px;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    display: inline-block;
+    position: absolute;
+    border: 1px solid #ccc;
+}
+
+.collapse-box2 [data-toggle="collapse"] .icon:before {
+    content: "\ea13";
+    font-family: 'remixicon' !important;
+}
+
+
+.collapse-box2 .card-body {
+    background: #fafafa;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.collapse-box2 [data-toggle="collapse"].collapsed .icon:before {
+    content: "\f1af";
+    font-family: 'remixicon' !important;
+    /* background: #cdcdcd; */
+}
+
+.input-button {
+}
+
+.input-button .btn {
+    border-radius: 0 5px 5px 0;
+}
+.collapse-box2 .card-body{
+    padding:10px
+}

@@ -34,6 +34,8 @@ namespace AMSQC.Application.Services
 
                 CloudBlobContainer container = blobClient.GetContainerReference(_config.Value.Container.ToLower());
 
+
+
                 OperationContext context = new OperationContext();
                 bool result = await container.CreateIfNotExistsAsync();
 

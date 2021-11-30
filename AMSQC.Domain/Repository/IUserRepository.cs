@@ -15,6 +15,8 @@ namespace AMSQC.Domain.Repository
 
         List<UserInfo> GetUsers(int regionId);
 
-        int AddUsers(List<UserInfo> users);
+        Task<int> AddUsers(List<UserInfo> users);
+
+        Task<int> DeleteUsers(int regionId);
     }
 }
